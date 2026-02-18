@@ -2,6 +2,52 @@
 
 Static site and data export for Cloudflare Pages, using the official SXSW schedule source.
 
+## Using the Website (Humans)
+
+Live site:
+- [sxsw.0fn.net](https://sxsw.0fn.net)
+
+How to browse:
+1. Open [Home](https://sxsw.0fn.net/).
+2. Click **Browse Full Schedule** or open [Schedule by day](https://sxsw.0fn.net/schedule/index.html).
+3. Pick a date page (for example [March 15](https://sxsw.0fn.net/schedule/date/2026-03-15.html)).
+4. Click any event title to open its event detail page.
+5. Use the **Official** link on event/day pages to jump to the source SXSW page.
+
+Useful machine/data links (still human-readable):
+- [Manifest](https://sxsw.0fn.net/schedule.manifest.json)
+- [Agent feed JSON](https://sxsw.0fn.net/agent-schedule.v1.json)
+- [Changes feed](https://sxsw.0fn.net/changes.ndjson)
+- [Schema](https://sxsw.0fn.net/schema.json)
+
+## Using the Repo (Humans)
+
+Prerequisite:
+- Node.js 22+ recommended
+
+Local setup:
+```bash
+git clone git@github.com:max2697/SXSW-for-agents.git
+cd SXSW-for-agents
+npm run build
+npm run verify
+```
+
+Open local output:
+- `public/index.html` in your browser
+- `public/schedule/index.html` for day-by-day browsing
+
+Typical refresh workflow:
+```bash
+npm run build
+npm run verify
+git add .
+git commit -m "Refresh SXSW schedule snapshot"
+git push
+```
+
+After push, GitHub Actions verifies the export and Cloudflare Pages deploys from `main`.
+
 ## What It Produces
 
 - `/agents.json`: machine-readable ingestion guide
