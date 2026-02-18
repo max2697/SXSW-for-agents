@@ -1,7 +1,7 @@
 # SXSW 2026 Agent-First Schedule
 
 > A static, machine-readable export of the official SXSW 2026 schedule.
-> 2777 events across March 12–18, 2026. All data sourced from schedule.sxsw.com.
+> 2779 events across March 12–18, 2026. All data sourced from schedule.sxsw.com.
 
 ## What This Site Is
 
@@ -11,8 +11,8 @@ It is designed to be easy for LLMs and AI agents to ingest, filter, and reason o
 ## Recommended Ingestion (Start Here)
 
 - [Agent ingestion contract](/agents.json) — machine-readable guide: endpoints, field names, ingestion order
-- [Normalized JSON feed](/agent-schedule.v1.json) — all 2777 events, raw + derived + provenance blocks, single file (~14 MB)
-- [Normalized NDJSON feed](/agent-schedule.v1.ndjson) — same data, one event per line, streaming-friendly (~9.3 MB)
+- [Normalized JSON feed](/agent-schedule.v1.json) — all 2779 events, raw + derived + provenance blocks, single file (~14 MB)
+- [Normalized NDJSON feed](/agent-schedule.v1.ndjson) — same data, one event per line, streaming-friendly (~9.2 MB)
 - [Manifest + hashes](/schedule.manifest.json) — metadata, SHA256 hashes, shard map, field inventory
 - [Field schema + sample record](/schema.json) — all 75 raw fields documented with a sample event
 - [Change feed + tombstones](/changes.ndjson) — added/modified/removed/cancelled records for incremental sync
@@ -22,11 +22,11 @@ It is designed to be easy for LLMs and AI agents to ingest, filter, and reason o
 
 Fetch only the days you need. One NDJSON file per festival date:
 
-- [Thu, Mar 12, 2026](/events/by-date/2026-03-12.ndjson) — 320 events
+- [Thu, Mar 12, 2026](/events/by-date/2026-03-12.ndjson) — 321 events
 - [Fri, Mar 13, 2026](/events/by-date/2026-03-13.ndjson) — 416 events
 - [Sat, Mar 14, 2026](/events/by-date/2026-03-14.ndjson) — 415 events
 - [Sun, Mar 15, 2026](/events/by-date/2026-03-15.ndjson) — 441 events
-- [Mon, Mar 16, 2026](/events/by-date/2026-03-16.ndjson) — 414 events
+- [Mon, Mar 16, 2026](/events/by-date/2026-03-16.ndjson) — 415 events
 - [Tue, Mar 17, 2026](/events/by-date/2026-03-17.ndjson) — 449 events
 - [Wed, Mar 18, 2026](/events/by-date/2026-03-18.ndjson) — 316 events
 
@@ -45,9 +45,9 @@ event_id, name, date, start_time, end_time, event_type, format, category, genre,
 
 ## Data Freshness
 
-Last built: 2026-02-18T02:43:29.877Z
-Source snapshot: 2026-02-17T23:24:00.000Z
-Expected next refresh by: 2026-02-21T02:43:29.877Z
+Last built: 2026-02-18T03:33:39.589Z
+Source snapshot: 2026-02-18T00:17:00.000Z
+Expected next refresh by: 2026-02-21T03:33:39.589Z
 Refresh mode: manual every few days.
 
 ## Notes for LLMs

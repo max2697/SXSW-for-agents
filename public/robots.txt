@@ -31,4 +31,4 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-Sitemap: https://sxsw-agent-schedule.pages.dev/sitemap.xml
+Sitemap: https://sxsw.0fn.net/sitemap.xml
