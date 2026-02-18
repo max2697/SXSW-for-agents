@@ -756,6 +756,32 @@ function renderShell({ title, description, body, jsonLd = null, pagePath = "/" }
 }
 
 function renderLandingPage(manifest, dateSummaries) {
+  const quickPrompts = `<section class="panel">
+  <h2>Quick AI Prompts</h2>
+  <p class="small">Copy and paste into Claude, ChatGPT, Gemini, Perplexity, or coding agents.</p>
+  <details>
+    <summary>Find AI safety sessions on 2026-03-15</summary>
+    <pre>Use ${escapeHtml(absoluteUrl("/"))} as source.
+Read /schedule.manifest.json first, then /agent-schedule.v1.json.
+Find SXSW ${manifest.festival_year} sessions on 2026-03-15 about AI safety.
+Return: event_id, name, start_time, end_time, venue.name, official_url.
+Sort by start_time.</pre>
+  </details>
+  <details>
+    <summary>Find sessions at Austin Convention Center</summary>
+    <pre>Use ${escapeHtml(absoluteUrl("/agent-schedule.v1.json"))}.
+Find all sessions at Austin Convention Center on 2026-03-14.
+Return a compact table with time, session name, format, and event_id.</pre>
+  </details>
+  <details>
+    <summary>Summarize what changed since last refresh</summary>
+    <pre>Use ${escapeHtml(absoluteUrl("/changes.ndjson"))}.
+Summarize added/modified/removed/cancelled events since the previous snapshot.
+If there are removed/cancelled events, list tombstones first.</pre>
+  </details>
+  <p><a class="button" href="/prompts/index.html">More Prompt Examples</a></p>
+</section>`;
+
   const cards = dateSummaries
     .map(
       (day) => `<article class="card">
@@ -769,7 +795,8 @@ function renderLandingPage(manifest, dateSummaries) {
   return renderShell({
     title: `SXSW ${manifest.festival_year} Static Schedule`,
     description: `Browse SXSW ${manifest.festival_year} schedule by day with static pages.`,
-    body: `<section class="hero">
+    body: `${quickPrompts}
+<section class="hero">
   <h1>SXSW ${manifest.festival_year} Static Schedule</h1>
   <p>Directly browse the schedule as a static website. Data is sourced from the official SXSW schedule.</p>
   <p><a class="button" href="/schedule/index.html">Browse Full Schedule</a></p>
@@ -858,6 +885,23 @@ Use only SXSW ${manifest.festival_year} events and include event_id + official_u
 }
 
 function renderScheduleIndexPage(manifest, dateSummaries) {
+  const quickPrompts = `<section class="panel">
+  <h2>Quick AI Prompts</h2>
+  <details>
+    <summary>Top AI + developer tooling sessions per day</summary>
+    <pre>Use ${escapeHtml(absoluteUrl("/agents.json"))} and follow its recommended ingestion order.
+Build a shortlist of top AI + developer tooling sessions for each day.
+Include event_id and official_url for every item.</pre>
+  </details>
+  <details>
+    <summary>Speaker lookup prompt</summary>
+    <pre>Use ${escapeHtml(absoluteUrl("/agent-schedule.v1.json"))}.
+Find sessions where contributors include "Meredith Whittaker".
+Return date, time, event name, event_id, and official_url.</pre>
+  </details>
+  <p><a class="button" href="/prompts/index.html">More Prompt Examples</a></p>
+</section>`;
+
   const cards = dateSummaries
     .map(
       (day) => `<article class="card">
@@ -872,6 +916,7 @@ function renderScheduleIndexPage(manifest, dateSummaries) {
     title: `SXSW ${manifest.festival_year} Schedule by Day`,
     description: `Browse SXSW ${manifest.festival_year} schedule by date.`,
     body: `<p class="breadcrumbs"><a href="/index.html">Home</a></p>
+${quickPrompts}
 <section class="hero">
   <h1>SXSW ${manifest.festival_year} Schedule by Day</h1>
   <p>Choose a day to view all sessions with times, venue, and detail pages.</p>

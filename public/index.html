@@ -19,11 +19,36 @@
   <link rel="stylesheet" href="/schedule/styles.css">
 </head>
 <body>
-  <main><section class="hero">
+  <main><section class="panel">
+  <h2>Quick AI Prompts</h2>
+  <p class="small">Copy and paste into Claude, ChatGPT, Gemini, Perplexity, or coding agents.</p>
+  <details>
+    <summary>Find AI safety sessions on 2026-03-15</summary>
+    <pre>Use https://sxsw-agent-schedule.pages.dev/ as source.
+Read /schedule.manifest.json first, then /agent-schedule.v1.json.
+Find SXSW 2026 sessions on 2026-03-15 about AI safety.
+Return: event_id, name, start_time, end_time, venue.name, official_url.
+Sort by start_time.</pre>
+  </details>
+  <details>
+    <summary>Find sessions at Austin Convention Center</summary>
+    <pre>Use https://sxsw-agent-schedule.pages.dev/agent-schedule.v1.json.
+Find all sessions at Austin Convention Center on 2026-03-14.
+Return a compact table with time, session name, format, and event_id.</pre>
+  </details>
+  <details>
+    <summary>Summarize what changed since last refresh</summary>
+    <pre>Use https://sxsw-agent-schedule.pages.dev/changes.ndjson.
+Summarize added/modified/removed/cancelled events since the previous snapshot.
+If there are removed/cancelled events, list tombstones first.</pre>
+  </details>
+  <p><a class="button" href="/prompts/index.html">More Prompt Examples</a></p>
+</section>
+<section class="hero">
   <h1>SXSW 2026 Static Schedule</h1>
   <p>Directly browse the schedule as a static website. Data is sourced from the official SXSW schedule.</p>
   <p><a class="button" href="/schedule/index.html">Browse Full Schedule</a></p>
-  <p class="meta">Generated: 2026-02-18T02:29:32.618Z | Events: 2777</p>
+  <p class="meta">Generated: 2026-02-18T02:34:10.249Z | Events: 2777</p>
 </section>
 <section class="panel">
   <h2>By Day</h2>
