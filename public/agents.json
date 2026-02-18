@@ -1,19 +1,19 @@
 {
   "agent_contract_version": "1.1.0",
-  "generated_at": "2026-02-18T03:33:39.589Z",
+  "generated_at": "2026-02-18T09:46:50.175Z",
   "festival_year": 2026,
   "purpose": "Agent-first SXSW schedule feed from official source",
   "freshness": {
     "refresh_mode": "manual",
-    "refresh_cadence_target": "every_few_days",
-    "last_successful_refresh_at": "2026-02-18T03:33:39.589Z",
+    "refresh_cadence_target": "daily",
+    "last_successful_refresh_at": "2026-02-18T09:46:50.175Z",
     "source_snapshot_at": "2026-02-18T00:17:00.000Z",
-    "expected_next_refresh_by": "2026-02-21T03:33:39.589Z",
-    "stale_after": "2026-02-22T03:33:39.589Z",
+    "expected_next_refresh_by": "2026-02-19T09:46:50.175Z",
+    "stale_after": "2026-02-22T09:46:50.175Z",
     "data_staleness": {
       "is_stale": false,
       "status": "fresh",
-      "source_snapshot_age_hours": 3.3
+      "source_snapshot_age_hours": 9.5
     }
   },
   "compatibility": {
@@ -76,7 +76,7 @@
     "shard_strategy": "one NDJSON file per event date plus unknown-date shard",
     "max_file_size_bytes": 26214400,
     "refresh_mode": "manual",
-    "refresh_cadence_target": "every_few_days"
+    "refresh_cadence_target": "daily"
   },
   "source": {
     "system": "Official SXSW schedule website",
