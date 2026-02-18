@@ -780,6 +780,11 @@ function renderLandingPage(manifest, dateSummaries) {
   <div class="grid">${cards}</div>
 </section>
 <section class="panel">
+  <h2>AI Assistant Prompts</h2>
+  <p>Use copy/paste prompts for Claude, ChatGPT, Gemini, Perplexity, and coding agents.</p>
+  <p><a class="button" href="/prompts/index.html">Open Prompt Examples</a></p>
+</section>
+<section class="panel">
   <h2>Machine Access</h2>
   <ul class="flat">
     <li><a href="/agents.json"><code>/agents.json</code></a></li>
@@ -802,6 +807,53 @@ function renderLandingPage(manifest, dateSummaries) {
       ]
     },
     pagePath: "/"
+  });
+}
+
+function renderPromptExamplesPage(manifest) {
+  const base = absoluteUrl("/");
+  return renderShell({
+    title: `AI Prompt Examples | SXSW ${manifest.festival_year}`,
+    description: `Copy/paste prompt examples for querying SXSW ${manifest.festival_year} schedule with popular AI assistants.`,
+    body: `<p class="breadcrumbs"><a href="/index.html">Home</a></p>
+<section class="hero">
+  <h1>AI Assistant Prompt Examples</h1>
+  <p>Copy and paste these into Claude, ChatGPT, Gemini, Perplexity, or coding agents.</p>
+  <p class="meta">Base URL: <code>${escapeHtml(base)}</code></p>
+</section>
+<section class="panel">
+  <h2>1) Find Sessions by Topic and Date</h2>
+  <pre>Use ${escapeHtml(base)} as source.
+Read /schedule.manifest.json first, then /agent-schedule.v1.json.
+Find SXSW ${manifest.festival_year} sessions on 2026-03-15 about AI safety.
+Return: event_id, name, start_time, end_time, venue.name, official_url.
+Sort by start_time.</pre>
+</section>
+<section class="panel">
+  <h2>2) Venue-Based Search</h2>
+  <pre>Use ${escapeHtml(base)}agent-schedule.v1.json.
+Find all sessions at Austin Convention Center on 2026-03-14.
+Return a compact table with time, session name, format, and event_id.</pre>
+</section>
+<section class="panel">
+  <h2>3) Speaker Lookup</h2>
+  <pre>Use ${escapeHtml(base)}agent-schedule.v1.json.
+Find sessions where contributors include "Meredith Whittaker".
+Return date, time, event name, event_id, and official_url.</pre>
+</section>
+<section class="panel">
+  <h2>4) Incremental Update Check</h2>
+  <pre>Use ${escapeHtml(base)}changes.ndjson.
+Summarize added/modified/removed/cancelled events since the previous snapshot.
+If there are removed/cancelled events, list tombstones first.</pre>
+</section>
+<section class="panel">
+  <h2>5) Best Ingestion Flow for an Agent</h2>
+  <pre>Use ${escapeHtml(base)}agents.json and follow its recommended ingestion order.
+Build a shortlist of "top AI + developer tooling sessions" for each day.
+Use only SXSW ${manifest.festival_year} events and include event_id + official_url in every item.</pre>
+</section>`,
+    pagePath: "/prompts/"
   });
 }
 
@@ -1358,10 +1410,12 @@ async function main() {
   await rm(`${OUTPUT_DIR}/events`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/schedule`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/entities`, { recursive: true, force: true });
+  await rm(`${OUTPUT_DIR}/prompts`, { recursive: true, force: true });
   await mkdir(`${OUTPUT_DIR}/events/by-date`, { recursive: true });
   await mkdir(`${OUTPUT_DIR}/schedule/date`, { recursive: true });
   await mkdir(`${OUTPUT_DIR}/schedule/event`, { recursive: true });
   await mkdir(`${OUTPUT_DIR}/entities`, { recursive: true });
+  await mkdir(`${OUTPUT_DIR}/prompts`, { recursive: true });
 
   for (const [date, events] of groupedByDate.entries()) {
     const pathDate = dateSlug(date);
@@ -1902,6 +1956,12 @@ async function main() {
     path: `${OUTPUT_DIR}/schedule/styles.css`,
     route: null,
     content: renderSiteCss()
+  });
+
+  pageWrites.push({
+    path: `${OUTPUT_DIR}/prompts/index.html`,
+    route: "/prompts/",
+    content: renderPromptExamplesPage(manifest)
   });
 
   pageWrites.push({

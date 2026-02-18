@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Prompt Examples | SXSW 2026</title>
+  <meta name="description" content="Copy/paste prompt examples for querying SXSW 2026 schedule with popular AI assistants.">
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+  <link rel="canonical" href="https://sxsw-agent-schedule.pages.dev/prompts/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AI Prompt Examples | SXSW 2026">
+  <meta property="og:description" content="Copy/paste prompt examples for querying SXSW 2026 schedule with popular AI assistants.">
+  <meta property="og:url" content="https://sxsw-agent-schedule.pages.dev/prompts/">
+  <meta property="og:image" content="https://sxsw-agent-schedule.pages.dev/schedule/og-default.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Prompt Examples | SXSW 2026">
+  <meta name="twitter:description" content="Copy/paste prompt examples for querying SXSW 2026 schedule with popular AI assistants.">
+  <meta name="twitter:image" content="https://sxsw-agent-schedule.pages.dev/schedule/og-default.svg">
+  <link rel="stylesheet" href="/schedule/styles.css">
+</head>
+<body>
+  <main><p class="breadcrumbs"><a href="/index.html">Home</a></p>
+<section class="hero">
+  <h1>AI Assistant Prompt Examples</h1>
+  <p>Copy and paste these into Claude, ChatGPT, Gemini, Perplexity, or coding agents.</p>
+  <p class="meta">Base URL: <code>https://sxsw-agent-schedule.pages.dev/</code></p>
+</section>
+<section class="panel">
+  <h2>1) Find Sessions by Topic and Date</h2>
+  <pre>Use https://sxsw-agent-schedule.pages.dev/ as source.
+Read /schedule.manifest.json first, then /agent-schedule.v1.json.
+Find SXSW 2026 sessions on 2026-03-15 about AI safety.
+Return: event_id, name, start_time, end_time, venue.name, official_url.
+Sort by start_time.</pre>
+</section>
+<section class="panel">
+  <h2>2) Venue-Based Search</h2>
+  <pre>Use https://sxsw-agent-schedule.pages.dev/agent-schedule.v1.json.
+Find all sessions at Austin Convention Center on 2026-03-14.
+Return a compact table with time, session name, format, and event_id.</pre>
+</section>
+<section class="panel">
+  <h2>3) Speaker Lookup</h2>
+  <pre>Use https://sxsw-agent-schedule.pages.dev/agent-schedule.v1.json.
+Find sessions where contributors include "Meredith Whittaker".
+Return date, time, event name, event_id, and official_url.</pre>
+</section>
+<section class="panel">
+  <h2>4) Incremental Update Check</h2>
+  <pre>Use https://sxsw-agent-schedule.pages.dev/changes.ndjson.
+Summarize added/modified/removed/cancelled events since the previous snapshot.
+If there are removed/cancelled events, list tombstones first.</pre>
+</section>
+<section class="panel">
+  <h2>5) Best Ingestion Flow for an Agent</h2>
+  <pre>Use https://sxsw-agent-schedule.pages.dev/agents.json and follow its recommended ingestion order.
+Build a shortlist of "top AI + developer tooling sessions" for each day.
+Use only SXSW 2026 events and include event_id + official_url in every item.</pre>
+</section></main>
+  
+</body>
+</html>
