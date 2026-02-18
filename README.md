@@ -20,6 +20,47 @@ Useful machine/data links (still human-readable):
 - [Changes feed](https://sxsw.0fn.net/changes.ndjson)
 - [Schema](https://sxsw.0fn.net/schema.json)
 
+## AI Assistant Examples (Copy/Paste)
+
+Use these prompts in Claude, ChatGPT, Gemini, Perplexity, or coding agents.
+
+### 1) Find sessions by topic and date
+```text
+Use https://sxsw.0fn.net as source.
+Read /schedule.manifest.json first, then /agent-schedule.v1.json.
+Find SXSW 2026 sessions on 2026-03-15 about AI safety.
+Return: event_id, name, start_time, end_time, venue.name, official_url.
+Sort by start_time.
+```
+
+### 2) Venue-based search
+```text
+Use https://sxsw.0fn.net/agent-schedule.v1.json.
+Find all sessions at Austin Convention Center on 2026-03-14.
+Return a compact table with time, session name, format, and event_id.
+```
+
+### 3) Speaker lookup
+```text
+Use https://sxsw.0fn.net/agent-schedule.v1.json.
+Find sessions where contributors include "Meredith Whittaker".
+Return date, time, event name, event_id, and official_url.
+```
+
+### 4) Incremental update check (for agents/tools)
+```text
+Use https://sxsw.0fn.net/changes.ndjson.
+Summarize added/modified/removed/cancelled events since the previous snapshot.
+If there are removed/cancelled events, list tombstones first.
+```
+
+### 5) Best ingestion flow for an agent
+```text
+Use https://sxsw.0fn.net/agents.json and follow its recommended ingestion order.
+Build a shortlist of "top AI + developer tooling sessions" for each day.
+Use only SXSW 2026 events and include event_id + official_url in every item.
+```
+
 ## Using the Repo (Humans)
 
 Prerequisite:
