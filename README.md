@@ -74,13 +74,17 @@ npm run build
 npm run verify
 ```
 
+Command intent:
+- `npm run build`: deterministic website rebuild from committed `public/` data (no SXSW network calls)
+- `npm run refresh:data`: manual data refresh from official SXSW endpoints (regenerates data + pages)
+
 Open local output:
 - `public/index.html` in your browser
 - `public/schedule/index.html` for day-by-day browsing
 
 Typical refresh workflow:
 ```bash
-npm run build
+npm run refresh:data
 npm run verify
 git add .
 git commit -m "Refresh SXSW schedule snapshot"
@@ -88,6 +92,10 @@ git push
 ```
 
 After push, GitHub Actions verifies the export and Cloudflare Pages deploys from `main`.
+
+Automation option:
+- `.github/workflows/refresh-data.yml` can auto-refresh data every day, run verify, and commit to `main` only when data changed.
+- You can also trigger it manually from the Actions tab: **Refresh SXSW Data Snapshot**.
 
 ## What It Produces
 
@@ -110,7 +118,7 @@ After push, GitHub Actions verifies the export and Cloudflare Pages deploys from
 
 ## Data Source
 
-Build pipeline reads from official endpoints:
+Manual refresh reads from official endpoints:
 
 - `POST https://schedule.sxsw.com/2026/search`
 - `GET https://schedule.sxsw.com/api/web/2026/events/{event_id}`
@@ -120,6 +128,8 @@ Build pipeline reads from official endpoints:
 ```bash
 npm run build
 npm run verify
+# refresh data snapshot (manual cadence)
+npm run refresh:data
 ```
 
 Optional environment variables:
@@ -129,7 +139,7 @@ Optional environment variables:
 - `RETRIES` (default `4`)
 - `REFRESH_INTERVAL_HOURS` (default `72`) for expected next refresh metadata
 - `STALE_AFTER_HOURS` (default `96`) for stale-flag metadata
-- `SITE_URL` (default `https://sxsw-agent-schedule.pages.dev`) for canonical URLs and sitemap
+- `SITE_URL` (default `https://sxsw.0fn.net`) for canonical URLs and sitemap
 
 ## Cloudflare Pages
 
@@ -138,7 +148,12 @@ Use:
 - Build command: `npm run build`
 - Build output directory: `public`
 
-This project is static-only after build.
+Cloudflare build is deterministic and does not fetch SXSW data. Data refresh stays manual via `npm run refresh:data`.
+
+## GitHub Actions
+
+- `Verify Export` (`.github/workflows/verify.yml`): runs on push/PR, rebuilds site from committed data, verifies integrity.
+- `Refresh SXSW Data Snapshot` (`.github/workflows/refresh-data.yml`): scheduled every day, fetches official SXSW source, regenerates data, verifies, and auto-commits only if changed.
 
 The exporter shards NDJSON by date and emits a compressed full dataset to stay under Cloudflare Pages per-file size limits.
 Build metadata includes manual-refresh freshness signals (`last_successful_refresh_at`, `source_snapshot_at`, `expected_next_refresh_by`, `data_staleness`) and compatibility policy guarantees.

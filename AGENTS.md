@@ -30,10 +30,14 @@ This repository publishes an agent-first static SXSW schedule export for Cloudfl
 - Freshness metadata in `public/schedule.manifest.json`: `last_successful_refresh_at`, `source_snapshot_at`, `expected_next_refresh_by`, `data_staleness`.
 
 ## Refresh and Validate
-- Rebuild data:
+- Rebuild website from committed snapshot:
   - `npm run build`
+- Refresh source data manually (official SXSW network calls):
+  - `npm run refresh:data`
 - Verify integrity:
   - `npm run verify`
+- Optional automation:
+  - `.github/workflows/refresh-data.yml` runs scheduled refresh every day and commits only when snapshot files change.
 
 ## Source of Truth
 - Official SXSW schedule website only:

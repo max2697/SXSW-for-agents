@@ -27,7 +27,11 @@ jobs:
           node-version: 22
 
       - name: Build export
+        env:
+          SITE_URL: https://sxsw.0fn.net
         run: npm run build
 
       - name: Verify export
+        env:
+          VERIFY_SOURCE_PARITY: "0"
         run: npm run verify

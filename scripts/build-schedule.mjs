@@ -1,12 +1,13 @@
-import { mkdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
-import { gzipSync } from "node:zlib";
+import { gunzipSync, gzipSync } from "node:zlib";
 
 const BASE_URL = "https://schedule.sxsw.com";
-const SITE_URL = String(process.env.SITE_URL || "https://sxsw-agent-schedule.pages.dev").replace(
+const SITE_URL = String(process.env.SITE_URL || "https://sxsw.0fn.net").replace(
   /\/+$/,
   ""
 );
+const BUILD_MODE = String(process.env.BUILD_MODE || "refresh").trim().toLowerCase();
 const YEAR = Number(process.env.SXSW_YEAR || 2026);
 const CONCURRENCY = Number(process.env.CONCURRENCY || 8);
 const RETRIES = Number(process.env.RETRIES || 4);
@@ -231,6 +232,14 @@ function normalizeToken(value) {
 
 function toNdjson(events) {
   return events.map((event) => JSON.stringify(event)).join("\n") + "\n";
+}
+
+function parseNdjson(raw) {
+  const text = String(raw || "").trim();
+  if (!text) {
+    return [];
+  }
+  return text.split("\n").map((line) => JSON.parse(line));
 }
 
 function groupByDate(events) {
@@ -779,7 +788,7 @@ Return a compact table with time, session name, format, and event_id.</pre>
 Summarize added/modified/removed/cancelled events since the previous snapshot.
 If there are removed/cancelled events, list tombstones first.</pre>
   </details>
-  <p><a class="button" href="/prompts/index.html">More Prompt Examples</a></p>
+  <p><a class="button" href="/prompts/index.html">Open Prompt Examples</a></p>
 </section>`;
 
   const cards = dateSummaries
@@ -1074,8 +1083,8 @@ function renderStabilityPage(manifest) {
 }
 
 function renderScheduleIndexPage(manifest, dateSummaries) {
-  const quickPrompts = `<section class="panel">
-  <h2>Quick AI Prompts</h2>
+  const aiPromptsSection = `<section class="panel">
+  <h2>AI Assistant Prompts</h2>
   <details>
     <summary>Top AI + developer tooling sessions per day</summary>
     <pre>Use ${escapeHtml(absoluteUrl("/agents.json"))} and follow its recommended ingestion order.
@@ -1088,7 +1097,7 @@ Include event_id and official_url for every item.</pre>
 Find sessions where contributors include "Meredith Whittaker".
 Return date, time, event name, event_id, and official_url.</pre>
   </details>
-  <p><a class="button" href="/prompts/index.html">More Prompt Examples</a></p>
+  <p><a class="button" href="/prompts/index.html">Open Prompt Examples</a></p>
 </section>`;
 
   const cards = dateSummaries
@@ -1105,11 +1114,11 @@ Return date, time, event name, event_id, and official_url.</pre>
     title: `SXSW ${manifest.festival_year} Schedule by Day`,
     description: `Browse SXSW ${manifest.festival_year} schedule by date.`,
     body: `<p class="breadcrumbs"><a href="/index.html">Home</a></p>
-${quickPrompts}
 <section class="hero">
   <h1>SXSW ${manifest.festival_year} Schedule by Day</h1>
   <p>Choose a day to view all sessions with times, venue, and detail pages.</p>
 </section>
+${aiPromptsSection}
 <section class="panel">
   <h2>Helpful Pages</h2>
   <ul class="flat">
@@ -1640,7 +1649,186 @@ function buildCompatibilityPolicy() {
   };
 }
 
+function buildDateSummaries(groupedByDate) {
+  const dateSummaries = [];
+  for (const [date, events] of groupedByDate.entries()) {
+    const pathDate = dateSlug(date);
+    dateSummaries.push({
+      date,
+      slug: pathDate,
+      label: formatDateLabel(date),
+      event_count: events.length,
+      ndjson_path: `/events/by-date/${pathDate}.ndjson`,
+      page_path: datePagePath(date)
+    });
+  }
+  return dateSummaries;
+}
+
+async function loadPublishedSnapshotForSiteBuild() {
+  const manifestPath = `${OUTPUT_DIR}/schedule.manifest.json`;
+  const fullPath = `${OUTPUT_DIR}/schedule.json.gz`;
+  const changesPath = `${OUTPUT_DIR}/changes.ndjson`;
+
+  const [manifestRaw, fullRaw, changesRaw] = await Promise.all([
+    readFile(manifestPath, "utf8"),
+    readFile(fullPath),
+    readFile(changesPath, "utf8").catch(() => "")
+  ]);
+
+  const manifest = JSON.parse(manifestRaw);
+  const full = JSON.parse(gunzipSync(fullRaw).toString("utf8"));
+  const detailedEvents = Array.isArray(full.events) ? full.events.slice().sort(byStartTime) : [];
+  const groupedByDate = groupByDate(detailedEvents);
+  const dateSummaries = buildDateSummaries(groupedByDate);
+  const changeLines = parseNdjson(changesRaw);
+  const changeRecords = changeLines.filter((line) => line?.record_type === "change");
+
+  return {
+    manifest,
+    groupedByDate,
+    dateSummaries,
+    changeRecords
+  };
+}
+
+async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, changeRecords, generatedAt }) {
+  await rm(`${OUTPUT_DIR}/schedule`, { recursive: true, force: true });
+  await rm(`${OUTPUT_DIR}/prompts`, { recursive: true, force: true });
+  await rm(`${OUTPUT_DIR}/faq`, { recursive: true, force: true });
+  await rm(`${OUTPUT_DIR}/changelog`, { recursive: true, force: true });
+  await rm(`${OUTPUT_DIR}/stability`, { recursive: true, force: true });
+  await mkdir(`${OUTPUT_DIR}/schedule/date`, { recursive: true });
+  await mkdir(`${OUTPUT_DIR}/schedule/event`, { recursive: true });
+  await mkdir(`${OUTPUT_DIR}/prompts`, { recursive: true });
+  await mkdir(`${OUTPUT_DIR}/faq`, { recursive: true });
+  await mkdir(`${OUTPUT_DIR}/changelog`, { recursive: true });
+  await mkdir(`${OUTPUT_DIR}/stability`, { recursive: true });
+
+  const pageWrites = [];
+
+  pageWrites.push({
+    path: `${OUTPUT_DIR}/index.html`,
+    route: "/",
+    content: renderLandingPage(manifest, dateSummaries)
+  });
+
+  pageWrites.push({
+    path: `${OUTPUT_DIR}/schedule/index.html`,
+    route: "/schedule/",
+    content: renderScheduleIndexPage(manifest, dateSummaries)
+  });
+
+  pageWrites.push({
+    path: `${OUTPUT_DIR}/schedule/styles.css`,
+    route: null,
+    content: renderSiteCss()
+  });
+
+  pageWrites.push({
+    path: `${OUTPUT_DIR}/prompts/index.html`,
+    route: "/prompts/",
+    content: renderPromptExamplesPage(manifest)
+  });
+
+  pageWrites.push({
+    path: `${OUTPUT_DIR}/faq/index.html`,
+    route: "/faq/",
+    content: renderFaqPage(manifest)
+  });
+
+  pageWrites.push({
+    path: `${OUTPUT_DIR}/changelog/index.html`,
+    route: "/changelog/",
+    content: renderChangelogPage(manifest, changeRecords)
+  });
+
+  pageWrites.push({
+    path: `${OUTPUT_DIR}/stability/index.html`,
+    route: "/stability/",
+    content: renderStabilityPage(manifest)
+  });
+
+  pageWrites.push({
+    path: `${OUTPUT_DIR}/schedule/og-default.svg`,
+    route: null,
+    content:
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="SXSW ${YEAR} Schedule for Agents">` +
+      `<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">` +
+      `<stop offset="0%" stop-color="#0a1a2a"/><stop offset="100%" stop-color="#153c5e"/></linearGradient></defs>` +
+      `<rect width="1200" height="630" fill="url(#g)"/>` +
+      `<text x="70" y="250" font-family="Arial, Helvetica, sans-serif" font-size="76" fill="#ffffff" font-weight="700">SXSW ${YEAR}</text>` +
+      `<text x="70" y="340" font-family="Arial, Helvetica, sans-serif" font-size="52" fill="#cfe9ff" font-weight="600">Schedule for Agents</text>` +
+      `<text x="70" y="410" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#9ac9ee">Agent-first website export</text>` +
+      `</svg>`
+  });
+
+  for (const day of dateSummaries) {
+    const events = groupedByDate.get(day.date) || [];
+    pageWrites.push({
+      path: `${OUTPUT_DIR}${day.page_path}`,
+      route: day.page_path,
+      content: renderDatePage(manifest, day, events)
+    });
+
+    for (const event of events) {
+      pageWrites.push({
+        path: `${OUTPUT_DIR}${eventPagePath(event)}`,
+        route: eventPagePath(event),
+        content: renderEventPage(manifest, event)
+      });
+    }
+  }
+
+  const sitemapPaths = pageWrites
+    .map((page) => page.route)
+    .filter((route) => typeof route === "string")
+    .concat([
+      "/agents.json",
+      "/schedule.manifest.json",
+      "/agent-schedule.v1.json",
+      "/agent-schedule.v1.ndjson",
+      "/changes.ndjson",
+      "/schema.json",
+      "/entities/venues.v1.ndjson",
+      "/entities/contributors.v1.ndjson",
+      "/llms.txt"
+    ])
+    .sort();
+
+  await Promise.all([
+    writeFile(`${OUTPUT_DIR}/robots.txt`, renderRobotsTxt()),
+    writeFile(`${OUTPUT_DIR}/sitemap.xml`, renderSitemapXml(sitemapPaths, generatedAt)),
+    writeFile(`${OUTPUT_DIR}/llms.txt`, renderLlmsTxt(manifest, dateSummaries))
+  ]);
+
+  await mapWithConcurrency(pageWrites, 32, async (page) => {
+    await writeFile(page.path, page.content);
+  });
+
+  return pageWrites.length;
+}
+
 async function main() {
+  if (BUILD_MODE === "site") {
+    console.log(`Building website from committed data snapshot (SXSW ${YEAR})...`);
+    const { manifest, groupedByDate, dateSummaries, changeRecords } =
+      await loadPublishedSnapshotForSiteBuild();
+    const pageCount = await writeSiteArtifacts({
+      manifest,
+      groupedByDate,
+      dateSummaries,
+      changeRecords,
+      generatedAt: manifest.generated_at || new Date().toISOString()
+    });
+    console.log(`Done. Rebuilt website pages (${pageCount} files) from committed snapshot.`);
+    return;
+  }
+
+  if (BUILD_MODE !== "refresh") {
+    throw new Error(`Unsupported BUILD_MODE="${BUILD_MODE}". Use "site" or "refresh".`);
+  }
+
   console.log(`Building SXSW ${YEAR} export from official schedule source...`);
 
   const indexData = await fetchEventIndex();
@@ -2257,12 +2445,12 @@ async function main() {
     path: `${OUTPUT_DIR}/schedule/og-default.svg`,
     route: null,
     content:
-      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="SXSW ${YEAR} Schedule">` +
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="SXSW ${YEAR} Schedule for Agents">` +
       `<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">` +
       `<stop offset="0%" stop-color="#0a1a2a"/><stop offset="100%" stop-color="#153c5e"/></linearGradient></defs>` +
       `<rect width="1200" height="630" fill="url(#g)"/>` +
       `<text x="70" y="250" font-family="Arial, Helvetica, sans-serif" font-size="76" fill="#ffffff" font-weight="700">SXSW ${YEAR}</text>` +
-      `<text x="70" y="340" font-family="Arial, Helvetica, sans-serif" font-size="52" fill="#cfe9ff" font-weight="600">Static Schedule</text>` +
+      `<text x="70" y="340" font-family="Arial, Helvetica, sans-serif" font-size="52" fill="#cfe9ff" font-weight="600">Schedule for Agents</text>` +
       `<text x="70" y="410" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#9ac9ee">Agent-first website export</text>` +
       `</svg>`
   });
