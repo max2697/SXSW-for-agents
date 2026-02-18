@@ -7,13 +7,14 @@ const SITE_URL = String(process.env.SITE_URL || "https://sxsw.0fn.net").replace(
   /\/+$/,
   ""
 );
+const REPOSITORY_URL = "https://github.com/max2697/SXSW-for-agents";
 const BUILD_MODE = String(process.env.BUILD_MODE || "refresh").trim().toLowerCase();
 const YEAR = Number(process.env.SXSW_YEAR || 2026);
 const CONCURRENCY = Number(process.env.CONCURRENCY || 8);
 const RETRIES = Number(process.env.RETRIES || 4);
 const SCHEMA_VERSION = "1.1.0";
 const INTERFACE_VERSION = "v1.1";
-const REFRESH_INTERVAL_HOURS = Number(process.env.REFRESH_INTERVAL_HOURS || 72);
+const REFRESH_INTERVAL_HOURS = Number(process.env.REFRESH_INTERVAL_HOURS || 24);
 const STALE_AFTER_HOURS = Number(process.env.STALE_AFTER_HOURS || 96);
 const OUTPUT_DIR = "public";
 
@@ -727,6 +728,11 @@ ul.flat {
   margin: 8px 0 0 16px;
   padding: 0;
 }
+.site-footer {
+  margin-top: 18px;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
 `;
 }
 
@@ -759,6 +765,9 @@ function renderShell({ title, description, body, jsonLd = null, pagePath = "/" }
 </head>
 <body>
   <main>${body}</main>
+  <footer class="site-footer">
+    <p>Source code: <a href="${escapeHtml(REPOSITORY_URL)}">GitHub repository</a></p>
+  </footer>
   ${jsonLd ? `<script type="application/ld+json">${jsonLdText}</script>` : ""}
 </body>
 </html>`;
@@ -1427,7 +1436,7 @@ ${normalizedFields}
 Last built: ${manifest.generated_at}
 Source snapshot: ${manifest.freshness?.source_snapshot_at || manifest.generated_at}
 Expected next refresh by: ${manifest.freshness?.expected_next_refresh_by || manifest.generated_at}
-Refresh mode: manual every few days.
+Refresh mode: daily cadence.
 
 ## Notes for LLMs
 
@@ -1952,7 +1961,7 @@ async function main() {
   const isStale = Date.now() > Date.parse(staleAfter);
   const freshness = {
     refresh_mode: "manual",
-    refresh_cadence_target: "every_few_days",
+    refresh_cadence_target: "daily",
     last_successful_refresh_at: generatedAt,
     source_snapshot_at: sourceSnapshotAt,
     expected_next_refresh_by: expectedNextRefreshBy,

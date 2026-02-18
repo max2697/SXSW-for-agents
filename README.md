@@ -137,7 +137,7 @@ Optional environment variables:
 - `SXSW_YEAR` (default `2026`)
 - `CONCURRENCY` (default `8`)
 - `RETRIES` (default `4`)
-- `REFRESH_INTERVAL_HOURS` (default `72`) for expected next refresh metadata
+- `REFRESH_INTERVAL_HOURS` (default `24`) for expected next refresh metadata
 - `STALE_AFTER_HOURS` (default `96`) for stale-flag metadata
 - `SITE_URL` (default `https://sxsw.0fn.net`) for canonical URLs and sitemap
 

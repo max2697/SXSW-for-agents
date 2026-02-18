@@ -19,7 +19,12 @@
 /agent-schedule.v1.ndjson
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=300
-  Content-Type: application/x-ndjson; charset=utf-8
+  Content-Type: text/plain; charset=utf-8
+
+/changes.ndjson
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=utf-8
 
 /schedule.manifest.json
   Access-Control-Allow-Origin: *
@@ -39,7 +44,12 @@
 /events/by-date/*
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=300
-  Content-Type: application/x-ndjson; charset=utf-8
+  Content-Type: text/plain; charset=utf-8
+
+/entities/*
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=utf-8
 
 /schedule/og-default.svg
   Cache-Control: public, max-age=300
