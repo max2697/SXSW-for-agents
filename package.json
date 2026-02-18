@@ -1,0 +1,11 @@
+{
+  "name": "sxsw-2026-agent-schedule",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-schedule.mjs",
+    "build:data": "node scripts/build-schedule.mjs",
+    "verify": "node scripts/verify-export.mjs"
+  }
+}

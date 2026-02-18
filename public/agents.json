@@ -1,0 +1,91 @@
+{
+  "agent_contract_version": "1.1.0",
+  "generated_at": "2026-02-18T01:52:50.776Z",
+  "festival_year": 2026,
+  "purpose": "Agent-first SXSW schedule feed from official source",
+  "freshness": {
+    "refresh_mode": "manual",
+    "refresh_cadence_target": "every_few_days",
+    "last_successful_refresh_at": "2026-02-18T01:52:50.776Z",
+    "source_snapshot_at": "2026-02-17T23:24:00.000Z",
+    "expected_next_refresh_by": "2026-02-21T01:52:50.776Z",
+    "stale_after": "2026-02-22T01:52:50.776Z",
+    "data_staleness": {
+      "is_stale": false,
+      "status": "fresh",
+      "source_snapshot_age_hours": 2.5
+    }
+  },
+  "compatibility": {
+    "schema_semver": "1.1.0",
+    "interface_semver": "v1.1",
+    "policy": {
+      "non_breaking_changes": [
+        "Adding nullable fields",
+        "Adding enum variants",
+        "Adding new feed files",
+        "Adding new manifest metadata keys"
+      ],
+      "breaking_changes": [
+        "Removing or renaming existing fields",
+        "Changing field types",
+        "Changing primary identifiers",
+        "Changing route templates"
+      ]
+    }
+  },
+  "identity": {
+    "primary_event_id_field": "event_id",
+    "canonical_templates": {
+      "event_page_path": "/schedule/event/{event_id}.html",
+      "date_page_path": "/schedule/date/{date}.html",
+      "official_event_url": "https://schedule.sxsw.com/2026/events/{event_id}",
+      "venue_entity_id": "venue:{venue.id}",
+      "contributor_entity_id": "contributor:{contributors[].entity_id|contributors[].id}"
+    },
+    "slug_policy": "Non-alphanumeric characters are replaced with underscores."
+  },
+  "entrypoints": {
+    "llms_txt": "/llms.txt",
+    "website_home": "/index.html",
+    "schedule_index": "/schedule/index.html",
+    "robots": "/robots.txt",
+    "sitemap": "/sitemap.xml",
+    "easy_json": "/agent-schedule.v1.json",
+    "easy_ndjson": "/agent-schedule.v1.ndjson",
+    "manifest": "/schedule.manifest.json",
+    "full_export_gzip": "/schedule.json.gz",
+    "schema": "/schema.json",
+    "shards": "/events/by-date/*.ndjson",
+    "changes": "/changes.ndjson",
+    "venues": "/entities/venues.v1.ndjson",
+    "contributors": "/entities/contributors.v1.ndjson"
+  },
+  "recommended_ingestion_order": [
+    "Read /schedule.manifest.json for schema version, freshness metadata, and hashes",
+    "Read /agent-schedule.v1.json for the normalized full feed",
+    "Read /changes.ndjson to apply tombstones and incremental updates",
+    "Read /entities/venues.v1.ndjson and /entities/contributors.v1.ndjson for cross-event identity joins",
+    "Use /events/by-date/*.ndjson for date-scoped streaming refreshes",
+    "Use /schedule.json.gz only when complete raw snapshot fidelity is required"
+  ],
+  "expectations": {
+    "timezone_note": "Event timestamps include local offsets from source data.",
+    "id_field": "event_id",
+    "date_field": "date",
+    "shard_strategy": "one NDJSON file per event date plus unknown-date shard",
+    "max_file_size_bytes": 26214400,
+    "refresh_mode": "manual",
+    "refresh_cadence_target": "every_few_days"
+  },
+  "source": {
+    "system": "Official SXSW schedule website",
+    "base_url": "https://schedule.sxsw.com",
+    "endpoints": [
+      "/2026/search",
+      "/api/web/2026/events/{event_id}"
+    ],
+    "source_snapshot_at": "2026-02-17T23:24:00.000Z",
+    "extraction_notes": "Event IDs are discovered from official search index; event records are hydrated from official detail endpoint."
+  }
+}

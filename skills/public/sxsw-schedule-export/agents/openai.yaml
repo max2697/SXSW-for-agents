@@ -1,0 +1,239 @@
+openapi: "3.1.0"
+info:
+  title: SXSW 2026 Agent Schedule API
+  description: >
+    Static agent-first feed of the official SXSW 2026 schedule.
+    All endpoints are static files served from Cloudflare Pages.
+    No authentication required. Start with /agents.json or /llms.txt.
+  version: "1.0.0"
+servers:
+  - url: https://sxsw-agent-schedule.pages.dev
+    description: Cloudflare Pages static host
+
+paths:
+  /llms.txt:
+    get:
+      operationId: getLlmsTxt
+      summary: LLM discovery file — human-readable site overview for language models
+      responses:
+        "200":
+          description: Plain text overview of site purpose, endpoints, and key fields
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /agents.json:
+    get:
+      operationId: getAgentsContract
+      summary: Machine-readable agent ingestion contract
+      description: >
+        Start here. Contains all endpoint paths, recommended ingestion order,
+        field semantics, and data freshness timestamp.
+      responses:
+        "200":
+          description: Agent contract JSON
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agent_contract_version: { type: string }
+                  generated_at: { type: string, format: date-time }
+                  festival_year: { type: integer }
+                  entrypoints: { type: object }
+                  recommended_ingestion_order: { type: array, items: { type: string } }
+                  expectations: { type: object }
+
+  /schedule.manifest.json:
+    get:
+      operationId: getManifest
+      summary: Build manifest with SHA256 hashes, event count, shard map, and all field names
+      responses:
+        "200":
+          description: Manifest JSON
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  generated_at: { type: string, format: date-time }
+                  festival_year: { type: integer }
+                  stats:
+                    type: object
+                    properties:
+                      event_count: { type: integer }
+                      field_count: { type: integer }
+                      shard_count: { type: integer }
+                  fields: { type: array, items: { type: string } }
+                  shards: { type: array, items: { type: object } }
+
+  /agent-schedule.v1.json:
+    get:
+      operationId: getFullScheduleJson
+      summary: All events as a single normalized JSON file (recommended for full ingestion)
+      description: >
+        Contains all 2,777 events with 22 normalized fields. ~4.5 MB.
+        Use this for full schedule ingestion, filtering, and planning tasks.
+      responses:
+        "200":
+          description: Normalized schedule JSON
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  generated_at: { type: string, format: date-time }
+                  event_count: { type: integer }
+                  events:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/NormalizedEvent"
+
+  /agent-schedule.v1.ndjson:
+    get:
+      operationId: getFullScheduleNdjson
+      summary: All events as NDJSON (one event per line, streaming-friendly)
+      description: >
+        Same data as agent-schedule.v1.json but in NDJSON format. ~3.5 MB.
+        Preferred for streaming parsers and line-by-line processing.
+      responses:
+        "200":
+          description: NDJSON stream of normalized events
+          content:
+            application/x-ndjson:
+              schema:
+                type: string
+
+  /schema.json:
+    get:
+      operationId: getSchema
+      summary: Field inventory — normalized fields mapped to raw source fields, plus dropped fields list
+      description: >
+        Shows which of the 75 raw fields are included in the normalized feed,
+        which are dropped (available only in schedule.json.gz), and a sample event record.
+      responses:
+        "200":
+          description: Schema JSON
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  normalized_field_count: { type: integer }
+                  raw_field_count: { type: integer }
+                  normalized_fields: { type: object }
+                  dropped_fields: { type: array, items: { type: string } }
+                  sample_record: { type: object }
+
+  /changes.ndjson:
+    get:
+      operationId: getChanges
+      summary: Diff feed — events added, modified, or removed since the previous build
+      description: >
+        First line is a summary object with counts. Subsequent lines are change records.
+        Use this to detect what changed without re-ingesting the full dataset.
+      responses:
+        "200":
+          description: NDJSON change feed
+          content:
+            application/x-ndjson:
+              schema:
+                type: string
+
+  /events/by-date/{date}.ndjson:
+    get:
+      operationId: getShardByDate
+      summary: Single-day NDJSON shard — fetch only the events for a specific date
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            enum:
+              - "2026-03-12"
+              - "2026-03-13"
+              - "2026-03-14"
+              - "2026-03-15"
+              - "2026-03-16"
+              - "2026-03-17"
+              - "2026-03-18"
+              - "unknown-date"
+      responses:
+        "200":
+          description: NDJSON shard for the requested date
+          content:
+            application/x-ndjson:
+              schema:
+                type: string
+
+  /schedule.json.gz:
+    get:
+      operationId: getFullRawExport
+      summary: Full raw export with all 75 source fields (gzip compressed)
+      description: >
+        Use only when you need fields not present in the normalized feed
+        (e.g. accessibility flags, streaming URLs, film data, related_sales_client).
+        Check /schema.json dropped_fields for the complete list.
+      responses:
+        "200":
+          description: Gzip-compressed JSON with full event data
+          content:
+            application/gzip:
+              schema:
+                type: string
+                format: binary
+
+components:
+  schemas:
+    NormalizedEvent:
+      type: object
+      properties:
+        event_id: { type: string, description: "Primary identifier" }
+        name: { type: string }
+        date: { type: string, format: date }
+        start_time: { type: string, format: date-time }
+        end_time: { type: string, format: date-time }
+        event_type: { type: string }
+        format: { type: string }
+        category: { type: string }
+        genre: { type: string }
+        subgenre: { type: string }
+        track: { type: string }
+        focus_area: { type: string }
+        presented_by: { type: string }
+        reservable: { type: boolean }
+        reservable_id: { type: string }
+        official_url: { type: string, format: uri }
+        venue:
+          type: object
+          properties:
+            id: { type: string }
+            name: { type: string }
+            root: { type: string }
+            address: { type: string }
+            city: { type: string }
+            state: { type: string }
+            postal_code: { type: string }
+            lat: { type: number }
+            lon: { type: number }
+        credentials:
+          type: array
+          items:
+            type: object
+            properties:
+              type: { type: string }
+              name: { type: string }
+        contributors:
+          type: array
+          items:
+            type: object
+            properties:
+              entity_id: { type: string }
+              id: { type: string }
+              name: { type: string }
+              type: { type: string }
+        tags: { type: array, items: { type: string } }
+        hash_tags: { type: array, items: { type: string } }
+        publish_at: { type: string, format: date-time }

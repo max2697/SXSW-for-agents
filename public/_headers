@@ -1,0 +1,46 @@
+/agents.json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+  Content-Type: application/json; charset=utf-8
+
+/robots.txt
+  Cache-Control: public, max-age=300
+  Content-Type: text/plain; charset=utf-8
+
+/sitemap.xml
+  Cache-Control: public, max-age=300
+  Content-Type: application/xml; charset=utf-8
+
+/agent-schedule.v1.json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+  Content-Type: application/json; charset=utf-8
+
+/agent-schedule.v1.ndjson
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+  Content-Type: application/x-ndjson; charset=utf-8
+
+/schedule.manifest.json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+  Content-Type: application/json; charset=utf-8
+
+/schema.json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+  Content-Type: application/json; charset=utf-8
+
+/schedule.json.gz
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+  Content-Type: application/gzip
+
+/events/by-date/*
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+  Content-Type: application/x-ndjson; charset=utf-8
+
+/schedule/og-default.svg
+  Cache-Control: public, max-age=300
+  Content-Type: image/svg+xml

@@ -1,0 +1,248 @@
+{
+  "schema_version": "1.1.0",
+  "generated_at": "2026-02-18T01:52:50.776Z",
+  "festival_year": 2026,
+  "source": {
+    "system": "Official SXSW schedule website",
+    "base_url": "https://schedule.sxsw.com",
+    "endpoints": [
+      "/2026/search",
+      "/api/web/2026/events/{event_id}"
+    ],
+    "source_snapshot_at": "2026-02-17T23:24:00.000Z",
+    "extraction_notes": "Event IDs are discovered from official search index; event records are hydrated from official detail endpoint."
+  },
+  "freshness": {
+    "refresh_mode": "manual",
+    "refresh_cadence_target": "every_few_days",
+    "last_successful_refresh_at": "2026-02-18T01:52:50.776Z",
+    "source_snapshot_at": "2026-02-17T23:24:00.000Z",
+    "expected_next_refresh_by": "2026-02-21T01:52:50.776Z",
+    "stale_after": "2026-02-22T01:52:50.776Z",
+    "data_staleness": {
+      "is_stale": false,
+      "status": "fresh",
+      "source_snapshot_age_hours": 2.5
+    }
+  },
+  "compatibility": {
+    "schema_semver": "1.1.0",
+    "interface_semver": "v1.1",
+    "policy": {
+      "non_breaking_changes": [
+        "Adding nullable fields",
+        "Adding enum variants",
+        "Adding new feed files",
+        "Adding new manifest metadata keys"
+      ],
+      "breaking_changes": [
+        "Removing or renaming existing fields",
+        "Changing field types",
+        "Changing primary identifiers",
+        "Changing route templates"
+      ]
+    }
+  },
+  "identity": {
+    "primary_event_id_field": "event_id",
+    "canonical_templates": {
+      "event_page_path": "/schedule/event/{event_id}.html",
+      "date_page_path": "/schedule/date/{date}.html",
+      "official_event_url": "https://schedule.sxsw.com/2026/events/{event_id}",
+      "venue_entity_id": "venue:{venue.id}",
+      "contributor_entity_id": "contributor:{contributors[].entity_id|contributors[].id}"
+    },
+    "slug_policy": "Non-alphanumeric characters are replaced with underscores."
+  },
+  "stats": {
+    "event_count": 2777,
+    "field_count": 75,
+    "failed_event_ids": [],
+    "date_range": {
+      "start": "2026-03-12T08:00:00.000-05:00",
+      "end": "2026-03-19T02:00:00.000-05:00"
+    },
+    "shard_count": 8,
+    "venue_entity_count": 176,
+    "contributor_entity_count": 3043
+  },
+  "fields": [
+    "accessibility",
+    "accessible_venue",
+    "add_bcl_url",
+    "add_slido",
+    "age_policy",
+    "american_sign_language",
+    "apple_url",
+    "audio_description",
+    "caption_url",
+    "category",
+    "closed_captioned",
+    "contributors",
+    "cpe_credit",
+    "credentials",
+    "date",
+    "description",
+    "end_time",
+    "event_id",
+    "event_type",
+    "experience_level",
+    "films",
+    "focus_area",
+    "format",
+    "genre",
+    "has_subtitles",
+    "hash_tags",
+    "high_sensory_experience",
+    "id",
+    "image",
+    "live",
+    "long_description",
+    "meeting_url",
+    "meeting_url_live",
+    "mentorly_url",
+    "message",
+    "mobile_audio_url",
+    "name",
+    "open_captioned",
+    "playlist_tag",
+    "presented_by",
+    "publish_at",
+    "rebroadcast",
+    "recommended_ids",
+    "related_sales_client",
+    "reservable",
+    "reservable_id",
+    "reserved",
+    "search_conversions",
+    "short_program",
+    "slido_url",
+    "sort",
+    "source",
+    "squad_up_url",
+    "start_time",
+    "stream_embed",
+    "stream_id",
+    "stream_url",
+    "strobe_warning",
+    "subdiscipline",
+    "subgenre",
+    "summit",
+    "summit_display_name",
+    "tags",
+    "talent_attending",
+    "title_only",
+    "track",
+    "track_display_name",
+    "trailer_id",
+    "trailer_url",
+    "venue",
+    "video_on_demand",
+    "vimeo_id",
+    "vod",
+    "xr_project_type",
+    "youtube_id"
+  ],
+  "full_export_gzip": {
+    "path": "/schedule.json.gz",
+    "sha256": "85b76612d97db77ec64a217ce06a1e0173c0a83eccca5458dd4c7645a0622501"
+  },
+  "agent_interface": {
+    "version": "v1.1",
+    "path_json": "/agent-schedule.v1.json",
+    "path_ndjson": "/agent-schedule.v1.ndjson",
+    "layering": {
+      "raw_fields_block": "raw",
+      "derived_fields_block": "derived",
+      "provenance_block": "provenance",
+      "canonical_block": "canonical"
+    },
+    "sha256_json": "7f80ed04d65b77a49f976731763a831e28e153abec09c2aed7c42a7188578ae3",
+    "sha256_ndjson": "e3a49cffdcc221d6f29d97ff9beea28c9c8f0d7729dc6188723c084b7de95865",
+    "bytes_json": 14729793,
+    "bytes_ndjson": 9727177
+  },
+  "changes": {
+    "path": "/changes.ndjson",
+    "generated_at": "2026-02-18T01:52:50.776Z",
+    "baseline_generated_at": "2026-02-18T01:49:53.564Z",
+    "baseline_reset_reason": null,
+    "total": 2,
+    "added": 0,
+    "modified": 2,
+    "removed": 0,
+    "cancelled": 0,
+    "uncancelled": 0,
+    "tombstone_count": 0
+  },
+  "entity_indexes": {
+    "venues_ndjson": "/entities/venues.v1.ndjson",
+    "contributors_ndjson": "/entities/contributors.v1.ndjson",
+    "venue_count": 176,
+    "contributor_count": 3043
+  },
+  "shards": [
+    {
+      "date": "2026-03-12",
+      "path": "/events/by-date/2026-03-12.ndjson",
+      "event_count": 320,
+      "sha256": "6fa8edd99a699f3a41704bcf2cd0d6c016cef9555ad815e011cb8f9ca5ca2a87",
+      "bytes": 4034599
+    },
+    {
+      "date": "2026-03-13",
+      "path": "/events/by-date/2026-03-13.ndjson",
+      "event_count": 416,
+      "sha256": "f865de662328c44336a782dd5558cde23fff51e1fd5d29e341a2d7e9296fbe4e",
+      "bytes": 5537491
+    },
+    {
+      "date": "2026-03-14",
+      "path": "/events/by-date/2026-03-14.ndjson",
+      "event_count": 415,
+      "sha256": "c12ad121bfd10dc9c13f8f002d74bc9f9fe70fdea38c68ef2a280435a5edcbff",
+      "bytes": 5631403
+    },
+    {
+      "date": "2026-03-15",
+      "path": "/events/by-date/2026-03-15.ndjson",
+      "event_count": 441,
+      "sha256": "3b8d1d611409d622462f38533d294c232f9962b3a0a5f3a583a91c8d58cc5f25",
+      "bytes": 5868944
+    },
+    {
+      "date": "2026-03-16",
+      "path": "/events/by-date/2026-03-16.ndjson",
+      "event_count": 414,
+      "sha256": "e3cb8c73d6cd2539fd7ddcb07acf3159dbb19f5ca261fbcbff3328cfb5cbdc0e",
+      "bytes": 5648530
+    },
+    {
+      "date": "2026-03-17",
+      "path": "/events/by-date/2026-03-17.ndjson",
+      "event_count": 449,
+      "sha256": "e1461071e1da5cae26d47a64be29837002d942a8b27d1ffc8cd5d8d3b0e3a307",
+      "bytes": 5976757
+    },
+    {
+      "date": "2026-03-18",
+      "path": "/events/by-date/2026-03-18.ndjson",
+      "event_count": 316,
+      "sha256": "2ad9f08ffe6dd80c430d2e0f6d12f58cf5d5ff8157e1838d6ad4632eeb33a96c",
+      "bytes": 4122677
+    },
+    {
+      "date": "unknown",
+      "path": "/events/by-date/unknown-date.ndjson",
+      "event_count": 6,
+      "sha256": "a4061a3d6ddd6942c5eec250c84de694fe59db2a21d0c8ef59b6d54486959ce1",
+      "bytes": 26626
+    }
+  ],
+  "website": {
+    "home": "/index.html",
+    "schedule_index": "/schedule/index.html",
+    "date_pages": "/schedule/date/{date}.html",
+    "event_pages": "/schedule/event/{event_id}.html"
+  }
+}
