@@ -33,6 +33,12 @@
   <select id="filter-venue" aria-label="Filter by venue" style="padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:0.95rem;">
     <option value="">All venues</option><option value="TBD Venue">TBD Venue</option>
   </select>
+  <select id="filter-category" aria-label="Filter by category" style="padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:0.95rem;">
+    <option value="">All categories</option><option value="Fireside Chat">Fireside Chat</option><option value="Meet Up">Meet Up</option><option value="Mentor Session">Mentor Session</option><option value="Panel">Panel</option>
+  </select>
+  <select id="filter-tag" aria-label="Filter by tag" style="padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:0.95rem;">
+    <option value="">All tags</option><option value="[object Object]">[object Object]</option><option value="[object Object]">[object Object]</option><option value="[object Object]">[object Object]</option>
+  </select>
   <span id="filter-count" class="meta" style="white-space:nowrap;" aria-live="polite">6 events</span>
 </div>
 <script>
@@ -40,21 +46,29 @@
   var textEl = document.getElementById('filter-text');
   var formatEl = document.getElementById('filter-format');
   var venueEl = document.getElementById('filter-venue');
+  var categoryEl = document.getElementById('filter-category');
+  var tagEl = document.getElementById('filter-tag');
   var countEl = document.getElementById('filter-count');
   var tbody = document.getElementById('event-tbody');
   function applyFilter() {
     var text = textEl.value.toLowerCase().trim();
     var format = formatEl.value.toLowerCase();
     var venue = venueEl.value.toLowerCase();
+    var category = categoryEl.value.toLowerCase();
+    var tag = tagEl.value.toLowerCase();
     var rows = tbody.querySelectorAll('tr');
     var visible = 0;
     rows.forEach(function(row) {
       var rowText = row.dataset.name || '';
       var rowFormat = row.dataset.format || '';
       var rowVenue = row.dataset.venue || '';
+      var rowCategory = row.dataset.category || '';
+      var rowTags = row.dataset.tags || '';
       var show = (!text || rowText.includes(text))
         && (!format || rowFormat === format)
-        && (!venue || rowVenue === venue);
+        && (!venue || rowVenue === venue)
+        && (!category || rowCategory === category)
+        && (!tag || rowTags.includes('|'+tag+'|'));
       row.style.display = show ? '' : 'none';
       if (show) visible++;
     });
@@ -63,6 +77,8 @@
   textEl.addEventListener('input', applyFilter);
   formatEl.addEventListener('change', applyFilter);
   venueEl.addEventListener('change', applyFilter);
+  categoryEl.addEventListener('change', applyFilter);
+  tagEl.addEventListener('change', applyFilter);
 })();
 </script>
   <div class="table-wrap">
@@ -76,7 +92,7 @@
           <th>Source</th>
         </tr>
       </thead>
-      <tbody id="event-tbody"><tr data-name="the city that plays: digital twins reimagining la &amp; beyond" data-format="panel" data-venue="tbd venue">
+      <tbody id="event-tbody"><tr data-name="the city that plays: digital twins reimagining la &amp; beyond" data-format="panel" data-venue="tbd venue" data-category="panel" data-tags="|[object object]|[object object]|[object object]|">
   <td class="mono">TBD</td>
   <td>
     <a href="/schedule/event/PP1148560.html">The City That Plays: Digital Twins Reimagining LA &amp; Beyond</a>
@@ -85,7 +101,7 @@
   <td>Panel</td>
   <td>TBD Venue</td>
   <td><a href="https://schedule.sxsw.com/2026/events/PP1148560" target="_blank" rel="noopener noreferrer">Official</a></td>
-</tr><tr data-name="sales, acquisitions, and distribution mentor session: yulissa morales (epic pictures / dread)" data-format="mentor session" data-venue="tbd venue">
+</tr><tr data-name="sales, acquisitions, and distribution mentor session: yulissa morales (epic pictures / dread)" data-format="mentor session" data-venue="tbd venue" data-category="mentor session" data-tags="||">
   <td class="mono">TBD</td>
   <td>
     <a href="/schedule/event/PP1149735.html">Sales, Acquisitions, and Distribution Mentor Session: Yulissa Morales (Epic Pictures / Dread)</a>
@@ -94,7 +110,7 @@
   <td>Mentor Session</td>
   <td>TBD Venue</td>
   <td><a href="https://schedule.sxsw.com/2026/events/PP1149735" target="_blank" rel="noopener noreferrer">Official</a></td>
-</tr><tr data-name="sales, acquisitions, and distribution mentor session: andreas olavarria (level 33 entertainment)" data-format="mentor session" data-venue="tbd venue">
+</tr><tr data-name="sales, acquisitions, and distribution mentor session: andreas olavarria (level 33 entertainment)" data-format="mentor session" data-venue="tbd venue" data-category="mentor session" data-tags="||">
   <td class="mono">TBD</td>
   <td>
     <a href="/schedule/event/PP1149736.html">Sales, Acquisitions, and Distribution Mentor Session: Andreas Olavarria (Level 33 Entertainment)</a>
@@ -103,7 +119,7 @@
   <td>Mentor Session</td>
   <td>TBD Venue</td>
   <td><a href="https://schedule.sxsw.com/2026/events/PP1149736" target="_blank" rel="noopener noreferrer">Official</a></td>
-</tr><tr data-name="moving culture: music brand campaigns with an eye for equity" data-format="fireside chat" data-venue="tbd venue">
+</tr><tr data-name="moving culture: music brand campaigns with an eye for equity" data-format="fireside chat" data-venue="tbd venue" data-category="fireside chat" data-tags="||">
   <td class="mono">TBD</td>
   <td>
     <a href="/schedule/event/PP1150004.html">Moving Culture: Music Brand Campaigns with an Eye for Equity</a>
@@ -112,7 +128,7 @@
   <td>Fireside Chat</td>
   <td>TBD Venue</td>
   <td><a href="https://schedule.sxsw.com/2026/events/PP1150004" target="_blank" rel="noopener noreferrer">Official</a></td>
-</tr><tr data-name="producers mentor session: david lawson (rustic films)" data-format="mentor session" data-venue="tbd venue">
+</tr><tr data-name="producers mentor session: david lawson (rustic films)" data-format="mentor session" data-venue="tbd venue" data-category="mentor session" data-tags="||">
   <td class="mono">TBD</td>
   <td>
     <a href="/schedule/event/PP1150144.html">Producers Mentor Session: David Lawson (Rustic Films)</a>
@@ -121,7 +137,7 @@
   <td>Mentor Session</td>
   <td>TBD Venue</td>
   <td><a href="https://schedule.sxsw.com/2026/events/PP1150144" target="_blank" rel="noopener noreferrer">Official</a></td>
-</tr><tr data-name="grammy u meet up" data-format="meet up" data-venue="tbd venue">
+</tr><tr data-name="grammy u meet up" data-format="meet up" data-venue="tbd venue" data-category="meet up" data-tags="||">
   <td class="mono">TBD</td>
   <td>
     <a href="/schedule/event/PP1150678.html">GRAMMY U Meet Up</a>

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-02-18T02:34:10.249Z",
+  "generated_at": "2026-02-18T02:43:29.877Z",
   "festival_year": 2026,
   "source": {
     "system": "Official SXSW schedule website",
@@ -15,14 +15,14 @@
   "freshness": {
     "refresh_mode": "manual",
     "refresh_cadence_target": "every_few_days",
-    "last_successful_refresh_at": "2026-02-18T02:34:10.249Z",
+    "last_successful_refresh_at": "2026-02-18T02:43:29.877Z",
     "source_snapshot_at": "2026-02-17T23:24:00.000Z",
-    "expected_next_refresh_by": "2026-02-21T02:34:10.249Z",
-    "stale_after": "2026-02-22T02:34:10.249Z",
+    "expected_next_refresh_by": "2026-02-21T02:43:29.877Z",
+    "stale_after": "2026-02-22T02:43:29.877Z",
     "data_staleness": {
       "is_stale": false,
       "status": "fresh",
-      "source_snapshot_age_hours": 3.2
+      "source_snapshot_age_hours": 3.3
     }
   },
   "compatibility": {
@@ -145,7 +145,7 @@
   ],
   "full_export_gzip": {
     "path": "/schedule.json.gz",
-    "sha256": "1e3f44c2769f20a2784ba9dee9b24830df9c8bbd3e9921492c0a7fd2b1554f50"
+    "sha256": "1c5236818dec4af67c65806cd7beb8e03ef2fac0b7a4d890a2b5963cc7878d9f"
   },
   "agent_interface": {
     "version": "v1.1",
@@ -157,19 +157,19 @@
       "provenance_block": "provenance",
       "canonical_block": "canonical"
     },
-    "sha256_json": "05b181fa6c435efcb7afd80af74ce59a3724ae9a475168144c6a8885f06ae91d",
-    "sha256_ndjson": "0ac84715223f00e0ff0452ec0d648019192719b3f141a480c463426c5abbfb47",
-    "bytes_json": 14729793,
-    "bytes_ndjson": 9727177
+    "sha256_json": "347037407945e95f449cb468104f5ae6575bc8337a00a57d8c28c6ce85ee6d8e",
+    "sha256_ndjson": "f60d39a0dcfc03589b58c033c8fe97b9a9fae5dd5b5ae098ce10b1d2f352cf32",
+    "bytes_json": 14731341,
+    "bytes_ndjson": 9728131
   },
   "changes": {
     "path": "/changes.ndjson",
-    "generated_at": "2026-02-18T02:34:10.249Z",
-    "baseline_generated_at": "2026-02-18T02:29:32.618Z",
+    "generated_at": "2026-02-18T02:43:29.877Z",
+    "baseline_generated_at": "2026-02-18T02:34:10.249Z",
     "baseline_reset_reason": null,
-    "total": 7,
+    "total": 351,
     "added": 0,
-    "modified": 7,
+    "modified": 351,
     "removed": 0,
     "cancelled": 0,
     "uncancelled": 0,
@@ -186,50 +186,50 @@
       "date": "2026-03-12",
       "path": "/events/by-date/2026-03-12.ndjson",
       "event_count": 320,
-      "sha256": "6fa8edd99a699f3a41704bcf2cd0d6c016cef9555ad815e011cb8f9ca5ca2a87",
-      "bytes": 4034599
+      "sha256": "e22d43e14a06458a4ee7b024ff0a3ba8bbce38007be04d7693d9cdd1600054a2",
+      "bytes": 4033879
     },
     {
       "date": "2026-03-13",
       "path": "/events/by-date/2026-03-13.ndjson",
       "event_count": 416,
-      "sha256": "f865de662328c44336a782dd5558cde23fff51e1fd5d29e341a2d7e9296fbe4e",
-      "bytes": 5537491
+      "sha256": "16a259004e74af8a044c0c1a668b59c4329698624ba47581b7d0e39bfcf4135d",
+      "bytes": 5533697
     },
     {
       "date": "2026-03-14",
       "path": "/events/by-date/2026-03-14.ndjson",
       "event_count": 415,
-      "sha256": "49bccee0db10962cd2b7687a5f0f53a682629454fc87f260ffe370578444a17e",
-      "bytes": 5631403
+      "sha256": "9332f0eb48360077a5642ddb82000e775ce937b03b02be2b40ecdff9e85b448e",
+      "bytes": 5628351
     },
     {
       "date": "2026-03-15",
       "path": "/events/by-date/2026-03-15.ndjson",
       "event_count": 441,
-      "sha256": "3b8d1d611409d622462f38533d294c232f9962b3a0a5f3a583a91c8d58cc5f25",
-      "bytes": 5868944
+      "sha256": "270683651fb9fb7a0befd9b44a7009f9556e3c99409ebfc5739632b15ee65f33",
+      "bytes": 5864498
     },
     {
       "date": "2026-03-16",
       "path": "/events/by-date/2026-03-16.ndjson",
       "event_count": 414,
-      "sha256": "9313e9474b20d40f65ea4e0d29d9a045ee7762a67aa865db9c0b40a76f7eb6f6",
-      "bytes": 5648530
+      "sha256": "0a56b778d196f2f87f11ef331680226fc4554c82df1f5fc77893a1db8b00a85d",
+      "bytes": 5645014
     },
     {
       "date": "2026-03-17",
       "path": "/events/by-date/2026-03-17.ndjson",
       "event_count": 449,
-      "sha256": "a020c209f6a054da8f462eb810d6cf2f917fc4eb59e99564275debe97d341e3b",
-      "bytes": 5976757
+      "sha256": "ad110f867983adfac76e42d61cb89616d36d468761189d4dc9e44be7f29c57df",
+      "bytes": 5973852
     },
     {
       "date": "2026-03-18",
       "path": "/events/by-date/2026-03-18.ndjson",
       "event_count": 316,
-      "sha256": "2ad9f08ffe6dd80c430d2e0f6d12f58cf5d5ff8157e1838d6ad4632eeb33a96c",
-      "bytes": 4122677
+      "sha256": "fe3eea74619548459a3070b25f89de1de04184387c95fcef6f2f2f7c0ef0abf4",
+      "bytes": 4118469
     },
     {
       "date": "unknown",

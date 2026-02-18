@@ -756,8 +756,8 @@ function renderShell({ title, description, body, jsonLd = null, pagePath = "/" }
 }
 
 function renderLandingPage(manifest, dateSummaries) {
-  const quickPrompts = `<section class="panel">
-  <h2>Quick AI Prompts</h2>
+  const aiPromptsSection = `<section class="panel">
+  <h2>AI Assistant Prompts</h2>
   <p class="small">Copy and paste into Claude, ChatGPT, Gemini, Perplexity, or coding agents.</p>
   <details>
     <summary>Find AI safety sessions on 2026-03-15</summary>
@@ -793,23 +793,28 @@ If there are removed/cancelled events, list tombstones first.</pre>
     .join("");
 
   return renderShell({
-    title: `SXSW ${manifest.festival_year} Static Schedule`,
-    description: `Browse SXSW ${manifest.festival_year} schedule by day with static pages.`,
-    body: `${quickPrompts}
-<section class="hero">
-  <h1>SXSW ${manifest.festival_year} Static Schedule</h1>
-  <p>Directly browse the schedule as a static website. Data is sourced from the official SXSW schedule.</p>
+    title: `SXSW ${manifest.festival_year} Schedule for Agents`,
+    description: `SXSW ${manifest.festival_year} schedule for agents: human-browsable pages and agent-ready feeds from official source data.`,
+    body: `<section class="hero">
+  <h1>SXSW ${manifest.festival_year} Schedule for Agents</h1>
+  <p>This project makes the SXSW schedule easy for agents to parse and easy for humans to browse, using official SXSW source data.</p>
+  <p class="meta"><strong>Freshness:</strong> ${escapeHtml(manifest.freshness?.data_staleness?.status || "unknown")} | Source snapshot: ${escapeHtml(manifest.freshness?.source_snapshot_at || "n/a")} | Next expected refresh: ${escapeHtml(manifest.freshness?.expected_next_refresh_by || "n/a")}</p>
   <p><a class="button" href="/schedule/index.html">Browse Full Schedule</a></p>
   <p class="meta">Generated: ${escapeHtml(manifest.generated_at)} | Events: ${manifest.stats.event_count}</p>
+</section>
+${aiPromptsSection}
+<section class="panel">
+  <h2>What This Is</h2>
+  <p>A human-browsable SXSW ${manifest.festival_year} schedule plus agent-ready data feeds. Built for people, LLMs, chatbots, and automation workflows.</p>
+  <ul class="flat">
+    <li><a href="/faq/index.html">FAQ</a> for common usage questions</li>
+    <li><a href="/changelog/index.html">Changelog</a> for latest snapshot differences</li>
+    <li><a href="/stability/index.html">Schema stability policy</a> for compatibility guarantees</li>
+  </ul>
 </section>
 <section class="panel">
   <h2>By Day</h2>
   <div class="grid">${cards}</div>
-</section>
-<section class="panel">
-  <h2>AI Assistant Prompts</h2>
-  <p>Use copy/paste prompts for Claude, ChatGPT, Gemini, Perplexity, and coding agents.</p>
-  <p><a class="button" href="/prompts/index.html">Open Prompt Examples</a></p>
 </section>
 <section class="panel">
   <h2>Machine Access</h2>
@@ -849,8 +854,19 @@ function renderPromptExamplesPage(manifest) {
   <p class="meta">Base URL: <code>${escapeHtml(base)}</code></p>
 </section>
 <section class="panel">
+  <h2>Prompt Builder</h2>
+  <div style="display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+    <label>Topic <input id="pb-topic" type="text" value="AI safety" style="width:100%;margin-top:4px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);"></label>
+    <label>Date <input id="pb-date" type="date" value="2026-03-15" style="width:100%;margin-top:4px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);"></label>
+    <label>Speaker (optional) <input id="pb-speaker" type="text" placeholder="Meredith Whittaker" style="width:100%;margin-top:4px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);"></label>
+  </div>
+  <p style="margin-top:10px;"><button id="pb-copy" class="button" type="button">Copy Generated Prompt</button></p>
+  <pre id="pb-output"></pre>
+</section>
+<section class="panel">
   <h2>1) Find Sessions by Topic and Date</h2>
-  <pre>Use ${escapeHtml(base)} as source.
+  <p><button class="button copy-prompt" type="button" data-target="prompt-1">Copy</button></p>
+  <pre id="prompt-1">Use ${escapeHtml(base)} as source.
 Read /schedule.manifest.json first, then /agent-schedule.v1.json.
 Find SXSW ${manifest.festival_year} sessions on 2026-03-15 about AI safety.
 Return: event_id, name, start_time, end_time, venue.name, official_url.
@@ -858,29 +874,202 @@ Sort by start_time.</pre>
 </section>
 <section class="panel">
   <h2>2) Venue-Based Search</h2>
-  <pre>Use ${escapeHtml(base)}agent-schedule.v1.json.
+  <p><button class="button copy-prompt" type="button" data-target="prompt-2">Copy</button></p>
+  <pre id="prompt-2">Use ${escapeHtml(base)}agent-schedule.v1.json.
 Find all sessions at Austin Convention Center on 2026-03-14.
 Return a compact table with time, session name, format, and event_id.</pre>
 </section>
 <section class="panel">
   <h2>3) Speaker Lookup</h2>
-  <pre>Use ${escapeHtml(base)}agent-schedule.v1.json.
+  <p><button class="button copy-prompt" type="button" data-target="prompt-3">Copy</button></p>
+  <pre id="prompt-3">Use ${escapeHtml(base)}agent-schedule.v1.json.
 Find sessions where contributors include "Meredith Whittaker".
 Return date, time, event name, event_id, and official_url.</pre>
 </section>
 <section class="panel">
   <h2>4) Incremental Update Check</h2>
-  <pre>Use ${escapeHtml(base)}changes.ndjson.
+  <p><button class="button copy-prompt" type="button" data-target="prompt-4">Copy</button></p>
+  <pre id="prompt-4">Use ${escapeHtml(base)}changes.ndjson.
 Summarize added/modified/removed/cancelled events since the previous snapshot.
 If there are removed/cancelled events, list tombstones first.</pre>
 </section>
 <section class="panel">
   <h2>5) Best Ingestion Flow for an Agent</h2>
-  <pre>Use ${escapeHtml(base)}agents.json and follow its recommended ingestion order.
+  <p><button class="button copy-prompt" type="button" data-target="prompt-5">Copy</button></p>
+  <pre id="prompt-5">Use ${escapeHtml(base)}agents.json and follow its recommended ingestion order.
 Build a shortlist of "top AI + developer tooling sessions" for each day.
 Use only SXSW ${manifest.festival_year} events and include event_id + official_url in every item.</pre>
-</section>`,
+</section>
+<section class="panel">
+  <h2>See Also</h2>
+  <ul class="flat">
+    <li><a href="/faq/index.html">FAQ</a></li>
+    <li><a href="/changelog/index.html">Changelog</a></li>
+    <li><a href="/stability/index.html">Schema stability policy</a></li>
+  </ul>
+</section>
+<script>
+(function() {
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    return Promise.resolve();
+  }
+
+  function buildPrompt() {
+    var topic = (document.getElementById('pb-topic').value || 'AI safety').trim();
+    var date = (document.getElementById('pb-date').value || '2026-03-15').trim();
+    var speaker = (document.getElementById('pb-speaker').value || '').trim();
+    var lines = [
+      'Use ${escapeHtml(base)} as source.',
+      'Read /schedule.manifest.json first, then /agent-schedule.v1.json.',
+      'Find SXSW ${manifest.festival_year} sessions on ' + date + ' about ' + topic + '.',
+      'Return: event_id, name, start_time, end_time, venue.name, official_url.',
+      'Sort by start_time.'
+    ];
+    if (speaker) {
+      lines.push('Prefer events where contributors include \"' + speaker + '\".');
+    }
+    var text = lines.join('\\n');
+    document.getElementById('pb-output').textContent = text;
+    return text;
+  }
+
+  ['pb-topic','pb-date','pb-speaker'].forEach(function(id) {
+    var el = document.getElementById(id);
+    el.addEventListener('input', buildPrompt);
+  });
+  buildPrompt();
+
+  document.getElementById('pb-copy').addEventListener('click', function() {
+    copyText(buildPrompt());
+  });
+
+  document.querySelectorAll('.copy-prompt').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var target = document.getElementById(btn.getAttribute('data-target'));
+      if (!target) return;
+      copyText(target.textContent || '');
+    });
+  });
+})();
+</script>
+`,
     pagePath: "/prompts/"
+  });
+}
+
+function renderFaqPage(manifest) {
+  return renderShell({
+    title: `FAQ | SXSW ${manifest.festival_year} Agent-First Schedule`,
+    description: `Frequently asked questions about using the SXSW ${manifest.festival_year} schedule website and data feeds.`,
+    body: `<p class="breadcrumbs"><a href="/index.html">Home</a></p>
+<section class="hero">
+  <h1>FAQ</h1>
+  <p>Practical answers for using the website and data feeds.</p>
+</section>
+<section class="panel">
+  <h2>What is this website?</h2>
+  <p>A static SXSW ${manifest.festival_year} schedule mirror designed for both humans and agents.</p>
+</section>
+<section class="panel">
+  <h2>Where should agents start?</h2>
+  <p>Start with <a href="/schedule.manifest.json"><code>/schedule.manifest.json</code></a>, then use <a href="/agent-schedule.v1.json"><code>/agent-schedule.v1.json</code></a>.</p>
+</section>
+<section class="panel">
+  <h2>How do I track updates?</h2>
+  <p>Read <a href="/changes.ndjson"><code>/changes.ndjson</code></a>. It includes added, modified, removed, and cancelled records plus tombstones.</p>
+</section>
+<section class="panel">
+  <h2>How fresh is the data?</h2>
+  <p>Check <code>freshness</code> fields in <a href="/schedule.manifest.json"><code>/schedule.manifest.json</code></a>: <code>source_snapshot_at</code>, <code>expected_next_refresh_by</code>, and <code>data_staleness</code>.</p>
+</section>
+<section class="panel">
+  <h2>Can I browse by day?</h2>
+  <p>Yes. Use <a href="/schedule/index.html"><code>/schedule/index.html</code></a> and each date page for filterable tables.</p>
+</section>
+<section class="panel">
+  <h2>Can I use this with Claude/ChatGPT/Gemini?</h2>
+  <p>Yes. Use <a href="/prompts/index.html"><code>/prompts/index.html</code></a> for copy/paste prompt examples and a prompt builder.</p>
+</section>`,
+    pagePath: "/faq/"
+  });
+}
+
+function renderChangelogPage(manifest, changeRecords) {
+  const rows = changeRecords
+    .slice(0, 200)
+    .map((record) => `<tr>
+  <td class="mono">${escapeHtml(record.change_type || "n/a")}</td>
+  <td class="mono">${escapeHtml(record.event_id || "n/a")}</td>
+  <td>${escapeHtml(record.name || "(untitled)")}</td>
+  <td class="mono">${escapeHtml(record.date || "n/a")}</td>
+  <td class="mono">${escapeHtml(record.status || "n/a")}</td>
+</tr>`)
+    .join("");
+
+  return renderShell({
+    title: `Changelog | SXSW ${manifest.festival_year} Agent-First Schedule`,
+    description: `Latest snapshot-level changes for SXSW ${manifest.festival_year} schedule data.`,
+    body: `<p class="breadcrumbs"><a href="/index.html">Home</a></p>
+<section class="hero">
+  <h1>Changelog</h1>
+  <p class="meta">Generated: ${escapeHtml(manifest.generated_at)}</p>
+  <p class="meta">Total changes: ${manifest.changes?.total ?? 0} | Added: ${manifest.changes?.added ?? 0} | Modified: ${manifest.changes?.modified ?? 0} | Removed: ${manifest.changes?.removed ?? 0} | Cancelled: ${manifest.changes?.cancelled ?? 0}</p>
+  <p><a class="button" href="/changes.ndjson">Download /changes.ndjson</a></p>
+</section>
+<section class="panel">
+  <h2>Recent Changes (first 200)</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Type</th><th>Event ID</th><th>Name</th><th>Date</th><th>Status</th></tr>
+      </thead>
+      <tbody>${rows || `<tr><td colspan="5">No changes in this snapshot.</td></tr>`}</tbody>
+    </table>
+  </div>
+</section>`,
+    pagePath: "/changelog/"
+  });
+}
+
+function renderStabilityPage(manifest) {
+  const nonBreaking = (manifest.compatibility?.policy?.non_breaking_changes || [])
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join("");
+  const breaking = (manifest.compatibility?.policy?.breaking_changes || [])
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join("");
+
+  return renderShell({
+    title: `Schema Stability | SXSW ${manifest.festival_year} Agent-First Schedule`,
+    description: `Compatibility guarantees and deprecation policy for SXSW ${manifest.festival_year} schedule data contracts.`,
+    body: `<p class="breadcrumbs"><a href="/index.html">Home</a></p>
+<section class="hero">
+  <h1>Schema Stability Policy</h1>
+  <p class="meta">Schema: ${escapeHtml(manifest.compatibility?.schema_semver || "n/a")} | Interface: ${escapeHtml(manifest.compatibility?.interface_semver || "n/a")}</p>
+</section>
+<section class="panel">
+  <h2>Non-Breaking Changes</h2>
+  <ul class="flat">${nonBreaking}</ul>
+</section>
+<section class="panel">
+  <h2>Breaking Changes</h2>
+  <ul class="flat">${breaking}</ul>
+</section>
+<section class="panel">
+  <h2>Deprecation Policy</h2>
+  <p>Breaking changes require a schema/interface version bump. Existing paths remain stable within the same interface version.</p>
+  <p>Before relying on a feed in production, always read <a href="/schedule.manifest.json"><code>/schedule.manifest.json</code></a> and compare <code>schema_version</code> and <code>agent_interface.version</code>.</p>
+</section>`,
+    pagePath: "/stability/"
   });
 }
 
@@ -922,6 +1111,15 @@ ${quickPrompts}
   <p>Choose a day to view all sessions with times, venue, and detail pages.</p>
 </section>
 <section class="panel">
+  <h2>Helpful Pages</h2>
+  <ul class="flat">
+    <li><a href="/prompts/index.html">Prompt examples</a></li>
+    <li><a href="/faq/index.html">FAQ</a></li>
+    <li><a href="/changelog/index.html">Changelog</a></li>
+    <li><a href="/stability/index.html">Schema stability</a></li>
+  </ul>
+</section>
+<section class="panel">
   <div class="grid">${cards}</div>
 </section>`,
     pagePath: "/schedule/"
@@ -929,12 +1127,16 @@ ${quickPrompts}
 }
 
 function renderDatePage(manifest, day, events) {
-  // Collect unique formats and venues for filter dropdowns
+  // Collect unique formats, venues, categories, and tags for filter dropdowns
   const formats = [...new Set(events.map((e) => e.format || e.event_type || "").filter(Boolean))].sort();
   const venues = [...new Set(events.map((e) => venueLabel(e)).filter(Boolean))].sort();
+  const categories = [...new Set(events.map((e) => e.category || "").filter(Boolean))].sort();
+  const tags = [...new Set(events.flatMap((e) => [...(Array.isArray(e.tags) ? e.tags : []), ...(Array.isArray(e.hash_tags) ? e.hash_tags : [])]).filter(Boolean))].sort();
 
   const formatOptions = formats.map((f) => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join("");
   const venueOptions = venues.map((v) => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join("");
+  const categoryOptions = categories.map((c) => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+  const tagOptions = tags.map((t) => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join("");
 
   const filterBar = `<div class="filter-bar" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;align-items:center;">
   <input id="filter-text" type="search" placeholder="Search sessions…" aria-label="Filter sessions by name" style="flex:1;min-width:180px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:0.95rem;">
@@ -944,6 +1146,12 @@ function renderDatePage(manifest, day, events) {
   <select id="filter-venue" aria-label="Filter by venue" style="padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:0.95rem;">
     <option value="">All venues</option>${venueOptions}
   </select>
+  <select id="filter-category" aria-label="Filter by category" style="padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:0.95rem;">
+    <option value="">All categories</option>${categoryOptions}
+  </select>
+  <select id="filter-tag" aria-label="Filter by tag" style="padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:0.95rem;">
+    <option value="">All tags</option>${tagOptions}
+  </select>
   <span id="filter-count" class="meta" style="white-space:nowrap;" aria-live="polite">${day.event_count} events</span>
 </div>
 <script>
@@ -951,21 +1159,29 @@ function renderDatePage(manifest, day, events) {
   var textEl = document.getElementById('filter-text');
   var formatEl = document.getElementById('filter-format');
   var venueEl = document.getElementById('filter-venue');
+  var categoryEl = document.getElementById('filter-category');
+  var tagEl = document.getElementById('filter-tag');
   var countEl = document.getElementById('filter-count');
   var tbody = document.getElementById('event-tbody');
   function applyFilter() {
     var text = textEl.value.toLowerCase().trim();
     var format = formatEl.value.toLowerCase();
     var venue = venueEl.value.toLowerCase();
+    var category = categoryEl.value.toLowerCase();
+    var tag = tagEl.value.toLowerCase();
     var rows = tbody.querySelectorAll('tr');
     var visible = 0;
     rows.forEach(function(row) {
       var rowText = row.dataset.name || '';
       var rowFormat = row.dataset.format || '';
       var rowVenue = row.dataset.venue || '';
+      var rowCategory = row.dataset.category || '';
+      var rowTags = row.dataset.tags || '';
       var show = (!text || rowText.includes(text))
         && (!format || rowFormat === format)
-        && (!venue || rowVenue === venue);
+        && (!venue || rowVenue === venue)
+        && (!category || rowCategory === category)
+        && (!tag || rowTags.includes('|'+tag+'|'));
       row.style.display = show ? '' : 'none';
       if (show) visible++;
     });
@@ -974,6 +1190,8 @@ function renderDatePage(manifest, day, events) {
   textEl.addEventListener('input', applyFilter);
   formatEl.addEventListener('change', applyFilter);
   venueEl.addEventListener('change', applyFilter);
+  categoryEl.addEventListener('change', applyFilter);
+  tagEl.addEventListener('change', applyFilter);
 })();
 </script>`;
 
@@ -983,7 +1201,9 @@ function renderDatePage(manifest, day, events) {
       const rowFormat = escapeHtml((event.format || event.event_type || "").toLowerCase());
       const rowVenue = escapeHtml(venueLabel(event).toLowerCase());
       const rowName = escapeHtml((event.name || "").toLowerCase());
-      return `<tr data-name="${rowName}" data-format="${rowFormat}" data-venue="${rowVenue}">
+      const rowCategory = escapeHtml((event.category || "").toLowerCase());
+      const rowTags = `|${[...(Array.isArray(event.tags) ? event.tags : []), ...(Array.isArray(event.hash_tags) ? event.hash_tags : [])].map((t) => String(t).toLowerCase()).join("|")}|`;
+      return `<tr data-name="${rowName}" data-format="${rowFormat}" data-venue="${rowVenue}" data-category="${rowCategory}" data-tags="${escapeHtml(rowTags)}">
   <td class="mono">${escapeHtml(formatTimeRange(event))}</td>
   <td>
     <a href="${pagePath}">${escapeHtml(event.name || "(Untitled)")}</a>
@@ -1456,11 +1676,17 @@ async function main() {
   await rm(`${OUTPUT_DIR}/schedule`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/entities`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/prompts`, { recursive: true, force: true });
+  await rm(`${OUTPUT_DIR}/faq`, { recursive: true, force: true });
+  await rm(`${OUTPUT_DIR}/changelog`, { recursive: true, force: true });
+  await rm(`${OUTPUT_DIR}/stability`, { recursive: true, force: true });
   await mkdir(`${OUTPUT_DIR}/events/by-date`, { recursive: true });
   await mkdir(`${OUTPUT_DIR}/schedule/date`, { recursive: true });
   await mkdir(`${OUTPUT_DIR}/schedule/event`, { recursive: true });
   await mkdir(`${OUTPUT_DIR}/entities`, { recursive: true });
   await mkdir(`${OUTPUT_DIR}/prompts`, { recursive: true });
+  await mkdir(`${OUTPUT_DIR}/faq`, { recursive: true });
+  await mkdir(`${OUTPUT_DIR}/changelog`, { recursive: true });
+  await mkdir(`${OUTPUT_DIR}/stability`, { recursive: true });
 
   for (const [date, events] of groupedByDate.entries()) {
     const pathDate = dateSlug(date);
@@ -2010,6 +2236,24 @@ async function main() {
   });
 
   pageWrites.push({
+    path: `${OUTPUT_DIR}/faq/index.html`,
+    route: "/faq/",
+    content: renderFaqPage(manifest)
+  });
+
+  pageWrites.push({
+    path: `${OUTPUT_DIR}/changelog/index.html`,
+    route: "/changelog/",
+    content: renderChangelogPage(manifest, changeRecords)
+  });
+
+  pageWrites.push({
+    path: `${OUTPUT_DIR}/stability/index.html`,
+    route: "/stability/",
+    content: renderStabilityPage(manifest)
+  });
+
+  pageWrites.push({
     path: `${OUTPUT_DIR}/schedule/og-default.svg`,
     route: null,
     content:
@@ -2043,6 +2287,17 @@ async function main() {
   const sitemapPaths = pageWrites
     .map((page) => page.route)
     .filter((route) => typeof route === "string")
+    .concat([
+      "/agents.json",
+      "/schedule.manifest.json",
+      "/agent-schedule.v1.json",
+      "/agent-schedule.v1.ndjson",
+      "/changes.ndjson",
+      "/schema.json",
+      "/entities/venues.v1.ndjson",
+      "/entities/contributors.v1.ndjson",
+      "/llms.txt"
+    ])
     .sort();
 
   const venueNdjson = toNdjson(venueEntities);
