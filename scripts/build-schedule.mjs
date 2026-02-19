@@ -1403,7 +1403,10 @@ Sitemap: ${absoluteUrl("/sitemap.xml")}
 function renderLlmsTxt(manifest, dateSummaries) {
   const shardLines = dateSummaries
     .filter((d) => d.date !== "unknown")
-    .map((d) => `- [${d.label}](${d.ndjson_path}) — ${d.event_count} events`)
+    .map((d) => {
+      const slimPath = d.ndjson_path.replace(/\.ndjson$/, ".slim.json");
+      return `- [${d.label} slim JSON](${slimPath}) — ${d.event_count} events, key fields only | [full NDJSON](${d.ndjson_path})`;
+    })
     .join("\n");
 
   const ai = manifest.agent_interface || {};
@@ -1437,9 +1440,9 @@ It is designed to be easy for LLMs and AI agents to ingest, filter, and reason o
 - [Change feed + tombstones](/changes.ndjson) — added/modified/removed/cancelled records for incremental sync
 - [Entity indexes](/entities/venues.v1.ndjson), [/entities/contributors.v1.ndjson] — canonical cross-event joins
 
-## Date-Sharded Feeds (Incremental Ingestion)
+## Date-Sharded Feeds (Recommended for Tool Calls)
 
-Fetch only the days you need. One NDJSON file per festival date:
+Fetch only the days you need. Each day has a **slim JSON** (~280-410 KB) and a full NDJSON shard:
 
 ${shardLines}
 
@@ -1751,6 +1754,27 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
   manifest.agent_interface.bytes_slim_json = Buffer.byteLength(slimJsonText);
   manifest.agent_interface.bytes_slim_ndjson = Buffer.byteLength(slimNdjson);
 
+  // Per-day slim JSON shards (~280-410 KB each, suitable for web tool fetches)
+  const slimByDate = groupByDate(slimEvents);
+  const slimShardWrites = [];
+  for (const [date, events] of slimByDate.entries()) {
+    const pathDate = dateSlug(date);
+    const shard = {
+      schema_version: manifest.schema_version || SCHEMA_VERSION,
+      generated_at: generatedAt,
+      festival_year: YEAR,
+      date: date || null,
+      event_count: events.length,
+      note: `Slim shard for ${date}. Full day data at /events/by-date/${pathDate}.ndjson.`,
+      fields: Object.keys(events[0] || {}),
+      events
+    };
+    slimShardWrites.push(
+      writeFile(`${OUTPUT_DIR}/events/by-date/${pathDate}.slim.json`, JSON.stringify(shard, null, 2) + "\n")
+    );
+  }
+  await Promise.all(slimShardWrites);
+
   await rm(`${OUTPUT_DIR}/schedule`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/prompts`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/faq`, { recursive: true, force: true });
@@ -1879,6 +1903,7 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
       manifest: "/schedule.manifest.json",
       full_export_gzip: "/schedule.json.gz",
       schema: "/schema.json",
+      slim_shards: "/events/by-date/*.slim.json",
       shards: "/events/by-date/*.ndjson",
       changes: "/changes.ndjson",
       venues: "/entities/venues.v1.ndjson",
@@ -1886,11 +1911,12 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
     },
     recommended_ingestion_order: [
       "Read /schedule.manifest.json for schema version, freshness metadata, and hashes",
-      "Read /agent-schedule.v1.slim.json for a compact feed (~10 key fields, fits in most tool call limits)",
+      "Fetch per-day slim JSON at /events/by-date/{date}.slim.json (~280-410 KB each) — best for most tool calls",
+      "Read /agent-schedule.v1.slim.json for all events in one request (~2.5 MB) — if per-day is too granular",
       "Read /agent-schedule.v1.json for the full normalized feed (14 MB — only when all fields are needed)",
       "Read /changes.ndjson to apply tombstones and incremental updates",
       "Read /entities/venues.v1.ndjson and /entities/contributors.v1.ndjson for cross-event identity joins",
-      "Use /events/by-date/*.ndjson for date-scoped streaming refreshes",
+      "Use /events/by-date/*.ndjson for full-fidelity date-scoped streaming refreshes",
       "Use /schedule.json.gz only when complete raw snapshot fidelity is required"
     ],
     expectations: manifest.expectations,
@@ -2051,6 +2077,27 @@ async function main() {
   };
   const slimNdjson = toNdjson(slimEvents);
   const slimJsonText = JSON.stringify(slimSchedule, null, 2) + "\n";
+
+  // Per-day slim JSON shards (~280-410 KB each, suitable for web tool fetches)
+  const slimByDate = groupByDate(slimEvents);
+  const slimShardWrites = [];
+  for (const [date, events] of slimByDate.entries()) {
+    const pathDate = dateSlug(date);
+    const shard = {
+      schema_version: SCHEMA_VERSION,
+      generated_at: generatedAt,
+      festival_year: YEAR,
+      date: date || null,
+      event_count: events.length,
+      note: `Slim shard for ${date}. Full day data at /events/by-date/${pathDate}.ndjson.`,
+      fields: Object.keys(events[0] || {}),
+      events
+    };
+    slimShardWrites.push(
+      writeFile(`${OUTPUT_DIR}/events/by-date/${pathDate}.slim.json`, JSON.stringify(shard, null, 2) + "\n")
+    );
+  }
+  await Promise.all(slimShardWrites);
 
   const { previousGeneratedAt, previousEventsById, baselineResetReason } = await readPreviousBuildState();
   const baselineGeneratedAt = previousGeneratedAt || null;
