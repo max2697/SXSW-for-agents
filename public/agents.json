@@ -51,6 +51,8 @@
     "schedule_index": "/schedule/index.html",
     "robots": "/robots.txt",
     "sitemap": "/sitemap.xml",
+    "slim_json": "/agent-schedule.v1.slim.json",
+    "slim_ndjson": "/agent-schedule.v1.slim.ndjson",
     "easy_json": "/agent-schedule.v1.json",
     "easy_ndjson": "/agent-schedule.v1.ndjson",
     "manifest": "/schedule.manifest.json",
@@ -63,21 +65,13 @@
   },
   "recommended_ingestion_order": [
     "Read /schedule.manifest.json for schema version, freshness metadata, and hashes",
-    "Read /agent-schedule.v1.json for the normalized full feed",
+    "Read /agent-schedule.v1.slim.json for a compact feed (~10 key fields, fits in most tool call limits)",
+    "Read /agent-schedule.v1.json for the full normalized feed (14 MB — only when all fields are needed)",
     "Read /changes.ndjson to apply tombstones and incremental updates",
     "Read /entities/venues.v1.ndjson and /entities/contributors.v1.ndjson for cross-event identity joins",
     "Use /events/by-date/*.ndjson for date-scoped streaming refreshes",
     "Use /schedule.json.gz only when complete raw snapshot fidelity is required"
   ],
-  "expectations": {
-    "timezone_note": "Event timestamps include local offsets from source data.",
-    "id_field": "event_id",
-    "date_field": "date",
-    "shard_strategy": "one NDJSON file per event date plus unknown-date shard",
-    "max_file_size_bytes": 26214400,
-    "refresh_mode": "manual",
-    "refresh_cadence_target": "daily"
-  },
   "source": {
     "system": "Official SXSW schedule website",
     "base_url": "https://schedule.sxsw.com",

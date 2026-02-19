@@ -1856,10 +1856,52 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
     ])
     .sort();
 
+  // Rebuild agents.json with slim feed entrypoints so agents read the right feed
+  const siteAgentsDescriptor = {
+    ...manifest.source_descriptor,
+    agent_contract_version: manifest.schema_version || SCHEMA_VERSION,
+    generated_at: generatedAt,
+    festival_year: manifest.festival_year || YEAR,
+    purpose: "Agent-first SXSW schedule feed from official source",
+    freshness: manifest.freshness,
+    compatibility: manifest.compatibility,
+    identity: manifest.identity,
+    entrypoints: {
+      llms_txt: "/llms.txt",
+      website_home: "/index.html",
+      schedule_index: "/schedule/index.html",
+      robots: "/robots.txt",
+      sitemap: "/sitemap.xml",
+      slim_json: "/agent-schedule.v1.slim.json",
+      slim_ndjson: "/agent-schedule.v1.slim.ndjson",
+      easy_json: "/agent-schedule.v1.json",
+      easy_ndjson: "/agent-schedule.v1.ndjson",
+      manifest: "/schedule.manifest.json",
+      full_export_gzip: "/schedule.json.gz",
+      schema: "/schema.json",
+      shards: "/events/by-date/*.ndjson",
+      changes: "/changes.ndjson",
+      venues: "/entities/venues.v1.ndjson",
+      contributors: "/entities/contributors.v1.ndjson"
+    },
+    recommended_ingestion_order: [
+      "Read /schedule.manifest.json for schema version, freshness metadata, and hashes",
+      "Read /agent-schedule.v1.slim.json for a compact feed (~10 key fields, fits in most tool call limits)",
+      "Read /agent-schedule.v1.json for the full normalized feed (14 MB — only when all fields are needed)",
+      "Read /changes.ndjson to apply tombstones and incremental updates",
+      "Read /entities/venues.v1.ndjson and /entities/contributors.v1.ndjson for cross-event identity joins",
+      "Use /events/by-date/*.ndjson for date-scoped streaming refreshes",
+      "Use /schedule.json.gz only when complete raw snapshot fidelity is required"
+    ],
+    expectations: manifest.expectations,
+    source: manifest.source
+  };
+
   await Promise.all([
     writeFile(`${OUTPUT_DIR}/robots.txt`, renderRobotsTxt()),
     writeFile(`${OUTPUT_DIR}/sitemap.xml`, renderSitemapXml(sitemapPaths, generatedAt)),
     writeFile(`${OUTPUT_DIR}/llms.txt`, renderLlmsTxt(manifest, dateSummaries)),
+    writeFile(`${OUTPUT_DIR}/agents.json`, JSON.stringify(siteAgentsDescriptor, null, 2) + "\n"),
     writeFile(`${OUTPUT_DIR}/agent-schedule.v1.slim.json`, slimJsonText),
     writeFile(`${OUTPUT_DIR}/agent-schedule.v1.slim.ndjson`, slimNdjson)
   ]);
