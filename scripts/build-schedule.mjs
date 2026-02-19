@@ -799,21 +799,15 @@ function renderLandingPage(manifest, dateSummaries) {
   <p class="small">Copy and paste into Claude, ChatGPT, Gemini, Perplexity, or coding agents.</p>
   <details>
     <summary>Find AI sessions on 2026-03-15</summary>
-    <pre>Use ${escapeHtml(absoluteUrl("/"))} as source.
-Read /schedule.manifest.json first, then /agent-schedule.v1.slim.json.
-Find SXSW ${manifest.festival_year} sessions on 2026-03-15 about AI.
-Return: event_id, name, start_time, end_time, venue.name, official_url.
-Sort by start_time.</pre>
+    <pre>Fetch ${escapeHtml(absoluteUrl("/api/events"))}?date=2026-03-15&q=AI and return a table of results with columns: time, session name, venue, event_id.</pre>
   </details>
   <details>
     <summary>Find sessions at Hilton Austin Downtown</summary>
-    <pre>Use ${escapeHtml(absoluteUrl("/agent-schedule.v1.slim.json"))}.
-Find all sessions at Hilton Austin Downtown on 2026-03-14.
-Return a compact table with time, session name, category, and event_id.</pre>
+    <pre>Fetch ${escapeHtml(absoluteUrl("/api/events"))}?venue=Hilton&date=2026-03-14 and return a compact table with time, session name, and event_id.</pre>
   </details>
   <details>
     <summary>Summarize what changed since last refresh</summary>
-    <pre>Use ${escapeHtml(absoluteUrl("/changes.ndjson"))}.
+    <pre>Fetch ${escapeHtml(absoluteUrl("/changes.ndjson"))}.
 Summarize added/modified/removed/cancelled events since the previous snapshot.
 If there are removed/cancelled events, list tombstones first.</pre>
   </details>
@@ -904,39 +898,35 @@ function renderPromptExamplesPage(manifest) {
 <section class="panel">
   <h2>1) Find Sessions by Topic and Date</h2>
   <p><button class="button copy-prompt" type="button" data-target="prompt-1">Copy</button></p>
-  <pre id="prompt-1">Use ${escapeHtml(base)} as source.
-Read /schedule.manifest.json first, then /agent-schedule.v1.slim.json.
-Find SXSW ${manifest.festival_year} sessions on 2026-03-15 about AI.
-Return: event_id, name, start_time, end_time, venue.name, official_url.
-Sort by start_time.</pre>
+  <pre id="prompt-1">Fetch ${escapeHtml(base)}api/events?date=2026-03-15&q=AI
+Return a table with columns: start_time, name, venue, event_id, official_url. Sort by start_time.</pre>
 </section>
 <section class="panel">
   <h2>2) Venue-Based Search</h2>
   <p><button class="button copy-prompt" type="button" data-target="prompt-2">Copy</button></p>
-  <pre id="prompt-2">Use ${escapeHtml(base)}agent-schedule.v1.slim.json.
-Find all sessions at Hilton Austin Downtown on 2026-03-14.
-Return a compact table with time, session name, category, and event_id.</pre>
+  <pre id="prompt-2">Fetch ${escapeHtml(base)}api/events?venue=Hilton&date=2026-03-14
+Return a compact table with time, session name, and event_id.</pre>
 </section>
 <section class="panel">
   <h2>3) Speaker Lookup</h2>
   <p><button class="button copy-prompt" type="button" data-target="prompt-3">Copy</button></p>
-  <pre id="prompt-3">Use ${escapeHtml(base)}agent-schedule.v1.slim.json.
-Find sessions where contributors include "Dr. Carmen Simon".
-Return date, time, event name, venue.name, event_id, and official_url.</pre>
+  <pre id="prompt-3">Fetch ${escapeHtml(base)}api/contributors?name=Carmen+Simon
+Return each session with date, start_time, event name, venue, event_id, and official_url.</pre>
 </section>
 <section class="panel">
   <h2>4) Incremental Update Check</h2>
   <p><button class="button copy-prompt" type="button" data-target="prompt-4">Copy</button></p>
-  <pre id="prompt-4">Use ${escapeHtml(base)}changes.ndjson.
+  <pre id="prompt-4">Fetch ${escapeHtml(base)}changes.ndjson
 Summarize added/modified/removed/cancelled events since the previous snapshot.
-If there are removed/cancelled events, list tombstones first.</pre>
+List any tombstones (removed/cancelled) first.</pre>
 </section>
 <section class="panel">
-  <h2>5) Best Ingestion Flow for an Agent</h2>
+  <h2>5) Plan My SXSW Day</h2>
   <p><button class="button copy-prompt" type="button" data-target="prompt-5">Copy</button></p>
-  <pre id="prompt-5">Use ${escapeHtml(base)}agents.json and follow its recommended ingestion order.
-Build a shortlist of "top AI + developer tooling sessions" for each day.
-Use only SXSW ${manifest.festival_year} events and include event_id + official_url in every item.</pre>
+  <pre id="prompt-5">Use the SXSW ${manifest.festival_year} schedule API at ${escapeHtml(base)}api/
+First fetch ${escapeHtml(base)}api/dates to see available days.
+Then fetch events for each day using ?q=AI+developer+tooling to find tech sessions.
+Build a shortlist of the top sessions per day. Include event_id and official_url for every item.</pre>
 </section>
 <section class="panel">
   <h2>See Also</h2>
@@ -1116,15 +1106,14 @@ function renderScheduleIndexPage(manifest, dateSummaries) {
   <h2>AI Assistant Prompts</h2>
   <details>
     <summary>Top AI + developer tooling sessions per day</summary>
-    <pre>Use ${escapeHtml(absoluteUrl("/agents.json"))} and follow its recommended ingestion order.
-Build a shortlist of top AI + developer tooling sessions for each day.
-Include event_id and official_url for every item.</pre>
+    <pre>Use the SXSW ${manifest.festival_year} API at ${escapeHtml(absoluteUrl("/api/"))}.
+Fetch ${escapeHtml(absoluteUrl("/api/dates"))} for available days, then for each day fetch /api/events?date={date}&q=AI+developer+tooling.
+Build a shortlist of top sessions per day. Include event_id and official_url for every item.</pre>
   </details>
   <details>
     <summary>Speaker lookup prompt</summary>
-    <pre>Use ${escapeHtml(absoluteUrl("/agent-schedule.v1.slim.json"))}.
-Find sessions where contributors include "Dr. Carmen Simon".
-Return date, time, event name, venue.name, event_id, and official_url.</pre>
+    <pre>Fetch ${escapeHtml(absoluteUrl("/api/contributors"))}?name=Carmen+Simon
+Return each session with date, start_time, event name, venue, event_id, and official_url.</pre>
   </details>
   <p><a class="button" href="/prompts/index.html">Open Prompt Examples</a></p>
 </section>`;
