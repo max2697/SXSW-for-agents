@@ -798,18 +798,18 @@ function renderLandingPage(manifest, dateSummaries) {
   <h2>AI Assistant Prompts</h2>
   <p class="small">Copy and paste into Claude, ChatGPT, Gemini, Perplexity, or coding agents.</p>
   <details>
-    <summary>Find AI safety sessions on 2026-03-15</summary>
+    <summary>Find AI sessions on 2026-03-15</summary>
     <pre>Use ${escapeHtml(absoluteUrl("/"))} as source.
-Read /schedule.manifest.json first, then /agent-schedule.v1.json.
-Find SXSW ${manifest.festival_year} sessions on 2026-03-15 about AI safety.
+Read /schedule.manifest.json first, then /agent-schedule.v1.slim.json.
+Find SXSW ${manifest.festival_year} sessions on 2026-03-15 about AI.
 Return: event_id, name, start_time, end_time, venue.name, official_url.
 Sort by start_time.</pre>
   </details>
   <details>
-    <summary>Find sessions at Austin Convention Center</summary>
-    <pre>Use ${escapeHtml(absoluteUrl("/agent-schedule.v1.json"))}.
-Find all sessions at Austin Convention Center on 2026-03-14.
-Return a compact table with time, session name, format, and event_id.</pre>
+    <summary>Find sessions at Hilton Austin Downtown</summary>
+    <pre>Use ${escapeHtml(absoluteUrl("/agent-schedule.v1.slim.json"))}.
+Find all sessions at Hilton Austin Downtown on 2026-03-14.
+Return a compact table with time, session name, category, and event_id.</pre>
   </details>
   <details>
     <summary>Summarize what changed since last refresh</summary>
@@ -894,9 +894,9 @@ function renderPromptExamplesPage(manifest) {
 <section class="panel">
   <h2>Prompt Builder</h2>
   <div style="display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-    <label>Topic <input id="pb-topic" type="text" value="AI safety" style="width:100%;margin-top:4px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);"></label>
+    <label>Topic <input id="pb-topic" type="text" value="AI" style="width:100%;margin-top:4px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);"></label>
     <label>Date <input id="pb-date" type="date" value="2026-03-15" style="width:100%;margin-top:4px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);"></label>
-    <label>Speaker (optional) <input id="pb-speaker" type="text" placeholder="Meredith Whittaker" style="width:100%;margin-top:4px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);"></label>
+    <label>Speaker (optional) <input id="pb-speaker" type="text" placeholder="Dr. Carmen Simon" style="width:100%;margin-top:4px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);"></label>
   </div>
   <p style="margin-top:10px;"><button id="pb-copy" class="button" type="button">Copy Generated Prompt</button></p>
   <pre id="pb-output"></pre>
@@ -905,24 +905,24 @@ function renderPromptExamplesPage(manifest) {
   <h2>1) Find Sessions by Topic and Date</h2>
   <p><button class="button copy-prompt" type="button" data-target="prompt-1">Copy</button></p>
   <pre id="prompt-1">Use ${escapeHtml(base)} as source.
-Read /schedule.manifest.json first, then /agent-schedule.v1.json.
-Find SXSW ${manifest.festival_year} sessions on 2026-03-15 about AI safety.
+Read /schedule.manifest.json first, then /agent-schedule.v1.slim.json.
+Find SXSW ${manifest.festival_year} sessions on 2026-03-15 about AI.
 Return: event_id, name, start_time, end_time, venue.name, official_url.
 Sort by start_time.</pre>
 </section>
 <section class="panel">
   <h2>2) Venue-Based Search</h2>
   <p><button class="button copy-prompt" type="button" data-target="prompt-2">Copy</button></p>
-  <pre id="prompt-2">Use ${escapeHtml(base)}agent-schedule.v1.json.
-Find all sessions at Austin Convention Center on 2026-03-14.
-Return a compact table with time, session name, format, and event_id.</pre>
+  <pre id="prompt-2">Use ${escapeHtml(base)}agent-schedule.v1.slim.json.
+Find all sessions at Hilton Austin Downtown on 2026-03-14.
+Return a compact table with time, session name, category, and event_id.</pre>
 </section>
 <section class="panel">
   <h2>3) Speaker Lookup</h2>
   <p><button class="button copy-prompt" type="button" data-target="prompt-3">Copy</button></p>
-  <pre id="prompt-3">Use ${escapeHtml(base)}agent-schedule.v1.json.
-Find sessions where contributors include "Meredith Whittaker".
-Return date, time, event name, event_id, and official_url.</pre>
+  <pre id="prompt-3">Use ${escapeHtml(base)}agent-schedule.v1.slim.json.
+Find sessions where contributors include "Dr. Carmen Simon".
+Return date, time, event name, venue.name, event_id, and official_url.</pre>
 </section>
 <section class="panel">
   <h2>4) Incremental Update Check</h2>
@@ -962,12 +962,12 @@ Use only SXSW ${manifest.festival_year} events and include event_id + official_u
   }
 
   function buildPrompt() {
-    var topic = (document.getElementById('pb-topic').value || 'AI safety').trim();
+    var topic = (document.getElementById('pb-topic').value || 'AI').trim();
     var date = (document.getElementById('pb-date').value || '2026-03-15').trim();
     var speaker = (document.getElementById('pb-speaker').value || '').trim();
     var lines = [
       'Use ${escapeHtml(base)} as source.',
-      'Read /schedule.manifest.json first, then /agent-schedule.v1.json.',
+      'Read /schedule.manifest.json first, then /agent-schedule.v1.slim.json.',
       'Find SXSW ${manifest.festival_year} sessions on ' + date + ' about ' + topic + '.',
       'Return: event_id, name, start_time, end_time, venue.name, official_url.',
       'Sort by start_time.'
@@ -1122,9 +1122,9 @@ Include event_id and official_url for every item.</pre>
   </details>
   <details>
     <summary>Speaker lookup prompt</summary>
-    <pre>Use ${escapeHtml(absoluteUrl("/agent-schedule.v1.json"))}.
-Find sessions where contributors include "Meredith Whittaker".
-Return date, time, event name, event_id, and official_url.</pre>
+    <pre>Use ${escapeHtml(absoluteUrl("/agent-schedule.v1.slim.json"))}.
+Find sessions where contributors include "Dr. Carmen Simon".
+Return date, time, event name, venue.name, event_id, and official_url.</pre>
   </details>
   <p><a class="button" href="/prompts/index.html">Open Prompt Examples</a></p>
 </section>`;
