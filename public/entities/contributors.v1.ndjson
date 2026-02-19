@@ -865,6 +865,7 @@
 {"canonical_id":"contributor:2238963","entity_id":"2238963","id":"78011","name":"Whitney Bell","type":"person","event_ids":["PP1162255"],"event_count":1}
 {"canonical_id":"contributor:2238964","entity_id":"2238964","id":"78012","name":"Natalia Davila","type":"person","event_ids":["PP1162551"],"event_count":1}
 {"canonical_id":"contributor:2238965","entity_id":"2238965","id":"78013","name":"Alex Raguet","type":"person","event_ids":["PP1162320"],"event_count":1}
+{"canonical_id":"contributor:2238970","entity_id":"2238970","id":"74580","name":"Aaron Page","type":"artist","event_ids":["MS63218"],"event_count":1}
 {"canonical_id":"contributor:2238972","entity_id":"2238972","id":"78019","name":"Steph Smith","type":"person","event_ids":["PP1162574"],"event_count":1}
 {"canonical_id":"contributor:2238973","entity_id":"2238973","id":"78020","name":"Brooke Miccio","type":"person","event_ids":["PP1162526"],"event_count":1}
 {"canonical_id":"contributor:2238974","entity_id":"2238974","id":"78021","name":"Brigitte Alanis","type":"person","event_ids":["PP1162302"],"event_count":1}
@@ -1231,6 +1232,7 @@
 {"canonical_id":"contributor:2240051","entity_id":"2240051","id":"73374","name":"Still Blank","type":"artist","event_ids":["MS63268"],"event_count":1}
 {"canonical_id":"contributor:2240052","entity_id":"2240052","id":"73421","name":"congratulations","type":"artist","event_ids":["MS63267"],"event_count":1}
 {"canonical_id":"contributor:2240053","entity_id":"2240053","id":"75082","name":"Azamiah","type":"artist","event_ids":["MS63269","MS63884","MS63928"],"event_count":3}
+{"canonical_id":"contributor:2240054","entity_id":"2240054","id":"72646","name":"Morgan Munroe","type":"artist","event_ids":["MS63270"],"event_count":1}
 {"canonical_id":"contributor:2240056","entity_id":"2240056","id":"73642","name":"Pär Hagström and Charlatans of Love","type":"artist","event_ids":["MS63272","MS63887"],"event_count":2}
 {"canonical_id":"contributor:2240058","entity_id":"2240058","id":"75101","name":"bloodsports","type":"artist","event_ids":["MS63274","MS63867","MS64102"],"event_count":3}
 {"canonical_id":"contributor:2240059","entity_id":"2240059","id":"75102","name":"Fine","type":"artist","event_ids":["MS63674"],"event_count":1}
@@ -1649,9 +1651,10 @@
 {"canonical_id":"contributor:2240946","entity_id":"2240946","id":"79743","name":"Henry Coutinho-Mason","type":"person","event_ids":["PP1149972"],"event_count":1}
 {"canonical_id":"contributor:2240947","entity_id":"2240947","id":"75853","name":"Femi Temowo","type":"artist","event_ids":["MS63403"],"event_count":1}
 {"canonical_id":"contributor:2240948","entity_id":"2240948","id":"75851","name":"Magic Rockers of Texas","type":"artist","event_ids":["MS63404"],"event_count":1}
+{"canonical_id":"contributor:2240949","entity_id":"2240949","id":"75849","name":"CQ Wrestling","type":"artist","event_ids":["MS63405","MS64495"],"event_count":2}
 {"canonical_id":"contributor:2240950","entity_id":"2240950","id":"75848","name":"Horsepower","type":"artist","event_ids":["MS63406","MS63885","MS64403"],"event_count":3}
 {"canonical_id":"contributor:2240952","entity_id":"2240952","id":"75846","name":"Amie Blu","type":"artist","event_ids":["MS63408","MS63938"],"event_count":2}
-{"canonical_id":"contributor:2240953","entity_id":"2240953","id":"75844","name":"Novelist","type":"artist","event_ids":["MS63409","MS63917"],"event_count":2}
+{"canonical_id":"contributor:2240953","entity_id":"2240953","id":"75844","name":"Novelist","type":"artist","event_ids":["MS63409"],"event_count":1}
 {"canonical_id":"contributor:2240954","entity_id":"2240954","id":"75843","name":"Marijuana Deathsquads","type":"artist","event_ids":["MS63410"],"event_count":1}
 {"canonical_id":"contributor:2240957","entity_id":"2240957","id":"73826","name":"Lucky","type":"artist","event_ids":["MS63413","MS64366"],"event_count":2}
 {"canonical_id":"contributor:2240958","entity_id":"2240958","id":"73106","name":"Chiara Savasta","type":"artist","event_ids":["MS63414","MS63919"],"event_count":2}
@@ -1936,7 +1939,7 @@
 {"canonical_id":"contributor:2242244","entity_id":"2242244","id":"75944","name":"Mama Duke","type":"artist","event_ids":["MS63568"],"event_count":1}
 {"canonical_id":"contributor:2242246","entity_id":"2242246","id":"75768","name":"Akshara","type":"artist","event_ids":["MS63570"],"event_count":1}
 {"canonical_id":"contributor:2242247","entity_id":"2242247","id":"75874","name":"Leo Kalyan","type":"artist","event_ids":["MS63571"],"event_count":1}
-{"canonical_id":"contributor:2242248","entity_id":"2242248","id":"75728","name":"SRI","type":"artist","event_ids":["MS63572"],"event_count":1}
+{"canonical_id":"contributor:2242248","entity_id":"2242248","id":"75728","name":"SRI","type":"artist","event_ids":["MS63572","MS64262"],"event_count":2}
 {"canonical_id":"contributor:2242249","entity_id":"2242249","id":"80677","name":"Jun Young (Zany) Jung","type":"person","event_ids":["PP1150258"],"event_count":1}
 {"canonical_id":"contributor:2242250","entity_id":"2242250","id":"75945","name":"Sonido Cachimbo","type":"artist","event_ids":["MS63573"],"event_count":1}
 {"canonical_id":"contributor:2242251","entity_id":"2242251","id":"75934","name":"Worlds Worst","type":"artist","event_ids":["MS63574"],"event_count":1}
@@ -1997,6 +2000,7 @@
 {"canonical_id":"contributor:2242922","entity_id":"2242922","id":"81303","name":"Marie Langhout-Franklin","type":"person","event_ids":["PP1162858"],"event_count":1}
 {"canonical_id":"contributor:2242923","entity_id":"2242923","id":"81304","name":"Steve Carell","type":"person","event_ids":["PP1149740"],"event_count":1}
 {"canonical_id":"contributor:2242924","entity_id":"2242924","id":"81305","name":"Danielle Deadwyler","type":"person","event_ids":["PP1149740"],"event_count":1}
+{"canonical_id":"contributor:2242949","entity_id":"2242949","id":"75966","name":"In Color","type":"artist","event_ids":["MS64463"],"event_count":1}
 {"canonical_id":"contributor:2242950","entity_id":"2242950","id":"75974","name":"Edgehill","type":"artist","event_ids":["MS63606"],"event_count":1}
 {"canonical_id":"contributor:2242951","entity_id":"2242951","id":"75975","name":"Girl Tones","type":"artist","event_ids":["MS63607","MS64183","MS64289"],"event_count":3}
 {"canonical_id":"contributor:2242952","entity_id":"2242952","id":"75868","name":"Saige Davis","type":"artist","event_ids":["MS63608","MS64133"],"event_count":2}
@@ -2960,7 +2964,6 @@
 {"canonical_id":"contributor:2257078","entity_id":"2257078","id":"76402","name":"Tone Royal","type":"artist","event_ids":["MS64364"],"event_count":1}
 {"canonical_id":"contributor:2257861","entity_id":"2257861","id":"94959","name":"Benjamin de Menil","type":"person","event_ids":["FS19489","FS19493","FS19495","FS19496","FS19500"],"event_count":5}
 {"canonical_id":"contributor:2258253","entity_id":"2258253","id":"95336","name":"Deon Gordon","type":"person","event_ids":["PP1149688"],"event_count":1}
-{"canonical_id":"contributor:2258254","entity_id":"2258254","id":"95337","name":"Kuniaki Higashi","type":"person","event_ids":["PP1162537"],"event_count":1}
 {"canonical_id":"contributor:2258255","entity_id":"2258255","id":"95338","name":"Kameryn Stanhouse","type":"person","event_ids":["PP1150161"],"event_count":1}
 {"canonical_id":"contributor:2258256","entity_id":"2258256","id":"95339","name":"Anthony Langone","type":"person","event_ids":["PP1149895"],"event_count":1}
 {"canonical_id":"contributor:2258257","entity_id":"2258257","id":"95340","name":"Nick Ayoub","type":"person","event_ids":["PP1149895"],"event_count":1}
@@ -3008,21 +3011,22 @@
 {"canonical_id":"contributor:2261662","entity_id":"2261662","id":"97689","name":"Chelsea Ellis Bloch","type":"person","event_ids":["PP1150714"],"event_count":1}
 {"canonical_id":"contributor:2261663","entity_id":"2261663","id":"97690","name":"Marisol Roncali","type":"person","event_ids":["PP1150714"],"event_count":1}
 {"canonical_id":"contributor:2261697","entity_id":"2261697","id":"97709","name":"Jenny Jue","type":"person","event_ids":["PP1150714"],"event_count":1}
-{"canonical_id":"contributor:2261707","entity_id":"2261707","id":"97717","name":"Various","type":"person","event_ids":["FS19120","FS19121","FS19122"],"event_count":3}
-{"canonical_id":"contributor:2261710","entity_id":"2261710","id":"97720","name":"Various","type":"person","event_ids":["FS19211","FS19212","FS19213"],"event_count":3}
-{"canonical_id":"contributor:2261719","entity_id":"2261719","id":"97729","name":"Various","type":"person","event_ids":["FS19586","FS19587"],"event_count":2}
-{"canonical_id":"contributor:2261721","entity_id":"2261721","id":"97731","name":"Various","type":"person","event_ids":["FS19673","FS19674"],"event_count":2}
-{"canonical_id":"contributor:2261724","entity_id":"2261724","id":"97734","name":"Various","type":"person","event_ids":["FS19670","FS19671"],"event_count":2}
-{"canonical_id":"contributor:2261725","entity_id":"2261725","id":"97735","name":"Various","type":"person","event_ids":["FS19675","FS19676"],"event_count":2}
-{"canonical_id":"contributor:2261727","entity_id":"2261727","id":"97737","name":"Various","type":"person","event_ids":["FS19677","FS19678"],"event_count":2}
-{"canonical_id":"contributor:2261730","entity_id":"2261730","id":"97740","name":"Various","type":"person","event_ids":["FS19679","FS19680"],"event_count":2}
-{"canonical_id":"contributor:2261732","entity_id":"2261732","id":"97742","name":"Various","type":"person","event_ids":["FS19681","FS19682"],"event_count":2}
-{"canonical_id":"contributor:2261733","entity_id":"2261733","id":"97743","name":"Various","type":"person","event_ids":["FS19253","FS19683"],"event_count":2}
-{"canonical_id":"contributor:2261735","entity_id":"2261735","id":"97745","name":"Various","type":"person","event_ids":["FS19684","FS19685"],"event_count":2}
-{"canonical_id":"contributor:2261738","entity_id":"2261738","id":"97748","name":"Various","type":"person","event_ids":["FS19672","FS19770"],"event_count":2}
-{"canonical_id":"contributor:2261741","entity_id":"2261741","id":"97751","name":"Various","type":"person","event_ids":["FS19982"],"event_count":1}
 {"canonical_id":"contributor:2261809","entity_id":"2261809","id":"97788","name":"Matt Mitchell","type":"person","event_ids":["PP1150601"],"event_count":1}
 {"canonical_id":"contributor:2261810","entity_id":"2261810","id":"97789","name":"Rev. Lennox Yearwood Jr.","type":"person","event_ids":["PP1150601"],"event_count":1}
+{"canonical_id":"contributor:2262016","entity_id":"2262016","id":"97933","name":"Bill Shouldis","type":"person","event_ids":["PP1149188"],"event_count":1}
+{"canonical_id":"contributor:2262127","entity_id":"2262127","id":"98012","name":"Various","type":"person","event_ids":["FS19120","FS19121","FS19122"],"event_count":3}
+{"canonical_id":"contributor:2262130","entity_id":"2262130","id":"98015","name":"Various","type":"person","event_ids":["FS19211","FS19212","FS19213"],"event_count":3}
+{"canonical_id":"contributor:2262133","entity_id":"2262133","id":"98018","name":"Various","type":"person","event_ids":["FS19586","FS19587"],"event_count":2}
+{"canonical_id":"contributor:2262135","entity_id":"2262135","id":"98020","name":"Various","type":"person","event_ids":["FS19673","FS19674"],"event_count":2}
+{"canonical_id":"contributor:2262138","entity_id":"2262138","id":"98023","name":"Various","type":"person","event_ids":["FS19670","FS19671"],"event_count":2}
+{"canonical_id":"contributor:2262139","entity_id":"2262139","id":"98024","name":"Various","type":"person","event_ids":["FS19675","FS19676"],"event_count":2}
+{"canonical_id":"contributor:2262141","entity_id":"2262141","id":"98026","name":"Various","type":"person","event_ids":["FS19677","FS19678"],"event_count":2}
+{"canonical_id":"contributor:2262144","entity_id":"2262144","id":"98029","name":"Various","type":"person","event_ids":["FS19679","FS19680"],"event_count":2}
+{"canonical_id":"contributor:2262146","entity_id":"2262146","id":"98031","name":"Various","type":"person","event_ids":["FS19681","FS19682"],"event_count":2}
+{"canonical_id":"contributor:2262147","entity_id":"2262147","id":"98032","name":"Various","type":"person","event_ids":["FS19253","FS19683"],"event_count":2}
+{"canonical_id":"contributor:2262149","entity_id":"2262149","id":"98034","name":"Various","type":"person","event_ids":["FS19684","FS19685"],"event_count":2}
+{"canonical_id":"contributor:2262152","entity_id":"2262152","id":"98037","name":"Various","type":"person","event_ids":["FS19672","FS19770"],"event_count":2}
+{"canonical_id":"contributor:2262155","entity_id":"2262155","id":"98040","name":"Various","type":"person","event_ids":["FS19982"],"event_count":1}
 {"canonical_id":"contributor:26191","entity_id":"26191","id":"5517","name":"Jeffrey Brown","type":"person","event_ids":["PP1150249"],"event_count":1}
 {"canonical_id":"contributor:2940","entity_id":"2940","id":"182","name":"Nancy Harhut","type":"person","event_ids":["PP1148538"],"event_count":1}
 {"canonical_id":"contributor:2951","entity_id":"2951","id":"189","name":"Sandy Carter","type":"person","event_ids":["PP1148486"],"event_count":1}

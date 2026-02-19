@@ -1,9 +1,9 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-02-19T01:23:17.640Z",
+  "generated_at": "2026-02-19T09:45:02.602Z",
   "festival_year": 2026,
   "date": "2026-03-17",
-  "event_count": 450,
+  "event_count": 451,
   "note": "Slim shard for 2026-03-17. Full day data at /events/by-date/2026-03-17.ndjson.",
   "fields": [
     "event_id",
@@ -2223,41 +2223,6 @@
       "contributors": [
         {
           "name": "DeShaunJay",
-          "type": "artist"
-        }
-      ]
-    },
-    {
-      "event_id": "MS63917",
-      "name": "Novelist",
-      "date": "2026-03-17",
-      "start_time": null,
-      "end_time": null,
-      "event_type": "showcase",
-      "format": "Hip-Hop / Rap",
-      "category": "Hip-Hop / Rap",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS63917",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0209",
-        "name": "British Music Embassy @ Palm Door on Sixth",
-        "lat": 30.2669107,
-        "lon": -97.7377236
-      },
-      "contributors": [
-        {
-          "name": "Novelist",
           "type": "artist"
         }
       ]
@@ -9895,7 +9860,7 @@
       "name": "Artist Demo Listening Session (Pop) Part 2 Presented by Discovr Radio",
       "date": "2026-03-17",
       "start_time": "2026-03-17T14:30:00.000-05:00",
-      "end_time": "2026-03-17T15:30:00.000-05:00",
+      "end_time": "2026-03-17T16:00:00.000-05:00",
       "event_type": "panel",
       "format": "Demo Listening",
       "category": "Demo Listening",
@@ -15060,6 +15025,41 @@
       ]
     },
     {
+      "event_id": "MS63270",
+      "name": "Morgan Munroe",
+      "date": "2026-03-17",
+      "start_time": "2026-03-17T21:20:00.000-05:00",
+      "end_time": "2026-03-17T21:50:00.000-05:00",
+      "event_type": "showcase",
+      "format": "R & B",
+      "category": "R & B",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS63270",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0209",
+        "name": "British Music Embassy @ Palm Door on Sixth",
+        "lat": 30.2669107,
+        "lon": -97.7377236
+      },
+      "contributors": [
+        {
+          "name": "Morgan Munroe",
+          "type": "artist"
+        }
+      ]
+    },
+    {
       "event_id": "MS63611",
       "name": "Pat G",
       "date": "2026-03-17",
@@ -15990,6 +15990,41 @@
       "contributors": [
         {
           "name": "Trophy Wife",
+          "type": "artist"
+        }
+      ]
+    },
+    {
+      "event_id": "MS63405",
+      "name": "CQ Wrestling",
+      "date": "2026-03-17",
+      "start_time": "2026-03-17T22:40:00.000-05:00",
+      "end_time": "2026-03-17T23:10:00.000-05:00",
+      "event_type": "showcase",
+      "format": "Rock",
+      "category": "Rock",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS63405",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0209",
+        "name": "British Music Embassy @ Palm Door on Sixth",
+        "lat": 30.2669107,
+        "lon": -97.7377236
+      },
+      "contributors": [
+        {
+          "name": "CQ Wrestling",
           "type": "artist"
         }
       ]

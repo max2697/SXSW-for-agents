@@ -22,30 +22,24 @@
   <main><section class="hero">
   <h1>SXSW 2026 Schedule for Agents</h1>
   <p>This project makes the SXSW schedule easy for agents to parse and easy for humans to browse, using official SXSW source data.</p>
-  <p class="meta"><strong>Freshness:</strong> fresh | Source snapshot: 2026-02-19T00:59:00.000Z | Next expected refresh: 2026-02-20T01:23:17.640Z</p>
+  <p class="meta"><strong>Freshness:</strong> fresh | Source snapshot: 2026-02-19T01:06:00.000Z | Next expected refresh: 2026-02-20T09:45:02.602Z</p>
   <p><a class="button" href="/schedule/index.html">Browse Full Schedule</a></p>
-  <p class="meta">Generated: 2026-02-19T01:23:17.640Z | Events: 2790</p>
+  <p class="meta">Generated: 2026-02-19T09:45:02.602Z | Events: 2795</p>
 </section>
 <section class="panel">
   <h2>AI Assistant Prompts</h2>
   <p class="small">Copy and paste into Claude, ChatGPT, Gemini, Perplexity, or coding agents.</p>
   <details>
     <summary>Find AI sessions on 2026-03-15</summary>
-    <pre>Use https://sxsw.0fn.net/ as source.
-Read /schedule.manifest.json first, then /agent-schedule.v1.slim.json.
-Find SXSW 2026 sessions on 2026-03-15 about AI.
-Return: event_id, name, start_time, end_time, venue.name, official_url.
-Sort by start_time.</pre>
+    <pre>Fetch https://sxsw.0fn.net/api/events?date=2026-03-15&q=AI&q_mode=any&limit=200 and return a table of results with columns: time, session name, venue, event_id.</pre>
   </details>
   <details>
     <summary>Find sessions at Hilton Austin Downtown</summary>
-    <pre>Use https://sxsw.0fn.net/agent-schedule.v1.slim.json.
-Find all sessions at Hilton Austin Downtown on 2026-03-14.
-Return a compact table with time, session name, category, and event_id.</pre>
+    <pre>Fetch https://sxsw.0fn.net/api/events?venue=Hilton&date=2026-03-14 and return a compact table with time, session name, and event_id.</pre>
   </details>
   <details>
     <summary>Summarize what changed since last refresh</summary>
-    <pre>Use https://sxsw.0fn.net/changes.ndjson.
+    <pre>Fetch https://sxsw.0fn.net/changes.ndjson.
 Summarize added/modified/removed/cancelled events since the previous snapshot.
 If there are removed/cancelled events, list tombstones first.</pre>
   </details>
@@ -72,11 +66,11 @@ If there are removed/cancelled events, list tombstones first.</pre>
   <p class="small"><a href="/events/by-date/2026-03-13.ndjson">NDJSON shard</a></p>
 </article><article class="card">
   <h3><a href="/schedule/date/2026-03-14.html">Sat, Mar 14, 2026</a></h3>
-  <p class="meta"><strong>422</strong> events</p>
+  <p class="meta"><strong>425</strong> events</p>
   <p class="small"><a href="/events/by-date/2026-03-14.ndjson">NDJSON shard</a></p>
 </article><article class="card">
   <h3><a href="/schedule/date/2026-03-15.html">Sun, Mar 15, 2026</a></h3>
-  <p class="meta"><strong>441</strong> events</p>
+  <p class="meta"><strong>442</strong> events</p>
   <p class="small"><a href="/events/by-date/2026-03-15.ndjson">NDJSON shard</a></p>
 </article><article class="card">
   <h3><a href="/schedule/date/2026-03-16.html">Mon, Mar 16, 2026</a></h3>
@@ -84,7 +78,7 @@ If there are removed/cancelled events, list tombstones first.</pre>
   <p class="small"><a href="/events/by-date/2026-03-16.ndjson">NDJSON shard</a></p>
 </article><article class="card">
   <h3><a href="/schedule/date/2026-03-17.html">Tue, Mar 17, 2026</a></h3>
-  <p class="meta"><strong>450</strong> events</p>
+  <p class="meta"><strong>451</strong> events</p>
   <p class="small"><a href="/events/by-date/2026-03-17.ndjson">NDJSON shard</a></p>
 </article><article class="card">
   <h3><a href="/schedule/date/2026-03-18.html">Wed, Mar 18, 2026</a></h3>

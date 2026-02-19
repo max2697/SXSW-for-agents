@@ -1,68 +1,67 @@
 # SXSW 2026 Agent-First Schedule
 
-> A static, machine-readable export of the official SXSW 2026 schedule.
-> 2790 events across March 12–18, 2026. All data sourced from schedule.sxsw.com.
+> 2795 events across March 12–18, 2026. Sourced daily from schedule.sxsw.com.
 
-## What This Site Is
+## Query API (Recommended — use this first)
 
-This site publishes the SXSW 2026 festival schedule as structured, agent-friendly data.
-It is designed to be easy for LLMs and AI agents to ingest, filter, and reason over.
+A search API returns filtered results in <10 KB. No bulk download needed.
 
-## Recommended Ingestion (Start Here)
+- [OpenAPI spec](https://sxsw.0fn.net/api/openapi.json) — import into ChatGPT, Claude, LangChain, or any OpenAPI-aware agent
+- `https://sxsw.0fn.net/api/shortlist?topic=ai-developer-tooling&per_day=5` — one-call daily shortlist for agentic search
+- `https://sxsw.0fn.net/api/events?date=2026-03-14&q=AI&q_mode=any&limit=200` — broad topic search on a specific day
+- `https://sxsw.0fn.net/api/events?date=2026-03-14&q=AI+developer+tooling&q_mode=all&limit=200` — strict all-term matching
+- `https://sxsw.0fn.net/api/events?venue=Hilton&type=panel` — venue + format filter
+- `https://sxsw.0fn.net/api/events?contributor=Carmen+Simon` — find sessions by speaker/artist
+- `https://sxsw.0fn.net/api/events/PP1162244` — single event by ID
+- `https://sxsw.0fn.net/api/dates` — festival dates with event counts
+- `https://sxsw.0fn.net/api/venues?name=Hilton` — venue lookup
+- `https://sxsw.0fn.net/api/categories` — all categories (format labels: Panel, Rock, Mentor Session, etc.)
+- `https://sxsw.0fn.net/api/contributors?name=Simon` — speaker/artist search
+- `https://sxsw.0fn.net/api/health` — health + current index timestamp
 
-- [Agent ingestion contract](/agents.json) — machine-readable guide: endpoints, field names, ingestion order
-- [**Slim JSON feed**](/agent-schedule.v1.slim.json) — all 2790 events, 10 key fields only, **~2.5 MB** — recommended for most agent tool calls
-- [Slim NDJSON feed](/agent-schedule.v1.slim.ndjson) — same slim data, one event per line, **~1.6 MB**
-- [Full normalized JSON feed](/agent-schedule.v1.json) — all 2790 events, raw + derived + provenance blocks, ~14 MB (large — prefer slim feed or per-day shards)
-- [Full normalized NDJSON feed](/agent-schedule.v1.ndjson) — same full data, one event per line, ~9.2 MB
-- [Manifest + hashes](/schedule.manifest.json) — metadata, SHA256 hashes, shard map, field inventory
-- [Field schema + sample record](/schema.json) — all 75 raw fields documented with a sample event
-- [Change feed + tombstones](/changes.ndjson) — added/modified/removed/cancelled records for incremental sync
-- [Entity indexes](/entities/venues.v1.ndjson), [/entities/contributors.v1.ndjson] — canonical cross-event joins
+Note: `category` is a format label (Panel, Rock, Mentor Session…), not a topic. Use `q=` with `q_mode=` for topic search. If a strict query returns zero, retry with `q=AI&q_mode=any`.
 
-## Date-Sharded Feeds (Recommended for Tool Calls)
+All API responses are JSON, CORS-enabled, always <10 KB.
 
-Fetch only the days you need. Each day has a **slim JSON** (~280-410 KB) and a full NDJSON shard:
+## Bulk Data Feeds (If You Need Everything)
+
+- [agents.json](/agents.json) — machine-readable contract: all endpoints, field names, ingestion order
+- [Per-day slim JSON shards](/events/by-date/2026-03-14.slim.json) — one per day, ~280-410 KB, 14 key fields
+- [Slim JSON feed](/agent-schedule.v1.slim.json) — all 2795 events, ~2.5 MB, 14 key fields
+- [Full normalized JSON feed](/agent-schedule.v1.json) — all 2795 events, ~14.1 MB, all fields
+- [Manifest + hashes](/schedule.manifest.json) — freshness metadata, SHA256 hashes
+- [Schema + sample](/schema.json) — all 75 raw fields with a sample event
+- [Changes feed](/changes.ndjson) — tombstones and incremental updates
+
+## Date Shards
 
 - [Thu, Mar 12, 2026 slim JSON](/events/by-date/2026-03-12.slim.json) — 323 events, key fields only | [full NDJSON](/events/by-date/2026-03-12.ndjson)
 - [Fri, Mar 13, 2026 slim JSON](/events/by-date/2026-03-13.slim.json) — 421 events, key fields only | [full NDJSON](/events/by-date/2026-03-13.ndjson)
-- [Sat, Mar 14, 2026 slim JSON](/events/by-date/2026-03-14.slim.json) — 422 events, key fields only | [full NDJSON](/events/by-date/2026-03-14.ndjson)
-- [Sun, Mar 15, 2026 slim JSON](/events/by-date/2026-03-15.slim.json) — 441 events, key fields only | [full NDJSON](/events/by-date/2026-03-15.ndjson)
+- [Sat, Mar 14, 2026 slim JSON](/events/by-date/2026-03-14.slim.json) — 425 events, key fields only | [full NDJSON](/events/by-date/2026-03-14.ndjson)
+- [Sun, Mar 15, 2026 slim JSON](/events/by-date/2026-03-15.slim.json) — 442 events, key fields only | [full NDJSON](/events/by-date/2026-03-15.ndjson)
 - [Mon, Mar 16, 2026 slim JSON](/events/by-date/2026-03-16.slim.json) — 415 events, key fields only | [full NDJSON](/events/by-date/2026-03-16.ndjson)
-- [Tue, Mar 17, 2026 slim JSON](/events/by-date/2026-03-17.slim.json) — 450 events, key fields only | [full NDJSON](/events/by-date/2026-03-17.ndjson)
+- [Tue, Mar 17, 2026 slim JSON](/events/by-date/2026-03-17.slim.json) — 451 events, key fields only | [full NDJSON](/events/by-date/2026-03-17.ndjson)
 - [Wed, Mar 18, 2026 slim JSON](/events/by-date/2026-03-18.slim.json) — 312 events, key fields only | [full NDJSON](/events/by-date/2026-03-18.ndjson)
-
-## Full Raw Snapshot
-
-- [Full compressed export](/schedule.json.gz) — all 75 raw fields, gzip compressed
-
-## Human-Browsable Pages
-
-- [Schedule index](/schedule/index.html) — browse by day
-- [Individual event pages](/schedule/event/{event_id}.html) — one HTML page per event with JSON payload
-
-## Key Fields (Normalized Feed)
-
-event_id, name, date, start_time, end_time, event_type, format, category, genre, subgenre, track, focus_area, presented_by, reservable, official_url, venue (id, name, address, lat, lon), contributors (name, type), tags, hash_tags
 
 ## Data Freshness
 
-Last built: 2026-02-19T01:23:17.640Z
-Source snapshot: 2026-02-19T00:59:00.000Z
-Expected next refresh by: 2026-02-20T01:23:17.640Z
-Refresh mode: daily cadence.
+Last built: 2026-02-19T09:45:02.602Z
+Source snapshot: 2026-02-19T01:06:00.000Z
+Expected next refresh: 2026-02-20T09:45:02.602Z
 
-## Notes for LLMs
+## Key Fields
 
-- Primary event identifier: `event_id`
-- All timestamps include timezone offsets (America/Chicago, UTC-5 during festival)
-- `contributors` array contains speakers, artists, and performers
-- `credentials` array indicates badge types required to attend
-- `reservable: true` means the event requires a reservation via the official SXSW app
-- Venue objects include `lat`/`lon` for geospatial filtering
-- **File size warning:** The full feeds (/agent-schedule.v1.json ~14 MB, /agent-schedule.v1.ndjson ~9.2 MB) may exceed tool call response limits. Use /agent-schedule.v1.slim.json (~2.5 MB) or per-day shards for most queries.
+- `event_id` — primary identifier
+- `event_type` — panel, showcase, screening, networking, party, activation, exhibition, comedy_event, lounge, special_event, registration
+- `contributors` — speakers, artists, performers (name + type)
+- `credentials` — badge types required (platinum, music, film, interactive, etc.)
+- `reservable` — true if RSVP required via SXSW app
+- `venue.lat` / `venue.lon` — coordinates for geospatial filtering
+- Timestamps are America/Chicago (UTC-5 during festival)
 
-## Optional: Full Raw Data
+## Fetching Notes
 
-The `/schedule.json.gz` file contains all 75 source fields including accessibility flags,
-streaming URLs, film data, and related event IDs. Decompress with standard gzip tools.
+- **Use the API** — /api/events with query params returns only what you need, always parses cleanly
+- Do not route requests through reader proxies (r.jina.ai etc.) — they wrap JSON in markdown and break parsing
+- All endpoints return `Content-Type: application/json` or `application/x-ndjson` — never HTML
+- If you receive HTML, you hit a proxy or a 404. Retry the raw URL directly.

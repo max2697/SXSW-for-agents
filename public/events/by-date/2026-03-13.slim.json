@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-02-19T01:23:17.640Z",
+  "generated_at": "2026-02-19T09:45:02.602Z",
   "festival_year": 2026,
   "date": "2026-03-13",
   "event_count": 421,
@@ -2228,53 +2228,6 @@
       ]
     },
     {
-      "event_id": "PP1149270",
-      "name": "Designing the Future of Human Performance",
-      "date": "2026-03-13",
-      "start_time": "2026-03-13T10:00:00.000-05:00",
-      "end_time": "2026-03-13T11:00:00.000-05:00",
-      "event_type": "panel",
-      "format": "Panel",
-      "category": "Panel",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1149270",
-      "credentials": [
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        },
-        {
-          "type": "innovation",
-          "name": "Innovation Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0454",
-        "name": "Salon D",
-        "lat": 30.2645713,
-        "lon": -97.743198
-      },
-      "contributors": [
-        {
-          "name": "Hunter Woodhall",
-          "type": "person"
-        },
-        {
-          "name": "Tara Woodhall",
-          "type": "person"
-        },
-        {
-          "name": "Justin Moore-Lewy\r",
-          "type": "person"
-        },
-        {
-          "name": "Scott Mager",
-          "type": "person"
-        }
-      ]
-    },
-    {
       "event_id": "PP1149384",
       "name": "Mentor Session: Allison Prasad (Oracle/Oracle Cloud Infrastructure)",
       "date": "2026-03-13",
@@ -4093,6 +4046,53 @@
       "contributors": [
         {
           "name": "Gustav Söderström",
+          "type": "person"
+        }
+      ]
+    },
+    {
+      "event_id": "PP1149270",
+      "name": "Designing the Future of Human Performance",
+      "date": "2026-03-13",
+      "start_time": "2026-03-13T11:30:00.000-05:00",
+      "end_time": "2026-03-13T12:30:00.000-05:00",
+      "event_type": "panel",
+      "format": "Panel",
+      "category": "Panel",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1149270",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0454",
+        "name": "Salon D",
+        "lat": 30.2645713,
+        "lon": -97.743198
+      },
+      "contributors": [
+        {
+          "name": "Hunter Woodhall",
+          "type": "person"
+        },
+        {
+          "name": "Tara Woodhall",
+          "type": "person"
+        },
+        {
+          "name": "Justin Moore-Lewy\r",
+          "type": "person"
+        },
+        {
+          "name": "Scott Mager",
           "type": "person"
         }
       ]
@@ -9743,6 +9743,10 @@
         "lon": -97.743198
       },
       "contributors": [
+        {
+          "name": "Bill Shouldis",
+          "type": "person"
+        },
         {
           "name": "Jonah Peretti",
           "type": "person"

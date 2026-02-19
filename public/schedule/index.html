@@ -28,15 +28,16 @@
   <h2>AI Assistant Prompts</h2>
   <details>
     <summary>Top AI + developer tooling sessions per day</summary>
-    <pre>Use https://sxsw.0fn.net/agents.json and follow its recommended ingestion order.
-Build a shortlist of top AI + developer tooling sessions for each day.
-Include event_id and official_url for every item.</pre>
+    <pre>Use the SXSW 2026 API at https://sxsw.0fn.net/api/.
+First try https://sxsw.0fn.net/api/shortlist?topic=ai-developer-tooling&per_day=5.
+If unavailable, fetch https://sxsw.0fn.net/api/dates and then fetch https://sxsw.0fn.net/api/events?date={date}&q=AI+developer+tooling&q_mode=all&limit=200.
+If no results, retry with q=AI&q_mode=any.
+Build a shortlist of top sessions per day. Include event_id and official_url for every item.</pre>
   </details>
   <details>
     <summary>Speaker lookup prompt</summary>
-    <pre>Use https://sxsw.0fn.net/agent-schedule.v1.slim.json.
-Find sessions where contributors include "Dr. Carmen Simon".
-Return date, time, event name, venue.name, event_id, and official_url.</pre>
+    <pre>Fetch https://sxsw.0fn.net/api/contributors?name=Carmen+Simon
+Return each session with date, start_time, event name, venue, event_id, and official_url.</pre>
   </details>
   <p><a class="button" href="/prompts/index.html">Open Prompt Examples</a></p>
 </section>
@@ -60,11 +61,11 @@ Return date, time, event name, venue.name, event_id, and official_url.</pre>
   <p class="small"><a href="/events/by-date/2026-03-13.ndjson">Raw shard</a></p>
 </article><article class="card">
   <h3><a href="/schedule/date/2026-03-14.html">Sat, Mar 14, 2026</a></h3>
-  <p class="meta"><strong>422</strong> events</p>
+  <p class="meta"><strong>425</strong> events</p>
   <p class="small"><a href="/events/by-date/2026-03-14.ndjson">Raw shard</a></p>
 </article><article class="card">
   <h3><a href="/schedule/date/2026-03-15.html">Sun, Mar 15, 2026</a></h3>
-  <p class="meta"><strong>441</strong> events</p>
+  <p class="meta"><strong>442</strong> events</p>
   <p class="small"><a href="/events/by-date/2026-03-15.ndjson">Raw shard</a></p>
 </article><article class="card">
   <h3><a href="/schedule/date/2026-03-16.html">Mon, Mar 16, 2026</a></h3>
@@ -72,7 +73,7 @@ Return date, time, event name, venue.name, event_id, and official_url.</pre>
   <p class="small"><a href="/events/by-date/2026-03-16.ndjson">Raw shard</a></p>
 </article><article class="card">
   <h3><a href="/schedule/date/2026-03-17.html">Tue, Mar 17, 2026</a></h3>
-  <p class="meta"><strong>450</strong> events</p>
+  <p class="meta"><strong>451</strong> events</p>
   <p class="small"><a href="/events/by-date/2026-03-17.ndjson">Raw shard</a></p>
 </article><article class="card">
   <h3><a href="/schedule/date/2026-03-18.html">Wed, Mar 18, 2026</a></h3>

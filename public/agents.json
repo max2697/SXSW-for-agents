@@ -1,19 +1,19 @@
 {
   "agent_contract_version": "1.1.0",
-  "generated_at": "2026-02-19T01:23:17.640Z",
+  "generated_at": "2026-02-19T09:45:02.602Z",
   "festival_year": 2026,
   "purpose": "Agent-first SXSW schedule feed from official source",
   "freshness": {
     "refresh_mode": "manual",
     "refresh_cadence_target": "daily",
-    "last_successful_refresh_at": "2026-02-19T01:23:17.640Z",
-    "source_snapshot_at": "2026-02-19T00:59:00.000Z",
-    "expected_next_refresh_by": "2026-02-20T01:23:17.640Z",
-    "stale_after": "2026-02-23T01:23:17.640Z",
+    "last_successful_refresh_at": "2026-02-19T09:45:02.602Z",
+    "source_snapshot_at": "2026-02-19T01:06:00.000Z",
+    "expected_next_refresh_by": "2026-02-20T09:45:02.602Z",
+    "stale_after": "2026-02-23T09:45:02.602Z",
     "data_staleness": {
       "is_stale": false,
       "status": "fresh",
-      "source_snapshot_age_hours": 0.4
+      "source_snapshot_age_hours": 8.7
     }
   },
   "compatibility": {
@@ -45,6 +45,35 @@
     },
     "slug_policy": "Non-alphanumeric characters are replaced with underscores."
   },
+  "api": {
+    "openapi": "/api/openapi.json",
+    "base_url": "/api",
+    "endpoints": {
+      "search_events": "GET /api/events?date=&category=&venue=&type=&contributor=&q=&q_mode=&limit=&offset=",
+      "get_event": "GET /api/events/{event_id}",
+      "shortlist": "GET /api/shortlist?topic=&per_day=",
+      "health": "GET /api/health",
+      "list_dates": "GET /api/dates",
+      "list_venues": "GET /api/venues?name=",
+      "list_categories": "GET /api/categories",
+      "search_contributors": "GET /api/contributors?name="
+    },
+    "param_notes": {
+      "q": "Tokenized full-text search across name, venue, category, contributors with synonym normalization (e.g. AI, llm, dev).",
+      "q_mode": "Search mode: any (default), all, phrase. If all returns 0 results, retry with q=AI&q_mode=any.",
+      "category": "Format label, not a topic (Panel, Rock, Mentor Session, Presentation…). Use /api/categories for valid values.",
+      "type": "event_type: panel, showcase, screening, networking, party, activation, exhibition, comedy_event, lounge, special_event, registration",
+      "contributor": "Partial match on speaker, artist, or performer name"
+    },
+    "example_urls": {
+      "health": "https://sxsw.0fn.net/api/health",
+      "dates": "https://sxsw.0fn.net/api/dates",
+      "shortlist_ai_developer_tooling": "https://sxsw.0fn.net/api/shortlist?topic=ai-developer-tooling&per_day=5",
+      "events_ai_any": "https://sxsw.0fn.net/api/events?date=2026-03-14&q=AI&q_mode=any&limit=200",
+      "events_ai_dev_tooling_all": "https://sxsw.0fn.net/api/events?date=2026-03-14&q=AI+developer+tooling&q_mode=all&limit=200"
+    },
+    "note": "Query API returns filtered results <10 KB. No bulk download needed for most queries."
+  },
   "entrypoints": {
     "llms_txt": "/llms.txt",
     "website_home": "/index.html",
@@ -53,6 +82,7 @@
     "sitemap": "/sitemap.xml",
     "slim_json": "/agent-schedule.v1.slim.json",
     "slim_ndjson": "/agent-schedule.v1.slim.ndjson",
+    "slim_shards": "/events/by-date/*.slim.json",
     "easy_json": "/agent-schedule.v1.json",
     "easy_ndjson": "/agent-schedule.v1.ndjson",
     "manifest": "/schedule.manifest.json",
@@ -64,13 +94,18 @@
     "contributors": "/entities/contributors.v1.ndjson"
   },
   "recommended_ingestion_order": [
-    "Read /schedule.manifest.json for schema version, freshness metadata, and hashes",
-    "Read /agent-schedule.v1.slim.json for a compact feed (~10 key fields, fits in most tool call limits)",
-    "Read /agent-schedule.v1.json for the full normalized feed (14 MB — only when all fields are needed)",
-    "Read /changes.ndjson to apply tombstones and incremental updates",
-    "Read /entities/venues.v1.ndjson and /entities/contributors.v1.ndjson for cross-event identity joins",
-    "Use /events/by-date/*.ndjson for date-scoped streaming refreshes",
-    "Use /schedule.json.gz only when complete raw snapshot fidelity is required"
+    "Import /api/openapi.json if your framework supports OpenAPI tool discovery",
+    "Use /api/shortlist?topic=ai-developer-tooling&per_day=5 for one-call ranked daily shortlists",
+    "Query /api/events with date/category/venue/type/contributor/q params — returns <10 KB",
+    "Fall back to per-day slim shards /events/by-date/{date}.slim.json if you need all events for a day",
+    "Use /agent-schedule.v1.slim.json only if you need all events across all days in one request",
+    "Use /agent-schedule.v1.json only when all 75 raw fields are required"
+  ],
+  "fetching_tips": [
+    "The /api/* endpoints are the recommended access pattern — small responses, no bulk download",
+    "Fetch JSON directly — do not route through reader proxies (e.g. r.jina.ai). They wrap responses in markdown and break JSON parsing.",
+    "All endpoints return Content-Type: application/json or application/x-ndjson — never HTML",
+    "If you receive HTML or a markdown wrapper, you are hitting a proxy or a 404. Retry the raw URL directly."
   ],
   "expectations": {
     "timezone_note": "Event timestamps include local offsets from source data.",
@@ -88,7 +123,7 @@
       "/2026/search",
       "/api/web/2026/events/{event_id}"
     ],
-    "source_snapshot_at": "2026-02-19T00:59:00.000Z",
+    "source_snapshot_at": "2026-02-19T01:06:00.000Z",
     "extraction_notes": "Event IDs are discovered from official search index; event records are hydrated from official detail endpoint."
   }
 }

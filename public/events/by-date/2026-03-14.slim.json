@@ -1,9 +1,9 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-02-19T01:23:17.640Z",
+  "generated_at": "2026-02-19T09:45:02.602Z",
   "festival_year": 2026,
   "date": "2026-03-14",
-  "event_count": 422,
+  "event_count": 425,
   "note": "Slim shard for 2026-03-14. Full day data at /events/by-date/2026-03-14.ndjson.",
   "fields": [
     "event_id",
@@ -1173,6 +1173,41 @@
       "contributors": [
         {
           "name": "Buckets",
+          "type": "artist"
+        }
+      ]
+    },
+    {
+      "event_id": "MS64495",
+      "name": "CQ Wrestling",
+      "date": "2026-03-14",
+      "start_time": null,
+      "end_time": null,
+      "event_type": "showcase",
+      "format": "Rock",
+      "category": "Rock",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64495",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0597",
+        "name": "Seven Grand",
+        "lat": 30.2676617,
+        "lon": -97.7386572
+      },
+      "contributors": [
+        {
+          "name": "CQ Wrestling",
           "type": "artist"
         }
       ]
@@ -3364,10 +3399,6 @@
         "lon": -97.743198
       },
       "contributors": [
-        {
-          "name": "Kuniaki Higashi",
-          "type": "person"
-        },
         {
           "name": "Terry Ouyang",
           "type": "person"
@@ -13699,6 +13730,41 @@
       ]
     },
     {
+      "event_id": "MS64483",
+      "name": "c_robo_",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T20:30:00.000-05:00",
+      "end_time": "2026-03-14T21:30:00.000-05:00",
+      "event_type": "showcase",
+      "format": "Electronic",
+      "category": "Electronic",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64483",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0599",
+        "name": "Kingdom",
+        "lat": 30.2672791,
+        "lon": -97.7375539
+      },
+      "contributors": [
+        {
+          "name": "c_robo_",
+          "type": "artist"
+        }
+      ]
+    },
+    {
       "event_id": "MS63510",
       "name": "Grandmas House",
       "date": "2026-03-14",
@@ -13839,41 +13905,6 @@
       ]
     },
     {
-      "event_id": "MS64483",
-      "name": "c_robo_",
-      "date": "2026-03-14",
-      "start_time": "2026-03-14T20:45:00.000-05:00",
-      "end_time": "2026-03-14T21:00:00.000-05:00",
-      "event_type": "showcase",
-      "format": "Electronic",
-      "category": "Electronic",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS64483",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0599",
-        "name": "Kingdom",
-        "lat": 30.2672791,
-        "lon": -97.7375539
-      },
-      "contributors": [
-        {
-          "name": "c_robo_",
-          "type": "artist"
-        }
-      ]
-    },
-    {
       "event_id": "FS19324",
       "name": "Mike & Nick & Nick & Alice",
       "date": "2026-03-14",
@@ -13940,6 +13971,41 @@
         {
           "name": "Oliver Bernsen",
           "type": "person"
+        }
+      ]
+    },
+    {
+      "event_id": "MS63218",
+      "name": "Aaron Page",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T21:00:00.000-05:00",
+      "end_time": "2026-03-14T21:15:00.000-05:00",
+      "event_type": "showcase",
+      "format": "R & B",
+      "category": "R & B",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS63218",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2389",
+        "name": "Brushy Street Commons",
+        "lat": 30.2647851,
+        "lon": -97.7340015
+      },
+      "contributors": [
+        {
+          "name": "Aaron Page",
+          "type": "artist"
         }
       ]
     },
@@ -14438,6 +14504,41 @@
       ]
     },
     {
+      "event_id": "MS64262",
+      "name": "SRI",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T21:30:00.000-05:00",
+      "end_time": "2026-03-14T22:30:00.000-05:00",
+      "event_type": "showcase",
+      "format": "DJ",
+      "category": "DJ",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64262",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0599",
+        "name": "Kingdom",
+        "lat": 30.2672791,
+        "lon": -97.7375539
+      },
+      "contributors": [
+        {
+          "name": "SRI",
+          "type": "artist"
+        }
+      ]
+    },
+    {
       "event_id": "MS63717",
       "name": "Mid Century Modern",
       "date": "2026-03-14",
@@ -14713,41 +14814,6 @@
       "contributors": [
         {
           "name": "SpaceGoonz",
-          "type": "artist"
-        }
-      ]
-    },
-    {
-      "event_id": "MS64261",
-      "name": "ultra caro",
-      "date": "2026-03-14",
-      "start_time": "2026-03-14T22:00:00.000-05:00",
-      "end_time": "2026-03-14T23:00:00.000-05:00",
-      "event_type": "showcase",
-      "format": "Pop",
-      "category": "Pop",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS64261",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0599",
-        "name": "Kingdom",
-        "lat": 30.2672791,
-        "lon": -97.7375539
-      },
-      "contributors": [
-        {
-          "name": "ultra caro",
           "type": "artist"
         }
       ]
@@ -15103,6 +15169,41 @@
       ]
     },
     {
+      "event_id": "MS64261",
+      "name": "ultra caro",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T22:30:00.000-05:00",
+      "end_time": "2026-03-14T23:30:00.000-05:00",
+      "event_type": "showcase",
+      "format": "Pop",
+      "category": "Pop",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64261",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0599",
+        "name": "Kingdom",
+        "lat": 30.2672791,
+        "lon": -97.7375539
+      },
+      "contributors": [
+        {
+          "name": "ultra caro",
+          "type": "artist"
+        }
+      ]
+    },
+    {
       "event_id": "MS63252",
       "name": "Whitelands",
       "date": "2026-03-14",
@@ -15348,41 +15449,6 @@
       ]
     },
     {
-      "event_id": "MS64260",
-      "name": "2charm",
-      "date": "2026-03-14",
-      "start_time": "2026-03-14T23:00:00.000-05:00",
-      "end_time": "2026-03-15T00:00:00.000-05:00",
-      "event_type": "showcase",
-      "format": "Pop",
-      "category": "Pop",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS64260",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0599",
-        "name": "Kingdom",
-        "lat": 30.2672791,
-        "lon": -97.7375539
-      },
-      "contributors": [
-        {
-          "name": "2charm",
-          "type": "artist"
-        }
-      ]
-    },
-    {
       "event_id": "MS64364",
       "name": "Tone Royal",
       "date": "2026-03-14",
@@ -15553,6 +15619,41 @@
       "contributors": [
         {
           "name": "Spoon Benders",
+          "type": "artist"
+        }
+      ]
+    },
+    {
+      "event_id": "MS64260",
+      "name": "2charm",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T23:30:00.000-05:00",
+      "end_time": "2026-03-15T00:00:00.000-05:00",
+      "event_type": "showcase",
+      "format": "Pop",
+      "category": "Pop",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64260",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0599",
+        "name": "Kingdom",
+        "lat": 30.2672791,
+        "lon": -97.7375539
+      },
+      "contributors": [
+        {
+          "name": "2charm",
           "type": "artist"
         }
       ]

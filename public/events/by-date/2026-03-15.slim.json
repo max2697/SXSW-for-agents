@@ -1,9 +1,9 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-02-19T01:23:17.640Z",
+  "generated_at": "2026-02-19T09:45:02.602Z",
   "festival_year": 2026,
   "date": "2026-03-15",
-  "event_count": 441,
+  "event_count": 442,
   "note": "Slim shard for 2026-03-15. Full day data at /events/by-date/2026-03-15.ndjson.",
   "fields": [
     "event_id",
@@ -3168,6 +3168,41 @@
       "contributors": [
         {
           "name": "Esau Ortiz",
+          "type": "artist"
+        }
+      ]
+    },
+    {
+      "event_id": "MS64463",
+      "name": "In Color",
+      "date": "2026-03-15",
+      "start_time": null,
+      "end_time": null,
+      "event_type": "showcase",
+      "format": "Pop",
+      "category": "Pop",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64463",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0228",
+        "name": "Stubb’s",
+        "lat": 30.2684579,
+        "lon": -97.7361748
+      },
+      "contributors": [
+        {
+          "name": "In Color",
           "type": "artist"
         }
       ]
