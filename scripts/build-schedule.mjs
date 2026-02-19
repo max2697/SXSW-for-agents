@@ -955,16 +955,16 @@ Build a shortlist of the top sessions per day. Include event_id and official_url
     var topic = (document.getElementById('pb-topic').value || 'AI').trim();
     var date = (document.getElementById('pb-date').value || '2026-03-15').trim();
     var speaker = (document.getElementById('pb-speaker').value || '').trim();
-    var lines = [
-      'Use ${escapeHtml(base)} as source.',
-      'Read /schedule.manifest.json first, then /agent-schedule.v1.slim.json.',
-      'Find SXSW ${manifest.festival_year} sessions on ' + date + ' about ' + topic + '.',
-      'Return: event_id, name, start_time, end_time, venue.name, official_url.',
-      'Sort by start_time.'
-    ];
+    var topicEnc = encodeURIComponent(topic).replace(/%20/g, '+');
+    var lines = [];
     if (speaker) {
-      lines.push('Prefer events where contributors include \"' + speaker + '\".');
+      var speakerEnc = encodeURIComponent(speaker).replace(/%20/g, '+');
+      lines.push('Fetch ${escapeHtml(base)}api/contributors?name=' + speakerEnc);
+      lines.push('Also fetch ${escapeHtml(base)}api/events?date=' + date + '&q=' + topicEnc);
+    } else {
+      lines.push('Fetch ${escapeHtml(base)}api/events?date=' + date + '&q=' + topicEnc);
     }
+    lines.push('Return a table with columns: start_time, name, venue, event_id, official_url. Sort by start_time.');
     var text = lines.join('\\n');
     document.getElementById('pb-output').textContent = text;
     return text;
