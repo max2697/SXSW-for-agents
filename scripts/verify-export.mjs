@@ -6,7 +6,9 @@ import { gunzipSync } from "node:zlib";
 const BASE_DIR = "public";
 const MAX_FILE_BYTES = 25 * 1024 * 1024;
 const VERIFY_SOURCE_PARITY = String(process.env.VERIFY_SOURCE_PARITY || "1") !== "0";
+const VERIFY_API_CONTRACT = String(process.env.VERIFY_API_CONTRACT || "1") !== "0";
 const PARITY_SAMPLE_SIZE = Math.max(1, Number(process.env.PARITY_SAMPLE_SIZE || 8));
+const API_MAX_LATENCY_MS = Math.max(100, Number(process.env.API_MAX_LATENCY_MS || 2000));
 const BASE_URL = "https://schedule.sxsw.com";
 const YEAR = Number(process.env.SXSW_YEAR || 2026);
 const USER_AGENT = "sxsw-2026-agent-schedule-verifier/1.0 (+https://schedule.sxsw.com)";
@@ -213,6 +215,80 @@ async function verifySourceParity(manifest, fullById) {
   }
 
   return { sourceCount: sourceIds.length, sampleChecked: sampleIds.length };
+}
+
+async function verifyApiContract() {
+  const { onRequest } = await import("../functions/api/[[path]].js");
+
+  async function callApi(path) {
+    const started = Date.now();
+    const response = await onRequest({
+      request: new Request(`https://sxsw.0fn.net/api${path}`),
+      env: {}
+    });
+    const latencyMs = Date.now() - started;
+    const text = await response.text();
+    let body = null;
+    if (text) {
+      try {
+        body = JSON.parse(text);
+      } catch {
+        fail(`API ${path} did not return JSON`);
+      }
+    }
+    if (!response.ok) {
+      fail(`API ${path} failed: HTTP ${response.status}`);
+    }
+    return { latencyMs, body };
+  }
+
+  const health = await callApi("/health");
+  if (health.body?.status !== "ok") {
+    fail(`API /health status mismatch: ${health.body?.status}`);
+  }
+  ensureIso("api.health.now", health.body?.now);
+  ensureIso("api.health.index_timestamp", health.body?.index_timestamp);
+
+  // Warm-cache call above should make this representative endpoint latency stable.
+  const events = await callApi("/events?date=2026-03-14&q=AI&q_mode=any&limit=20");
+  if (events.latencyMs > API_MAX_LATENCY_MS) {
+    fail(`API latency exceeded for /events: ${events.latencyMs}ms > ${API_MAX_LATENCY_MS}ms`);
+  }
+  if (!Number.isInteger(events.body?.total) || events.body.total <= 0) {
+    fail(`Expected non-zero total for known query, got: ${events.body?.total}`);
+  }
+  if (!Array.isArray(events.body?.results) || events.body.results.length === 0) {
+    fail("Expected non-empty result set for known /api/events query");
+  }
+
+  const shortlist = await callApi("/shortlist?topic=ai-developer-tooling&per_day=3");
+  if (!shortlist.body || !Array.isArray(shortlist.body.days) || shortlist.body.days.length === 0) {
+    fail("shortlist response missing days array");
+  }
+  if (shortlist.body.per_day !== 3) {
+    fail(`shortlist per_day mismatch: expected 3, got ${shortlist.body.per_day}`);
+  }
+  ensureIso("shortlist.generated_at", shortlist.body.generated_at);
+  ensureIso("shortlist.index_timestamp", shortlist.body.index_timestamp);
+
+  for (const day of shortlist.body.days) {
+    if (!day?.date) fail("shortlist day missing date");
+    if (!Array.isArray(day.results)) fail(`shortlist day ${day.date} missing results array`);
+    if (day.results.length > 3) fail(`shortlist day ${day.date} exceeded per_day limit`);
+    for (const item of day.results) {
+      if (!item?.event_id) fail(`shortlist item missing event_id for day ${day.date}`);
+      if (!item?.official_url) fail(`shortlist item missing official_url for day ${day.date}`);
+      if (typeof item?.score !== "number") fail(`shortlist item missing numeric score for ${item?.event_id}`);
+      if (!Array.isArray(item?.matched_terms)) fail(`shortlist item missing matched_terms array for ${item?.event_id}`);
+      if (!Array.isArray(item?.matched_fields)) fail(`shortlist item missing matched_fields array for ${item?.event_id}`);
+    }
+  }
+
+  return {
+    eventsLatencyMs: events.latencyMs,
+    eventsTotal: events.body.total,
+    shortlistDays: shortlist.body.days.length
+  };
 }
 
 async function main() {
@@ -499,6 +575,11 @@ async function main() {
     parityResult = await verifySourceParity(manifest, fullById);
   }
 
+  let apiResult = null;
+  if (VERIFY_API_CONTRACT) {
+    apiResult = await verifyApiContract();
+  }
+
   console.log("Verification passed");
   console.log(`Events: ${full.events.length}`);
   console.log(`Easy JSON events: ${easyJson.events.length}`);
@@ -512,6 +593,13 @@ async function main() {
     console.log(`Source sample checked: ${parityResult.sampleChecked}`);
   } else {
     console.log("Source parity skipped (VERIFY_SOURCE_PARITY=0)");
+  }
+  if (apiResult) {
+    console.log(`API events latency: ${apiResult.eventsLatencyMs}ms`);
+    console.log(`API known-query total: ${apiResult.eventsTotal}`);
+    console.log(`API shortlist days: ${apiResult.shortlistDays}`);
+  } else {
+    console.log("API contract checks skipped (VERIFY_API_CONTRACT=0)");
   }
   console.log(`Files checked: ${files.length}`);
   console.log(`Generated: ${manifest.generated_at}`);

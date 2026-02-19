@@ -799,7 +799,7 @@ function renderLandingPage(manifest, dateSummaries) {
   <p class="small">Copy and paste into Claude, ChatGPT, Gemini, Perplexity, or coding agents.</p>
   <details>
     <summary>Find AI sessions on 2026-03-15</summary>
-    <pre>Fetch ${escapeHtml(absoluteUrl("/api/events"))}?date=2026-03-15&q=AI and return a table of results with columns: time, session name, venue, event_id.</pre>
+    <pre>Fetch ${escapeHtml(absoluteUrl("/api/events"))}?date=2026-03-15&q=AI&q_mode=any&limit=200 and return a table of results with columns: time, session name, venue, event_id.</pre>
   </details>
   <details>
     <summary>Find sessions at Hilton Austin Downtown</summary>
@@ -898,7 +898,7 @@ function renderPromptExamplesPage(manifest) {
 <section class="panel">
   <h2>1) Find Sessions by Topic and Date</h2>
   <p><button class="button copy-prompt" type="button" data-target="prompt-1">Copy</button></p>
-  <pre id="prompt-1">Fetch ${escapeHtml(base)}api/events?date=2026-03-15&q=AI
+  <pre id="prompt-1">Fetch ${escapeHtml(base)}api/events?date=2026-03-15&q=AI&q_mode=any&limit=200
 Return a table with columns: start_time, name, venue, event_id, official_url. Sort by start_time.</pre>
 </section>
 <section class="panel">
@@ -924,8 +924,9 @@ List any tombstones (removed/cancelled) first.</pre>
   <h2>5) Plan My SXSW Day</h2>
   <p><button class="button copy-prompt" type="button" data-target="prompt-5">Copy</button></p>
   <pre id="prompt-5">Use the SXSW ${manifest.festival_year} schedule API at ${escapeHtml(base)}api/
-First fetch ${escapeHtml(base)}api/dates to see available days.
-Then fetch events for each day using ?q=AI+developer+tooling to find tech sessions.
+First try: fetch ${escapeHtml(base)}api/shortlist?topic=ai-developer-tooling&per_day=5
+If unavailable, fetch ${escapeHtml(base)}api/dates and then fetch ${escapeHtml(base)}api/events?date={date}&q=AI+developer+tooling&q_mode=all&limit=200 for each day.
+If no results, retry with q=AI&q_mode=any.
 Build a shortlist of the top sessions per day. Include event_id and official_url for every item.</pre>
 </section>
 <section class="panel">
@@ -960,9 +961,9 @@ Build a shortlist of the top sessions per day. Include event_id and official_url
     if (speaker) {
       var speakerEnc = encodeURIComponent(speaker).replace(/%20/g, '+');
       lines.push('Fetch ${escapeHtml(base)}api/contributors?name=' + speakerEnc);
-      lines.push('Also fetch ${escapeHtml(base)}api/events?date=' + date + '&q=' + topicEnc);
+      lines.push('Also fetch ${escapeHtml(base)}api/events?date=' + date + '&q=' + topicEnc + '&q_mode=any&limit=200');
     } else {
-      lines.push('Fetch ${escapeHtml(base)}api/events?date=' + date + '&q=' + topicEnc);
+      lines.push('Fetch ${escapeHtml(base)}api/events?date=' + date + '&q=' + topicEnc + '&q_mode=any&limit=200');
     }
     lines.push('Return a table with columns: start_time, name, venue, event_id, official_url. Sort by start_time.');
     var text = lines.join('\\n');
@@ -1107,7 +1108,9 @@ function renderScheduleIndexPage(manifest, dateSummaries) {
   <details>
     <summary>Top AI + developer tooling sessions per day</summary>
     <pre>Use the SXSW ${manifest.festival_year} API at ${escapeHtml(absoluteUrl("/api/"))}.
-Fetch ${escapeHtml(absoluteUrl("/api/dates"))} for available days, then for each day fetch /api/events?date={date}&q=AI+developer+tooling.
+First try ${escapeHtml(absoluteUrl("/api/shortlist"))}?topic=ai-developer-tooling&per_day=5.
+If unavailable, fetch ${escapeHtml(absoluteUrl("/api/dates"))} and then fetch ${escapeHtml(absoluteUrl("/api/events"))}?date={date}&q=AI+developer+tooling&q_mode=all&limit=200.
+If no results, retry with q=AI&q_mode=any.
 Build a shortlist of top sessions per day. Include event_id and official_url for every item.</pre>
   </details>
   <details>
@@ -1415,18 +1418,20 @@ function renderLlmsTxt(manifest, dateSummaries) {
 
 A search API returns filtered results in <10 KB. No bulk download needed.
 
-- [OpenAPI spec](/api/openapi.json) — import into ChatGPT, Claude, LangChain, or any OpenAPI-aware agent
-- \`GET /api/events?date=2026-03-14&q=artificial+intelligence\` — topic search on a specific day
-- \`GET /api/events?venue=Hilton&type=panel\` — venue + format filter
-- \`GET /api/events?contributor=Carmen+Simon\` — find sessions by speaker/artist
-- \`GET /api/events?q=climate+tech&date=2026-03-15\` — full-text search across name, venue, contributors
-- \`GET /api/events/{event_id}\` — single event by ID
-- \`GET /api/dates\` — festival dates with event counts
-- \`GET /api/venues?name=Hilton\` — venue lookup
-- \`GET /api/categories\` — all categories (format labels: Panel, Rock, Mentor Session, etc.)
-- \`GET /api/contributors?name=Simon\` — speaker/artist search
+- [OpenAPI spec](${absoluteUrl("/api/openapi.json")}) — import into ChatGPT, Claude, LangChain, or any OpenAPI-aware agent
+- \`${absoluteUrl("/api/shortlist?topic=ai-developer-tooling&per_day=5")}\` — one-call daily shortlist for agentic search
+- \`${absoluteUrl("/api/events?date=2026-03-14&q=AI&q_mode=any&limit=200")}\` — broad topic search on a specific day
+- \`${absoluteUrl("/api/events?date=2026-03-14&q=AI+developer+tooling&q_mode=all&limit=200")}\` — strict all-term matching
+- \`${absoluteUrl("/api/events?venue=Hilton&type=panel")}\` — venue + format filter
+- \`${absoluteUrl("/api/events?contributor=Carmen+Simon")}\` — find sessions by speaker/artist
+- \`${absoluteUrl("/api/events/PP1162244")}\` — single event by ID
+- \`${absoluteUrl("/api/dates")}\` — festival dates with event counts
+- \`${absoluteUrl("/api/venues?name=Hilton")}\` — venue lookup
+- \`${absoluteUrl("/api/categories")}\` — all categories (format labels: Panel, Rock, Mentor Session, etc.)
+- \`${absoluteUrl("/api/contributors?name=Simon")}\` — speaker/artist search
+- \`${absoluteUrl("/api/health")}\` — health + current index timestamp
 
-Note: \`category\` is a format label (Panel, Rock, Mentor Session…), not a topic. Use \`q=\` for topic-based search.
+Note: \`category\` is a format label (Panel, Rock, Mentor Session…), not a topic. Use \`q=\` with \`q_mode=\` for topic search. If a strict query returns zero, retry with \`q=AI&q_mode=any\`.
 
 All API responses are JSON, CORS-enabled, always <10 KB.
 
@@ -1880,18 +1885,28 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
       openapi: "/api/openapi.json",
       base_url: "/api",
       endpoints: {
-        search_events: "GET /api/events?date=&category=&venue=&type=&contributor=&q=&limit=&offset=",
+        search_events: "GET /api/events?date=&category=&venue=&type=&contributor=&q=&q_mode=&limit=&offset=",
         get_event:     "GET /api/events/{event_id}",
+        shortlist:     "GET /api/shortlist?topic=&per_day=",
+        health:        "GET /api/health",
         list_dates:    "GET /api/dates",
         list_venues:   "GET /api/venues?name=",
         list_categories: "GET /api/categories",
         search_contributors: "GET /api/contributors?name="
       },
       param_notes: {
-        q: "Full-text search across name, venue, category, contributors — use for topic queries (e.g. q=AI, q=climate)",
+        q: "Tokenized full-text search across name, venue, category, contributors with synonym normalization (e.g. AI, llm, dev).",
+        q_mode: "Search mode: any (default), all, phrase. If all returns 0 results, retry with q=AI&q_mode=any.",
         category: "Format label, not a topic (Panel, Rock, Mentor Session, Presentation…). Use /api/categories for valid values.",
         type: "event_type: panel, showcase, screening, networking, party, activation, exhibition, comedy_event, lounge, special_event, registration",
         contributor: "Partial match on speaker, artist, or performer name"
+      },
+      example_urls: {
+        health: absoluteUrl("/api/health"),
+        dates: absoluteUrl("/api/dates"),
+        shortlist_ai_developer_tooling: absoluteUrl("/api/shortlist?topic=ai-developer-tooling&per_day=5"),
+        events_ai_any: absoluteUrl("/api/events?date=2026-03-14&q=AI&q_mode=any&limit=200"),
+        events_ai_dev_tooling_all: absoluteUrl("/api/events?date=2026-03-14&q=AI+developer+tooling&q_mode=all&limit=200")
       },
       note: "Query API returns filtered results <10 KB. No bulk download needed for most queries."
     },
@@ -1916,6 +1931,7 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
     },
     recommended_ingestion_order: [
       "Import /api/openapi.json if your framework supports OpenAPI tool discovery",
+      "Use /api/shortlist?topic=ai-developer-tooling&per_day=5 for one-call ranked daily shortlists",
       "Query /api/events with date/venue/type/contributor/q params — returns <10 KB",
       "Fall back to per-day slim shards /events/by-date/{date}.slim.json if you need all events for a day",
       "Use /agent-schedule.v1.slim.json only if you need all events across all days in one request",
@@ -2249,18 +2265,28 @@ async function main() {
       openapi: "/api/openapi.json",
       base_url: "/api",
       endpoints: {
-        search_events:       "GET /api/events?date=&category=&venue=&type=&contributor=&q=&limit=&offset=",
+        search_events:       "GET /api/events?date=&category=&venue=&type=&contributor=&q=&q_mode=&limit=&offset=",
         get_event:           "GET /api/events/{event_id}",
+        shortlist:           "GET /api/shortlist?topic=&per_day=",
+        health:              "GET /api/health",
         list_dates:          "GET /api/dates",
         list_venues:         "GET /api/venues?name=",
         list_categories:     "GET /api/categories",
         search_contributors: "GET /api/contributors?name="
       },
       param_notes: {
-        q: "Full-text search across name, venue, category, contributors — use for topic queries (e.g. q=AI, q=climate)",
+        q: "Tokenized full-text search across name, venue, category, contributors with synonym normalization (e.g. AI, llm, dev).",
+        q_mode: "Search mode: any (default), all, phrase. If all returns 0 results, retry with q=AI&q_mode=any.",
         category: "Format label, not a topic (Panel, Rock, Mentor Session, Presentation…). Use /api/categories for valid values.",
         type: "event_type: panel, showcase, screening, networking, party, activation, exhibition, comedy_event, lounge, special_event, registration",
         contributor: "Partial match on speaker, artist, or performer name"
+      },
+      example_urls: {
+        health: absoluteUrl("/api/health"),
+        dates: absoluteUrl("/api/dates"),
+        shortlist_ai_developer_tooling: absoluteUrl("/api/shortlist?topic=ai-developer-tooling&per_day=5"),
+        events_ai_any: absoluteUrl("/api/events?date=2026-03-14&q=AI&q_mode=any&limit=200"),
+        events_ai_dev_tooling_all: absoluteUrl("/api/events?date=2026-03-14&q=AI+developer+tooling&q_mode=all&limit=200")
       },
       note: "Query API returns filtered results <10 KB. No bulk download needed for most queries."
     },
@@ -2285,6 +2311,7 @@ async function main() {
     },
     recommended_ingestion_order: [
       "Import /api/openapi.json if your framework supports OpenAPI tool discovery",
+      "Use /api/shortlist?topic=ai-developer-tooling&per_day=5 for one-call ranked daily shortlists",
       "Query /api/events with date/category/venue/type/contributor/q params — returns <10 KB",
       "Fall back to per-day slim shards /events/by-date/{date}.slim.json if you need all events for a day",
       "Use /agent-schedule.v1.slim.json only if you need all events across all days in one request",
