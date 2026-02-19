@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>404 Not Found — SXSW 2026 Schedule</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 4rem auto; padding: 0 1rem; }
+    code { background: #f0f0f0; padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.9em; }
+    pre { background: #f0f0f0; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>404 — Not Found</h1>
+  <p>This path does not exist on <strong>sxsw.0fn.net</strong>.</p>
+  <h2>Valid Agent Endpoints</h2>
+  <pre>/agents.json               — ingestion contract (start here)
+/schedule.manifest.json    — metadata, hashes, shard map
+/agent-schedule.v1.slim.json  — slim feed, ~10 key fields (~1 MB)
+/agent-schedule.v1.json    — full normalized feed (~14 MB)
+/agent-schedule.v1.ndjson  — full NDJSON feed (~9 MB)
+/changes.ndjson            — change feed + tombstones
+/entities/venues.v1.ndjson
+/entities/contributors.v1.ndjson
+/events/by-date/2026-03-12.ndjson
+/events/by-date/2026-03-13.ndjson
+/events/by-date/2026-03-14.ndjson
+/events/by-date/2026-03-15.ndjson
+/events/by-date/2026-03-16.ndjson
+/events/by-date/2026-03-17.ndjson
+/events/by-date/2026-03-18.ndjson
+/llms.txt                  — LLM guidance
+/schema.json               — field documentation</pre>
+  <p>See <a href="/agents.json">/agents.json</a> for the full machine-readable ingestion contract.</p>
+</body>
+</html>

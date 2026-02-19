@@ -11,8 +11,10 @@ It is designed to be easy for LLMs and AI agents to ingest, filter, and reason o
 ## Recommended Ingestion (Start Here)
 
 - [Agent ingestion contract](/agents.json) — machine-readable guide: endpoints, field names, ingestion order
-- [Normalized JSON feed](/agent-schedule.v1.json) — all 2779 events, raw + derived + provenance blocks, single file (~14 MB)
-- [Normalized NDJSON feed](/agent-schedule.v1.ndjson) — same data, one event per line, streaming-friendly (~9.2 MB)
+- [**Slim JSON feed**](/agent-schedule.v1.slim.json) — all 2779 events, 10 key fields only, **~2.5 MB** — recommended for most agent tool calls
+- [Slim NDJSON feed](/agent-schedule.v1.slim.ndjson) — same slim data, one event per line, **~1.6 MB**
+- [Full normalized JSON feed](/agent-schedule.v1.json) — all 2779 events, raw + derived + provenance blocks, ~14 MB (large — prefer slim feed or per-day shards)
+- [Full normalized NDJSON feed](/agent-schedule.v1.ndjson) — same full data, one event per line, ~9.2 MB
 - [Manifest + hashes](/schedule.manifest.json) — metadata, SHA256 hashes, shard map, field inventory
 - [Field schema + sample record](/schema.json) — all 75 raw fields documented with a sample event
 - [Change feed + tombstones](/changes.ndjson) — added/modified/removed/cancelled records for incremental sync
@@ -58,6 +60,7 @@ Refresh mode: daily cadence.
 - `credentials` array indicates badge types required to attend
 - `reservable: true` means the event requires a reservation via the official SXSW app
 - Venue objects include `lat`/`lon` for geospatial filtering
+- **File size warning:** The full feeds (/agent-schedule.v1.json ~14 MB, /agent-schedule.v1.ndjson ~9.2 MB) may exceed tool call response limits. Use /agent-schedule.v1.slim.json (~2.5 MB) or per-day shards for most queries.
 
 ## Optional: Full Raw Data
 

@@ -512,6 +512,26 @@ function normalizeAgentEvent(event, generatedAt) {
   };
 }
 
+const SLIM_FIELDS = [
+  "event_id", "name", "date", "start_time", "end_time",
+  "event_type", "format", "category", "reservable", "official_url",
+  "credentials", "status"
+];
+
+function slimEvent(event) {
+  const slim = {};
+  for (const field of SLIM_FIELDS) {
+    slim[field] = event[field] ?? null;
+  }
+  slim.venue = event.venue
+    ? { id: event.venue.id ?? null, name: event.venue.name ?? null, lat: event.venue.lat ?? null, lon: event.venue.lon ?? null }
+    : null;
+  slim.contributors = Array.isArray(event.contributors)
+    ? event.contributors.map((c) => ({ name: c.name ?? null, type: c.type ?? null }))
+    : [];
+  return slim;
+}
+
 function buildVenueEntityIndex(agentEvents) {
   const map = new Map();
 
@@ -1386,6 +1406,9 @@ function renderLlmsTxt(manifest, dateSummaries) {
     .map((d) => `- [${d.label}](${d.ndjson_path}) — ${d.event_count} events`)
     .join("\n");
 
+  const ai = manifest.agent_interface || {};
+  const fmtMb = (bytes) => (typeof bytes === "number" ? `~${Math.round(bytes / 1024 / 1024 * 10) / 10} MB` : "see manifest");
+
   const normalizedFields = [
     "event_id", "name", "date", "start_time", "end_time", "event_type", "format", "category",
     "genre", "subgenre", "track", "focus_area", "presented_by", "reservable", "official_url",
@@ -1405,8 +1428,10 @@ It is designed to be easy for LLMs and AI agents to ingest, filter, and reason o
 ## Recommended Ingestion (Start Here)
 
 - [Agent ingestion contract](/agents.json) — machine-readable guide: endpoints, field names, ingestion order
-- [Normalized JSON feed](/agent-schedule.v1.json) — all ${manifest.stats.event_count} events, ${Object.keys(manifest.agent_interface.layering || {}).length > 0 ? "raw + derived + provenance blocks" : "normalized fields"}, single file (~${Math.round(manifest.agent_interface.bytes_json / 1024 / 1024 * 10) / 10} MB)
-- [Normalized NDJSON feed](/agent-schedule.v1.ndjson) — same data, one event per line, streaming-friendly (~${Math.round(manifest.agent_interface.bytes_ndjson / 1024 / 1024 * 10) / 10} MB)
+- [**Slim JSON feed**](/agent-schedule.v1.slim.json) — all ${manifest.stats.event_count} events, 10 key fields only, **${fmtMb(ai.bytes_slim_json)}** — recommended for most agent tool calls
+- [Slim NDJSON feed](/agent-schedule.v1.slim.ndjson) — same slim data, one event per line, **${fmtMb(ai.bytes_slim_ndjson)}**
+- [Full normalized JSON feed](/agent-schedule.v1.json) — all ${manifest.stats.event_count} events, raw + derived + provenance blocks, ${fmtMb(ai.bytes_json)} (large — prefer slim feed or per-day shards)
+- [Full normalized NDJSON feed](/agent-schedule.v1.ndjson) — same full data, one event per line, ${fmtMb(ai.bytes_ndjson)}
 - [Manifest + hashes](/schedule.manifest.json) — metadata, SHA256 hashes, shard map, field inventory
 - [Field schema + sample record](/schema.json) — all ${manifest.stats.field_count} raw fields documented with a sample event
 - [Change feed + tombstones](/changes.ndjson) — added/modified/removed/cancelled records for incremental sync
@@ -1446,6 +1471,7 @@ Refresh mode: daily cadence.
 - \`credentials\` array indicates badge types required to attend
 - \`reservable: true\` means the event requires a reservation via the official SXSW app
 - Venue objects include \`lat\`/\`lon\` for geospatial filtering
+- **File size warning:** The full feeds (/agent-schedule.v1.json ${fmtMb(ai.bytes_json)}, /agent-schedule.v1.ndjson ${fmtMb(ai.bytes_ndjson)}) may exceed tool call response limits. Use /agent-schedule.v1.slim.json (${fmtMb(ai.bytes_slim_json)}) or per-day shards for most queries.
 
 ## Optional: Full Raw Data
 
@@ -1678,11 +1704,13 @@ async function loadPublishedSnapshotForSiteBuild() {
   const manifestPath = `${OUTPUT_DIR}/schedule.manifest.json`;
   const fullPath = `${OUTPUT_DIR}/schedule.json.gz`;
   const changesPath = `${OUTPUT_DIR}/changes.ndjson`;
+  const agentNdjsonPath = `${OUTPUT_DIR}/agent-schedule.v1.ndjson`;
 
-  const [manifestRaw, fullRaw, changesRaw] = await Promise.all([
+  const [manifestRaw, fullRaw, changesRaw, agentNdjsonRaw] = await Promise.all([
     readFile(manifestPath, "utf8"),
     readFile(fullPath),
-    readFile(changesPath, "utf8").catch(() => "")
+    readFile(changesPath, "utf8").catch(() => ""),
+    readFile(agentNdjsonPath, "utf8").catch(() => "")
   ]);
 
   const manifest = JSON.parse(manifestRaw);
@@ -1692,16 +1720,37 @@ async function loadPublishedSnapshotForSiteBuild() {
   const dateSummaries = buildDateSummaries(groupedByDate);
   const changeLines = parseNdjson(changesRaw);
   const changeRecords = changeLines.filter((line) => line?.record_type === "change");
+  const agentEvents = agentNdjsonRaw ? parseNdjson(agentNdjsonRaw) : [];
 
   return {
     manifest,
     groupedByDate,
     dateSummaries,
-    changeRecords
+    changeRecords,
+    agentEvents
   };
 }
 
-async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, changeRecords, generatedAt }) {
+async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, changeRecords, agentEvents, generatedAt }) {
+  // Generate slim feeds from normalized agent events
+  const slimEvents = (agentEvents || []).map(slimEvent);
+  const slimSchedule = {
+    schema_version: manifest.schema_version || SCHEMA_VERSION,
+    interface_version: manifest.agent_interface?.version || INTERFACE_VERSION,
+    generated_at: generatedAt,
+    festival_year: YEAR,
+    event_count: slimEvents.length,
+    note: "Slim feed: key fields only. Full data at /agent-schedule.v1.json.",
+    fields: Object.keys(slimEvents[0] || {}),
+    events: slimEvents
+  };
+  const slimNdjson = toNdjson(slimEvents);
+  const slimJsonText = JSON.stringify(slimSchedule, null, 2) + "\n";
+
+  // Patch slim byte sizes into manifest.agent_interface for renderLlmsTxt
+  manifest.agent_interface.bytes_slim_json = Buffer.byteLength(slimJsonText);
+  manifest.agent_interface.bytes_slim_ndjson = Buffer.byteLength(slimNdjson);
+
   await rm(`${OUTPUT_DIR}/schedule`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/prompts`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/faq`, { recursive: true, force: true });
@@ -1795,6 +1844,8 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
     .concat([
       "/agents.json",
       "/schedule.manifest.json",
+      "/agent-schedule.v1.slim.json",
+      "/agent-schedule.v1.slim.ndjson",
       "/agent-schedule.v1.json",
       "/agent-schedule.v1.ndjson",
       "/changes.ndjson",
@@ -1808,7 +1859,9 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
   await Promise.all([
     writeFile(`${OUTPUT_DIR}/robots.txt`, renderRobotsTxt()),
     writeFile(`${OUTPUT_DIR}/sitemap.xml`, renderSitemapXml(sitemapPaths, generatedAt)),
-    writeFile(`${OUTPUT_DIR}/llms.txt`, renderLlmsTxt(manifest, dateSummaries))
+    writeFile(`${OUTPUT_DIR}/llms.txt`, renderLlmsTxt(manifest, dateSummaries)),
+    writeFile(`${OUTPUT_DIR}/agent-schedule.v1.slim.json`, slimJsonText),
+    writeFile(`${OUTPUT_DIR}/agent-schedule.v1.slim.ndjson`, slimNdjson)
   ]);
 
   await mapWithConcurrency(pageWrites, 32, async (page) => {
@@ -1821,13 +1874,14 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
 async function main() {
   if (BUILD_MODE === "site") {
     console.log(`Building website from committed data snapshot (SXSW ${YEAR})...`);
-    const { manifest, groupedByDate, dateSummaries, changeRecords } =
+    const { manifest, groupedByDate, dateSummaries, changeRecords, agentEvents } =
       await loadPublishedSnapshotForSiteBuild();
     const pageCount = await writeSiteArtifacts({
       manifest,
       groupedByDate,
       dateSummaries,
       changeRecords,
+      agentEvents,
       generatedAt: manifest.generated_at || new Date().toISOString()
     });
     console.log(`Done. Rebuilt website pages (${pageCount} files) from committed snapshot.`);
@@ -1941,6 +1995,20 @@ async function main() {
   };
   const agentNdjson = toNdjson(agentEvents);
   const agentJsonText = JSON.stringify(agentSchedule, null, 2) + "\n";
+
+  const slimEvents = agentEvents.map(slimEvent);
+  const slimSchedule = {
+    schema_version: SCHEMA_VERSION,
+    interface_version: INTERFACE_VERSION,
+    generated_at: generatedAt,
+    festival_year: YEAR,
+    event_count: slimEvents.length,
+    note: "Slim feed: key fields only. Full data at /agent-schedule.v1.json.",
+    fields: Object.keys(slimEvents[0] || {}),
+    events: slimEvents
+  };
+  const slimNdjson = toNdjson(slimEvents);
+  const slimJsonText = JSON.stringify(slimSchedule, null, 2) + "\n";
 
   const { previousGeneratedAt, previousEventsById, baselineResetReason } = await readPreviousBuildState();
   const baselineGeneratedAt = previousGeneratedAt || null;
@@ -2064,6 +2132,13 @@ async function main() {
     .digest("hex");
   manifest.agent_interface.bytes_json = Buffer.byteLength(agentJsonText);
   manifest.agent_interface.bytes_ndjson = Buffer.byteLength(agentNdjson);
+  manifest.agent_interface.path_slim_json = "/agent-schedule.v1.slim.json";
+  manifest.agent_interface.path_slim_ndjson = "/agent-schedule.v1.slim.ndjson";
+  manifest.agent_interface.sha256_slim_json = createHash("sha256").update(slimJsonText).digest("hex");
+  manifest.agent_interface.sha256_slim_ndjson = createHash("sha256").update(slimNdjson).digest("hex");
+  manifest.agent_interface.bytes_slim_json = Buffer.byteLength(slimJsonText);
+  manifest.agent_interface.bytes_slim_ndjson = Buffer.byteLength(slimNdjson);
+  manifest.agent_interface.slim_fields = Object.keys(slimEvents[0] || {});
 
   const agentsDescriptor = {
     agent_contract_version: SCHEMA_VERSION,
@@ -2079,6 +2154,8 @@ async function main() {
       schedule_index: "/schedule/index.html",
       robots: "/robots.txt",
       sitemap: "/sitemap.xml",
+      slim_json: "/agent-schedule.v1.slim.json",
+      slim_ndjson: "/agent-schedule.v1.slim.ndjson",
       easy_json: "/agent-schedule.v1.json",
       easy_ndjson: "/agent-schedule.v1.ndjson",
       manifest: "/schedule.manifest.json",
@@ -2091,7 +2168,8 @@ async function main() {
     },
     recommended_ingestion_order: [
       "Read /schedule.manifest.json for schema version, freshness metadata, and hashes",
-      "Read /agent-schedule.v1.json for the normalized full feed",
+      "Read /agent-schedule.v1.slim.json for a compact feed (~10 key fields, fits in most tool call limits)",
+      "Read /agent-schedule.v1.json for the full normalized feed (14 MB — only when all fields are needed)",
       "Read /changes.ndjson to apply tombstones and incremental updates",
       "Read /entities/venues.v1.ndjson and /entities/contributors.v1.ndjson for cross-event identity joins",
       "Use /events/by-date/*.ndjson for date-scoped streaming refreshes",
@@ -2487,6 +2565,8 @@ async function main() {
     .concat([
       "/agents.json",
       "/schedule.manifest.json",
+      "/agent-schedule.v1.slim.json",
+      "/agent-schedule.v1.slim.ndjson",
       "/agent-schedule.v1.json",
       "/agent-schedule.v1.ndjson",
       "/changes.ndjson",
@@ -2505,6 +2585,8 @@ async function main() {
     writeFile(`${OUTPUT_DIR}/agents.json`, JSON.stringify(agentsDescriptor, null, 2) + "\n"),
     writeFile(`${OUTPUT_DIR}/agent-schedule.v1.json`, agentJsonText),
     writeFile(`${OUTPUT_DIR}/agent-schedule.v1.ndjson`, agentNdjson),
+    writeFile(`${OUTPUT_DIR}/agent-schedule.v1.slim.json`, slimJsonText),
+    writeFile(`${OUTPUT_DIR}/agent-schedule.v1.slim.ndjson`, slimNdjson),
     writeFile(`${OUTPUT_DIR}/schema.json`, JSON.stringify(schema, null, 2) + "\n"),
     writeFile(`${OUTPUT_DIR}/schedule.json.gz`, gzippedFull),
     writeFile(`${OUTPUT_DIR}/changes.ndjson`, changesNdjson),
