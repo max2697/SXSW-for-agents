@@ -20,17 +20,17 @@ It is designed to be easy for LLMs and AI agents to ingest, filter, and reason o
 - [Change feed + tombstones](/changes.ndjson) — added/modified/removed/cancelled records for incremental sync
 - [Entity indexes](/entities/venues.v1.ndjson), [/entities/contributors.v1.ndjson] — canonical cross-event joins
 
-## Date-Sharded Feeds (Incremental Ingestion)
+## Date-Sharded Feeds (Recommended for Tool Calls)
 
-Fetch only the days you need. One NDJSON file per festival date:
+Fetch only the days you need. Each day has a **slim JSON** (~280-410 KB) and a full NDJSON shard:
 
-- [Thu, Mar 12, 2026](/events/by-date/2026-03-12.ndjson) — 323 events
-- [Fri, Mar 13, 2026](/events/by-date/2026-03-13.ndjson) — 421 events
-- [Sat, Mar 14, 2026](/events/by-date/2026-03-14.ndjson) — 422 events
-- [Sun, Mar 15, 2026](/events/by-date/2026-03-15.ndjson) — 441 events
-- [Mon, Mar 16, 2026](/events/by-date/2026-03-16.ndjson) — 415 events
-- [Tue, Mar 17, 2026](/events/by-date/2026-03-17.ndjson) — 450 events
-- [Wed, Mar 18, 2026](/events/by-date/2026-03-18.ndjson) — 312 events
+- [Thu, Mar 12, 2026 slim JSON](/events/by-date/2026-03-12.slim.json) — 323 events, key fields only | [full NDJSON](/events/by-date/2026-03-12.ndjson)
+- [Fri, Mar 13, 2026 slim JSON](/events/by-date/2026-03-13.slim.json) — 421 events, key fields only | [full NDJSON](/events/by-date/2026-03-13.ndjson)
+- [Sat, Mar 14, 2026 slim JSON](/events/by-date/2026-03-14.slim.json) — 422 events, key fields only | [full NDJSON](/events/by-date/2026-03-14.ndjson)
+- [Sun, Mar 15, 2026 slim JSON](/events/by-date/2026-03-15.slim.json) — 441 events, key fields only | [full NDJSON](/events/by-date/2026-03-15.ndjson)
+- [Mon, Mar 16, 2026 slim JSON](/events/by-date/2026-03-16.slim.json) — 415 events, key fields only | [full NDJSON](/events/by-date/2026-03-16.ndjson)
+- [Tue, Mar 17, 2026 slim JSON](/events/by-date/2026-03-17.slim.json) — 450 events, key fields only | [full NDJSON](/events/by-date/2026-03-17.ndjson)
+- [Wed, Mar 18, 2026 slim JSON](/events/by-date/2026-03-18.slim.json) — 312 events, key fields only | [full NDJSON](/events/by-date/2026-03-18.ndjson)
 
 ## Full Raw Snapshot
 
@@ -47,9 +47,9 @@ event_id, name, date, start_time, end_time, event_type, format, category, genre,
 
 ## Data Freshness
 
-Last built: 2026-02-19T01:06:36.391Z
+Last built: 2026-02-19T01:23:17.640Z
 Source snapshot: 2026-02-19T00:59:00.000Z
-Expected next refresh by: 2026-02-20T01:06:36.391Z
+Expected next refresh by: 2026-02-20T01:23:17.640Z
 Refresh mode: daily cadence.
 
 ## Notes for LLMs

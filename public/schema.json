@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "interface_version": "v1.1",
-  "generated_at": "2026-02-19T01:06:36.391Z",
+  "generated_at": "2026-02-19T01:23:17.640Z",
   "festival_year": 2026,
   "compatibility_policy": {
     "schema_semver": "1.1.0",
@@ -1449,6 +1449,6 @@
     },
     "shard_count": 8,
     "venue_entity_count": 181,
-    "contributor_entity_count": 3059
+    "contributor_entity_count": 3061
   }
 }

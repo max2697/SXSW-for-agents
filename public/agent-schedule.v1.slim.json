@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "interface_version": "v1.1",
-  "generated_at": "2026-02-19T01:06:36.391Z",
+  "generated_at": "2026-02-19T01:23:17.640Z",
   "festival_year": 2026,
   "event_count": 2790,
   "note": "Slim feed: key fields only. Full data at /agent-schedule.v1.json.",
@@ -58761,6 +58761,14 @@
         "lon": -97.7403971
       },
       "contributors": [
+        {
+          "name": "Rev. Lennox Yearwood Jr.",
+          "type": "person"
+        },
+        {
+          "name": "Matt Mitchell",
+          "type": "person"
+        },
         {
           "name": "Jennifer Holness",
           "type": "person"

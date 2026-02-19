@@ -3021,6 +3021,8 @@
 {"canonical_id":"contributor:2261735","entity_id":"2261735","id":"97745","name":"Various","type":"person","event_ids":["FS19684","FS19685"],"event_count":2}
 {"canonical_id":"contributor:2261738","entity_id":"2261738","id":"97748","name":"Various","type":"person","event_ids":["FS19672","FS19770"],"event_count":2}
 {"canonical_id":"contributor:2261741","entity_id":"2261741","id":"97751","name":"Various","type":"person","event_ids":["FS19982"],"event_count":1}
+{"canonical_id":"contributor:2261809","entity_id":"2261809","id":"97788","name":"Matt Mitchell","type":"person","event_ids":["PP1150601"],"event_count":1}
+{"canonical_id":"contributor:2261810","entity_id":"2261810","id":"97789","name":"Rev. Lennox Yearwood Jr.","type":"person","event_ids":["PP1150601"],"event_count":1}
 {"canonical_id":"contributor:26191","entity_id":"26191","id":"5517","name":"Jeffrey Brown","type":"person","event_ids":["PP1150249"],"event_count":1}
 {"canonical_id":"contributor:2940","entity_id":"2940","id":"182","name":"Nancy Harhut","type":"person","event_ids":["PP1148538"],"event_count":1}
 {"canonical_id":"contributor:2951","entity_id":"2951","id":"189","name":"Sandy Carter","type":"person","event_ids":["PP1148486"],"event_count":1}
