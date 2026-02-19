@@ -1427,15 +1427,17 @@ function renderLlmsTxt(manifest, dateSummaries) {
 A search API returns filtered results in <10 KB. No bulk download needed.
 
 - [OpenAPI spec](/api/openapi.json) — import into ChatGPT, Claude, LangChain, or any OpenAPI-aware agent
-- \`GET /api/events?date=2026-03-14&category=AI\` — filter events by any combination of fields
-- \`GET /api/events?venue=Hilton&type=panel\` — venue + type filter
+- \`GET /api/events?date=2026-03-14&q=artificial+intelligence\` — topic search on a specific day
+- \`GET /api/events?venue=Hilton&type=panel\` — venue + format filter
 - \`GET /api/events?contributor=Carmen+Simon\` — find sessions by speaker/artist
-- \`GET /api/events?q=machine+learning\` — full-text search across name, category, venue
+- \`GET /api/events?q=climate+tech&date=2026-03-15\` — full-text search across name, venue, contributors
 - \`GET /api/events/{event_id}\` — single event by ID
 - \`GET /api/dates\` — festival dates with event counts
 - \`GET /api/venues?name=Hilton\` — venue lookup
-- \`GET /api/categories\` — all 54 categories with counts
+- \`GET /api/categories\` — all categories (format labels: Panel, Rock, Mentor Session, etc.)
 - \`GET /api/contributors?name=Simon\` — speaker/artist search
+
+Note: \`category\` is a format label (Panel, Rock, Mentor Session…), not a topic. Use \`q=\` for topic-based search.
 
 All API responses are JSON, CORS-enabled, always <10 KB.
 
@@ -1896,6 +1898,12 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
         list_categories: "GET /api/categories",
         search_contributors: "GET /api/contributors?name="
       },
+      param_notes: {
+        q: "Full-text search across name, venue, category, contributors — use for topic queries (e.g. q=AI, q=climate)",
+        category: "Format label, not a topic (Panel, Rock, Mentor Session, Presentation…). Use /api/categories for valid values.",
+        type: "event_type: panel, showcase, screening, networking, party, activation, exhibition, comedy_event, lounge, special_event, registration",
+        contributor: "Partial match on speaker, artist, or performer name"
+      },
       note: "Query API returns filtered results <10 KB. No bulk download needed for most queries."
     },
     entrypoints: {
@@ -1919,7 +1927,7 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
     },
     recommended_ingestion_order: [
       "Import /api/openapi.json if your framework supports OpenAPI tool discovery",
-      "Query /api/events with date/category/venue/type/contributor/q params — returns <10 KB",
+      "Query /api/events with date/venue/type/contributor/q params — returns <10 KB",
       "Fall back to per-day slim shards /events/by-date/{date}.slim.json if you need all events for a day",
       "Use /agent-schedule.v1.slim.json only if you need all events across all days in one request",
       "Use /agent-schedule.v1.json only when all 75 raw fields are required"
@@ -2258,6 +2266,12 @@ async function main() {
         list_venues:         "GET /api/venues?name=",
         list_categories:     "GET /api/categories",
         search_contributors: "GET /api/contributors?name="
+      },
+      param_notes: {
+        q: "Full-text search across name, venue, category, contributors — use for topic queries (e.g. q=AI, q=climate)",
+        category: "Format label, not a topic (Panel, Rock, Mentor Session, Presentation…). Use /api/categories for valid values.",
+        type: "event_type: panel, showcase, screening, networking, party, activation, exhibition, comedy_event, lounge, special_event, registration",
+        contributor: "Partial match on speaker, artist, or performer name"
       },
       note: "Query API returns filtered results <10 KB. No bulk download needed for most queries."
     },

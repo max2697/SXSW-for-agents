@@ -211,14 +211,14 @@ function handleOpenApi(url) {
         get: {
           operationId: "searchEvents",
           summary: "Search and filter events",
-          description: "Returns events matching all supplied filters. All params are optional and combinable. Results are paginated (default 50, max 200).",
+          description: "Returns events matching all supplied filters. All params optional and combinable. NOTE: 'category' is a format label (Panel, Rock, Mentor Session, etc.) — use 'q' for topic search. Results paginated (default 50, max 200).",
           parameters: [
             { name: "date", in: "query", schema: { type: "string", example: "2026-03-14" }, description: "Festival date (YYYY-MM-DD). One of: 2026-03-12 through 2026-03-18." },
-            { name: "category", in: "query", schema: { type: "string", example: "AI" }, description: "Partial match on category name (case-insensitive)." },
+            { name: "category", in: "query", schema: { type: "string", example: "Mentor Session" }, description: "Partial match on category (case-insensitive). Category is a format label: Panel, Rock, Mentor Session, Presentation, Documentary Feature, etc. Use /api/categories for the full list. Use 'q' for topic-based search." },
             { name: "venue", in: "query", schema: { type: "string", example: "Hilton" }, description: "Partial match on venue name (case-insensitive)." },
             { name: "type", in: "query", schema: { type: "string", enum: ["panel","showcase","screening","networking","party","activation","exhibition","comedy_event","lounge","special_event","registration"] }, description: "Exact match on event_type." },
             { name: "contributor", in: "query", schema: { type: "string", example: "Carmen Simon" }, description: "Partial match on contributor/speaker/artist name." },
-            { name: "q", in: "query", schema: { type: "string" }, description: "Full-text search across event name, category, venue, and contributor names." },
+            { name: "q", in: "query", schema: { type: "string", example: "artificial intelligence" }, description: "Full-text search across event name, category, venue, and contributor names. Use this for topic-based queries (e.g. q=AI, q=climate, q=music+tech)." },
             { name: "limit", in: "query", schema: { type: "integer", default: 50, maximum: 200 }, description: "Max results to return." },
             { name: "offset", in: "query", schema: { type: "integer", default: 0 }, description: "Pagination offset." },
           ],

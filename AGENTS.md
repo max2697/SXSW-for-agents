@@ -32,19 +32,19 @@ GET https://sxsw.0fn.net/api/openapi.json
 | Param | Type | Example | Description |
 |---|---|---|---|
 | `date` | string | `2026-03-14` | Exact date match. |
-| `category` | string | `AI` | Partial match (case-insensitive). |
+| `category` | string | `Mentor Session` | Partial match on format label. **Not a topic** — values are Panel, Rock, Mentor Session, etc. Use `/api/categories` for the full list. |
 | `venue` | string | `Hilton` | Partial match on venue name. |
 | `type` | string | `panel` | Exact match on `event_type`. |
 | `contributor` | string | `Carmen Simon` | Partial match on speaker/artist name. |
-| `q` | string | `machine learning` | Full-text across name, category, venue, contributors. |
+| `q` | string | `artificial intelligence` | Full-text across name, category, venue, contributors. **Use this for topic search.** |
 | `limit` | int | `50` | Max results (default 50, max 200). |
 | `offset` | int | `0` | Pagination offset. |
 
 ### Example queries
 
 ```
-# AI panels on March 14
-GET /api/events?date=2026-03-14&category=AI&type=panel
+# AI sessions on March 14 (topic search)
+GET /api/events?date=2026-03-14&q=artificial+intelligence&type=panel
 
 # All sessions at the Hilton
 GET /api/events?venue=Hilton
@@ -75,7 +75,7 @@ GET /api/events/PP1162244
       "start_time": "2026-03-14T10:00:00.000-05:00",
       "end_time": "2026-03-14T11:00:00.000-05:00",
       "event_type": "panel",
-      "category": "AI",
+      "category": "Panel",
       "reservable": false,
       "official_url": "https://schedule.sxsw.com/2026/events/PP1162244",
       "credentials": [{ "type": "interactive", "name": "Interactive Badge" }],
