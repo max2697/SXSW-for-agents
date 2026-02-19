@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1.0",
   "interface_version": "v1.1",
-  "generated_at": "2026-02-18T09:46:50.175Z",
+  "generated_at": "2026-02-19T01:06:36.391Z",
   "festival_year": 2026,
   "compatibility_policy": {
     "schema_semver": "1.1.0",
@@ -818,7 +818,7 @@
       "source_event_id": "MS63110",
       "source_search_path": "/2026/search",
       "source_detail_path": "/api/web/2026/events/MS63110",
-      "source_snapshot_at": "2026-02-18T00:17:00.000Z",
+      "source_snapshot_at": "2026-02-19T00:59:00.000Z",
       "raw_fields": [
         "accessibility",
         "accessible_venue",
@@ -915,8 +915,8 @@
       "is_tbd_time": true
     },
     "record_updated_at": "2025-11-11T09:56:00.000-06:00",
-    "record_version": "2025-11-11T09:56:00.000-06:00:8a8c3a0b4d9c",
-    "record_sha256": "8a8c3a0b4d9c4a90c48e4ba75424f1105a2938c7ad91ca3596567c98e801aa9c"
+    "record_version": "2025-11-11T09:56:00.000-06:00:9d15e150de48",
+    "record_sha256": "9d15e150de482e67f1b64d4567ca8da094e4fd1b4f02a8e8af9f333532c95196"
   },
   "sample_raw_record": {
     "id": "MS63110",
@@ -1440,7 +1440,7 @@
     "related_sales_client": null
   },
   "stats": {
-    "event_count": 2779,
+    "event_count": 2790,
     "field_count": 75,
     "failed_event_ids": [],
     "date_range": {
@@ -1448,7 +1448,7 @@
       "end": "2026-03-19T02:00:00.000-05:00"
     },
     "shard_count": 8,
-    "venue_entity_count": 176,
-    "contributor_entity_count": 3043
+    "venue_entity_count": 181,
+    "contributor_entity_count": 3059
   }
 }

@@ -1,9 +1,9 @@
 {
   "schema_version": "1.1.0",
   "interface_version": "v1.1",
-  "generated_at": "2026-02-18T03:33:39.589Z",
+  "generated_at": "2026-02-19T01:06:36.391Z",
   "festival_year": 2026,
-  "event_count": 2779,
+  "event_count": 2790,
   "note": "Slim feed: key fields only. Full data at /agent-schedule.v1.json.",
   "fields": [
     "event_id",
@@ -1068,6 +1068,41 @@
       "contributors": [
         {
           "name": "The All-American Rejects",
+          "type": "artist"
+        }
+      ]
+    },
+    {
+      "event_id": "MS63254",
+      "name": "Easy Honey",
+      "date": "2026-03-14",
+      "start_time": null,
+      "end_time": null,
+      "event_type": "showcase",
+      "format": "Rock",
+      "category": "Rock",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS63254",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V1168",
+        "name": "Low Down Lounge",
+        "lat": 30.2636606,
+        "lon": -97.7275704
+      },
+      "contributors": [
+        {
+          "name": "Easy Honey",
           "type": "artist"
         }
       ]
@@ -2963,41 +2998,6 @@
       ]
     },
     {
-      "event_id": "MS63444",
-      "name": "Bleary Eyed",
-      "date": "2026-03-18",
-      "start_time": null,
-      "end_time": null,
-      "event_type": "showcase",
-      "format": "Rock",
-      "category": "Rock",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS63444",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0248",
-        "name": "Valhalla",
-        "lat": 30.2680595,
-        "lon": -97.7368537
-      },
-      "contributors": [
-        {
-          "name": "Bleary Eyed",
-          "type": "artist"
-        }
-      ]
-    },
-    {
       "event_id": "MS63449",
       "name": "Nilipek.",
       "date": "2026-03-13",
@@ -3238,41 +3238,6 @@
       "contributors": [
         {
           "name": "Twitch4Eva",
-          "type": "artist"
-        }
-      ]
-    },
-    {
-      "event_id": "MS63467",
-      "name": "Buckets",
-      "date": "2026-03-18",
-      "start_time": null,
-      "end_time": null,
-      "event_type": "showcase",
-      "format": "Punk",
-      "category": "Punk",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS63467",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2390",
-        "name": "Seven Spirits",
-        "lat": 30.2641174,
-        "lon": -97.7274221
-      },
-      "contributors": [
-        {
-          "name": "Buckets",
           "type": "artist"
         }
       ]
@@ -4078,6 +4043,41 @@
       "contributors": [
         {
           "name": "Hemi Hemingway",
+          "type": "artist"
+        }
+      ]
+    },
+    {
+      "event_id": "MS63512",
+      "name": "The Ramona Flowers",
+      "date": "2026-03-17",
+      "start_time": null,
+      "end_time": null,
+      "event_type": "showcase",
+      "format": "Pop",
+      "category": "Pop",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS63512",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0271",
+        "name": "Mohawk Indoor",
+        "lat": 30.2701568,
+        "lon": -97.7360368
+      },
+      "contributors": [
+        {
+          "name": "The Ramona Flowers",
           "type": "artist"
         }
       ]
@@ -7198,41 +7198,6 @@
       ]
     },
     {
-      "event_id": "MS63785",
-      "name": "Lola Bates",
-      "date": "2026-03-18",
-      "start_time": null,
-      "end_time": null,
-      "event_type": "showcase",
-      "format": "Pop",
-      "category": "Pop",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS63785",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0900",
-        "name": "Wanderlust Wine Co.",
-        "lat": 30.266322,
-        "lon": -97.7350602
-      },
-      "contributors": [
-        {
-          "name": "Lola Bates",
-          "type": "artist"
-        }
-      ]
-    },
-    {
       "event_id": "MS63791",
       "name": "Alma Muñeca",
       "date": "2026-03-15",
@@ -8598,41 +8563,6 @@
       ]
     },
     {
-      "event_id": "MS63896",
-      "name": "Flesh Juicer",
-      "date": "2026-03-17",
-      "start_time": null,
-      "end_time": null,
-      "event_type": "showcase",
-      "format": "Metal",
-      "category": "Metal",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS63896",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0248",
-        "name": "Valhalla",
-        "lat": 30.2680595,
-        "lon": -97.7368537
-      },
-      "contributors": [
-        {
-          "name": "Flesh Juicer",
-          "type": "artist"
-        }
-      ]
-    },
-    {
       "event_id": "MS63897",
       "name": "Diles que no me maten",
       "date": "2026-03-17",
@@ -9293,41 +9223,6 @@
       "contributors": [
         {
           "name": "Kofi Stone",
-          "type": "artist"
-        }
-      ]
-    },
-    {
-      "event_id": "MS63930",
-      "name": "Jenna Cole",
-      "date": "2026-03-17",
-      "start_time": null,
-      "end_time": null,
-      "event_type": "showcase",
-      "format": "R & B",
-      "category": "R & B",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS63930",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0186",
-        "name": "Flamingo Cantina",
-        "lat": 30.266484,
-        "lon": -97.7377449
-      },
-      "contributors": [
-        {
-          "name": "Jenna Cole",
           "type": "artist"
         }
       ]
@@ -10035,7 +9930,7 @@
     {
       "event_id": "MS64006",
       "name": "Hania Derej",
-      "date": "2026-03-17",
+      "date": "2026-03-14",
       "start_time": null,
       "end_time": null,
       "event_type": "showcase",
@@ -11645,7 +11540,7 @@
     {
       "event_id": "MS64128",
       "name": "Spike Fuck",
-      "date": "2026-03-16",
+      "date": "2026-03-17",
       "start_time": null,
       "end_time": null,
       "event_type": "showcase",
@@ -11665,10 +11560,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V1168",
-        "name": "Low Down Lounge",
-        "lat": 30.2636606,
-        "lon": -97.7275704
+        "id": "V0271",
+        "name": "Mohawk Indoor",
+        "lat": 30.2701568,
+        "lon": -97.7360368
       },
       "contributors": [
         {
@@ -11813,6 +11708,41 @@
       "contributors": [
         {
           "name": "Haters",
+          "type": "artist"
+        }
+      ]
+    },
+    {
+      "event_id": "MS64138",
+      "name": "Famous Friend",
+      "date": "2026-03-18",
+      "start_time": null,
+      "end_time": null,
+      "event_type": "showcase",
+      "format": "Rock",
+      "category": "Rock",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64138",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0182",
+        "name": "Elysium",
+        "lat": 30.2675715,
+        "lon": -97.7365464
+      },
+      "contributors": [
+        {
+          "name": "Famous Friend",
           "type": "artist"
         }
       ]
@@ -13918,111 +13848,6 @@
       ]
     },
     {
-      "event_id": "MS64397",
-      "name": "Sarah Crean",
-      "date": "2026-03-18",
-      "start_time": null,
-      "end_time": null,
-      "event_type": "showcase",
-      "format": "Pop",
-      "category": "Pop",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS64397",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0900",
-        "name": "Wanderlust Wine Co.",
-        "lat": 30.266322,
-        "lon": -97.7350602
-      },
-      "contributors": [
-        {
-          "name": "Sarah Crean",
-          "type": "artist"
-        }
-      ]
-    },
-    {
-      "event_id": "MS64444",
-      "name": "Shallowater",
-      "date": "2026-03-17",
-      "start_time": null,
-      "end_time": null,
-      "event_type": "showcase",
-      "format": "Alt Country",
-      "category": "Alt Country",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS64444",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0248",
-        "name": "Valhalla",
-        "lat": 30.2680595,
-        "lon": -97.7368537
-      },
-      "contributors": [
-        {
-          "name": "Shallowater",
-          "type": "artist"
-        }
-      ]
-    },
-    {
-      "event_id": "MS64445",
-      "name": "KUOKO",
-      "date": "2026-03-12",
-      "start_time": null,
-      "end_time": null,
-      "event_type": "showcase",
-      "format": "Electronic",
-      "category": "Electronic",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS64445",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2194",
-        "name": "Marlow",
-        "lat": 30.2663066,
-        "lon": -97.7358631
-      },
-      "contributors": [
-        {
-          "name": "KUOKO",
-          "type": "artist"
-        }
-      ]
-    },
-    {
       "event_id": "MS64446",
       "name": "His Lordship",
       "date": "2026-03-12",
@@ -14443,41 +14268,6 @@
       ]
     },
     {
-      "event_id": "MS64478",
-      "name": "Liz Cooper",
-      "date": "2026-03-18",
-      "start_time": null,
-      "end_time": null,
-      "event_type": "showcase",
-      "format": "Rock",
-      "category": "Rock",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS64478",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2390",
-        "name": "Seven Spirits",
-        "lat": 30.2641174,
-        "lon": -97.7274221
-      },
-      "contributors": [
-        {
-          "name": "Liz Cooper",
-          "type": "artist"
-        }
-      ]
-    },
-    {
       "event_id": "MS64482",
       "name": "His Lordship",
       "date": "2026-03-16",
@@ -14513,49 +14303,212 @@
       ]
     },
     {
-      "event_id": "PP1148560",
-      "name": "The City That Plays: Digital Twins Reimagining LA & Beyond",
-      "date": null,
+      "event_id": "MS64484",
+      "name": "Marni Ct.",
+      "date": "2026-03-18",
       "start_time": null,
       "end_time": null,
-      "event_type": "panel",
-      "format": "Panel",
-      "category": "Panel",
+      "event_type": "showcase",
+      "format": "Rock",
+      "category": "Rock",
       "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1148560",
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64484",
       "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
         {
           "type": "platinum",
           "name": "Platinum Badge"
-        },
-        {
-          "type": "innovation",
-          "name": "Innovation Badge"
         }
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V1168",
+        "name": "Low Down Lounge",
+        "lat": 30.2636606,
+        "lon": -97.7275704
       },
       "contributors": [
         {
-          "name": "Jack Rendler",
-          "type": "person"
+          "name": "Marni Ct.",
+          "type": "artist"
+        }
+      ]
+    },
+    {
+      "event_id": "MS64486",
+      "name": "Sarah Crean",
+      "date": "2026-03-12",
+      "start_time": null,
+      "end_time": null,
+      "event_type": "showcase",
+      "format": "Pop",
+      "category": "Pop",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64486",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
         },
         {
-          "name": "Marcela Oliva",
-          "type": "person"
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2194",
+        "name": "Marlow",
+        "lat": 30.2663066,
+        "lon": -97.7358631
+      },
+      "contributors": [
+        {
+          "name": "Sarah Crean",
+          "type": "artist"
+        }
+      ]
+    },
+    {
+      "event_id": "MS64490",
+      "name": "Buckets",
+      "date": "2026-03-14",
+      "start_time": null,
+      "end_time": null,
+      "event_type": "showcase",
+      "format": "Punk",
+      "category": "Punk",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64490",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
         },
         {
-          "name": "Duane Waliser",
-          "type": "person"
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0248",
+        "name": "Valhalla",
+        "lat": 30.2680595,
+        "lon": -97.7368537
+      },
+      "contributors": [
+        {
+          "name": "Buckets",
+          "type": "artist"
+        }
+      ]
+    },
+    {
+      "event_id": "MS64491",
+      "name": "P.H.0",
+      "date": "2026-03-17",
+      "start_time": null,
+      "end_time": null,
+      "event_type": "showcase",
+      "format": "Metal",
+      "category": "Metal",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64491",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
         },
         {
-          "name": "Kathleen Cohen",
-          "type": "person"
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0248",
+        "name": "Valhalla",
+        "lat": 30.2680595,
+        "lon": -97.7368537
+      },
+      "contributors": [
+        {
+          "name": "P.H.0",
+          "type": "artist"
+        }
+      ]
+    },
+    {
+      "event_id": "MS64496",
+      "name": "Annabelle Chairlegs",
+      "date": "2026-03-18",
+      "start_time": null,
+      "end_time": null,
+      "event_type": "showcase",
+      "format": "Rock",
+      "category": "Rock",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64496",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2390",
+        "name": "Seven Spirits",
+        "lat": 30.2641174,
+        "lon": -97.7274221
+      },
+      "contributors": [
+        {
+          "name": "Annabelle Chairlegs",
+          "type": "artist"
+        }
+      ]
+    },
+    {
+      "event_id": "MS64499",
+      "name": "willoh",
+      "date": "2026-03-14",
+      "start_time": null,
+      "end_time": null,
+      "event_type": "showcase",
+      "format": "R & B",
+      "category": "R & B",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64499",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V1168",
+        "name": "Low Down Lounge",
+        "lat": 30.2636606,
+        "lon": -97.7275704
+      },
+      "contributors": [
+        {
+          "name": "willoh",
+          "type": "artist"
         }
       ]
     },
@@ -15028,6 +14981,45 @@
       ]
     },
     {
+      "event_id": "PP1162672",
+      "name": "Collab at 300km/h: When Sport Powers Stories & Tech",
+      "date": null,
+      "start_time": null,
+      "end_time": null,
+      "event_type": "panel",
+      "format": "Core Conversation",
+      "category": "Core Conversation",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1162672",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": null,
+        "name": null,
+        "lat": null,
+        "lon": null
+      },
+      "contributors": [
+        {
+          "name": "Pierre-Antoine Capton",
+          "type": "person"
+        },
+        {
+          "name": "Nicolas Parpex",
+          "type": "person"
+        }
+      ]
+    },
+    {
       "event_id": "PP1162761",
       "name": "Don't Be Cringe: How to Actually Win Gen Z & Alpha",
       "date": "2026-03-16",
@@ -15412,18 +15404,14 @@
       "start_time": "2026-03-12T10:00:00.000-05:00",
       "end_time": "2026-03-12T17:00:00.000-05:00",
       "event_type": "special_event",
-      "format": null,
-      "category": null,
+      "format": "Special Event",
+      "category": "Special Event",
       "reservable": false,
       "official_url": "https://schedule.sxsw.com/2026/events/OE46382",
       "credentials": [
         {
           "type": "platinum",
           "name": "Platinum Badge"
-        },
-        {
-          "type": "innovation",
-          "name": "Innovation Badge"
         }
       ],
       "status": "active",
@@ -15530,6 +15518,44 @@
         "name": "4th St Closure (between Congress & Colorado)",
         "lat": null,
         "lon": null
+      },
+      "contributors": []
+    },
+    {
+      "event_id": "OE46689",
+      "name": "Planet Margo",
+      "date": "2026-03-12",
+      "start_time": "2026-03-12T10:00:00.000-05:00",
+      "end_time": "2026-03-12T18:00:00.000-05:00",
+      "event_type": "special_event",
+      "format": null,
+      "category": null,
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/OE46689",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0989",
+        "name": "800 Congress Street Closure",
+        "lat": 30.2702192,
+        "lon": -97.7422188
       },
       "contributors": []
     },
@@ -16855,10 +16881,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -16893,10 +16919,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -16931,10 +16957,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -16969,10 +16995,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -17007,10 +17033,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -17045,10 +17071,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -17599,7 +17625,7 @@
       "event_type": "panel",
       "format": "Fireside Chat",
       "category": "Fireside Chat",
-      "reservable": true,
+      "reservable": false,
       "official_url": "https://schedule.sxsw.com/2026/events/PP1150236",
       "credentials": [
         {
@@ -18484,7 +18510,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -18582,10 +18608,48 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
+      },
+      "contributors": []
+    },
+    {
+      "event_id": "OE46690",
+      "name": "The F-Stop",
+      "date": "2026-03-12",
+      "start_time": "2026-03-12T12:00:00.000-05:00",
+      "end_time": "2026-03-12T18:00:00.000-05:00",
+      "event_type": "special_event",
+      "format": null,
+      "category": null,
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/OE46690",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2457",
+        "name": "700 Congress Ave",
+        "lat": 30.269273,
+        "lon": -97.7428373
       },
       "contributors": []
     },
@@ -19890,7 +19954,7 @@
       "event_type": "panel",
       "format": "Panel",
       "category": "Panel",
-      "reservable": true,
+      "reservable": false,
       "official_url": "https://schedule.sxsw.com/2026/events/PP1162895",
       "credentials": [
         {
@@ -19918,6 +19982,10 @@
         "lon": -97.7381959
       },
       "contributors": [
+        {
+          "name": "Will Rice",
+          "type": "person"
+        },
         {
           "name": "Tomoki Osato",
           "type": "person"
@@ -21891,7 +21959,7 @@
       "date": "2026-03-12",
       "start_time": "2026-03-12T17:00:00.000-05:00",
       "end_time": "2026-03-12T20:00:00.000-05:00",
-      "event_type": "special_event",
+      "event_type": "networking",
       "format": null,
       "category": null,
       "reservable": false,
@@ -26419,10 +26487,48 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2346",
+        "name": "Realtor.com Headquarters",
+        "lat": 30.2651723,
+        "lon": -97.7334166
+      },
+      "contributors": []
+    },
+    {
+      "event_id": "OE46483",
+      "name": "Variety True Crime Summit presented by Investigation Discovery",
+      "date": "2026-03-13",
+      "start_time": "2026-03-13T10:00:00.000-05:00",
+      "end_time": "2026-03-13T15:00:00.000-05:00",
+      "event_type": "special_event",
+      "format": "Special Event",
+      "category": "Special Event",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/OE46483",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V1269",
+        "name": "Assembly Hall",
+        "lat": 30.2651873,
+        "lon": -97.73051
       },
       "contributors": []
     },
@@ -28112,10 +28218,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -28150,10 +28256,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -28188,10 +28294,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -28226,10 +28332,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -28264,10 +28370,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -28302,10 +28408,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -30433,7 +30539,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -30667,7 +30773,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -30701,6 +30807,44 @@
         "name": "Music Clubhouse",
         "lat": 30.2698058,
         "lon": -97.7343172
+      },
+      "contributors": []
+    },
+    {
+      "event_id": "OE46691",
+      "name": "The F-Stop",
+      "date": "2026-03-13",
+      "start_time": "2026-03-13T12:00:00.000-05:00",
+      "end_time": "2026-03-13T18:00:00.000-05:00",
+      "event_type": "special_event",
+      "format": null,
+      "category": null,
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/OE46691",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2457",
+        "name": "700 Congress Ave",
+        "lat": 30.269273,
+        "lon": -97.7428373
       },
       "contributors": []
     },
@@ -31856,7 +32000,7 @@
     },
     {
       "event_id": "PP1149760",
-      "name": "Round Table: Sales, Acquisitions, and Distribution: Amy Beecroft, Joe Yanick, and Shaked Berenson",
+      "name": "Round Table: Sales, Acquisitions, and Distribution: John Von Thaden, Joe Yanick, and Shaked Berenson",
       "date": "2026-03-13",
       "start_time": "2026-03-13T14:30:00.000-05:00",
       "end_time": "2026-03-13T15:30:00.000-05:00",
@@ -31884,15 +32028,15 @@
       },
       "contributors": [
         {
+          "name": "John Von Thaden",
+          "type": "person"
+        },
+        {
           "name": "Joe Yanick",
           "type": "person"
         },
         {
           "name": "Shaked Berenson",
-          "type": "person"
-        },
-        {
-          "name": "Amy Beecroft",
           "type": "person"
         }
       ]
@@ -32068,6 +32212,41 @@
       "contributors": [
         {
           "name": "Max Hirsh",
+          "type": "person"
+        }
+      ]
+    },
+    {
+      "event_id": "PP1150098",
+      "name": "Space Workforce Meet Up",
+      "date": "2026-03-13",
+      "start_time": "2026-03-13T14:30:00.000-05:00",
+      "end_time": "2026-03-13T15:30:00.000-05:00",
+      "event_type": "panel",
+      "format": "Meet Up",
+      "category": "Meet Up",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1150098",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0411",
+        "name": "Brazos",
+        "lat": 30.2645713,
+        "lon": -97.743198
+      },
+      "contributors": [
+        {
+          "name": "Geoff Tudor",
           "type": "person"
         }
       ]
@@ -32407,6 +32586,41 @@
       "contributors": [
         {
           "name": "Traci Hanlon",
+          "type": "person"
+        }
+      ]
+    },
+    {
+      "event_id": "PP1150630",
+      "name": "Funding/Artist Support Mentor Session: Emily Best (Seed&Spark)",
+      "date": "2026-03-13",
+      "start_time": "2026-03-13T14:30:00.000-05:00",
+      "end_time": "2026-03-13T15:45:00.000-05:00",
+      "event_type": "panel",
+      "format": "Mentor Session",
+      "category": "Mentor Session",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1150630",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2401",
+        "name": "Executive Room",
+        "lat": 30.2689471,
+        "lon": -97.7403971
+      },
+      "contributors": [
+        {
+          "name": "Emily Best",
           "type": "person"
         }
       ]
@@ -33215,41 +33429,6 @@
         },
         {
           "name": "Gabe Amo",
-          "type": "person"
-        }
-      ]
-    },
-    {
-      "event_id": "PP1162646",
-      "name": "Launchpad: Ready, Set, Communicate",
-      "date": "2026-03-13",
-      "start_time": "2026-03-13T14:30:00.000-05:00",
-      "end_time": "2026-03-13T15:30:00.000-05:00",
-      "event_type": "panel",
-      "format": "Core Conversation",
-      "category": "Core Conversation",
-      "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1162646",
-      "credentials": [
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        },
-        {
-          "type": "innovation",
-          "name": "Innovation Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0368",
-        "name": "Room 412",
-        "lat": 30.2651364,
-        "lon": -97.7381904
-      },
-      "contributors": [
-        {
-          "name": "Aisling Conlon",
           "type": "person"
         }
       ]
@@ -35288,41 +35467,6 @@
       ]
     },
     {
-      "event_id": "PP1150550",
-      "name": "Programming Mentor Session: Boram Park (Bucheon International Fantastic Film Festival)",
-      "date": "2026-03-13",
-      "start_time": "2026-03-13T16:00:00.000-05:00",
-      "end_time": "2026-03-13T17:15:00.000-05:00",
-      "event_type": "panel",
-      "format": "Mentor Session",
-      "category": "Mentor Session",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1150550",
-      "credentials": [
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        },
-        {
-          "type": "filmtv",
-          "name": "Film & TV Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2401",
-        "name": "Executive Room",
-        "lat": 30.2689471,
-        "lon": -97.7403971
-      },
-      "contributors": [
-        {
-          "name": "Boram Park",
-          "type": "person"
-        }
-      ]
-    },
-    {
       "event_id": "PP1150553",
       "name": "Programming Mentor Session: Kristin McCracken (Hamptons International Film Festival)",
       "date": "2026-03-13",
@@ -35353,6 +35497,96 @@
       "contributors": [
         {
           "name": "Kristin McCracken",
+          "type": "person"
+        }
+      ]
+    },
+    {
+      "event_id": "PP1150670",
+      "name": "The Risks of Making a Film About NDAs",
+      "date": "2026-03-13",
+      "start_time": "2026-03-13T16:00:00.000-05:00",
+      "end_time": "2026-03-13T17:00:00.000-05:00",
+      "event_type": "panel",
+      "format": "Panel",
+      "category": "Panel",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1150670",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2400",
+        "name": "Pennybacker",
+        "lat": 30.2689471,
+        "lon": -97.7403971
+      },
+      "contributors": [
+        {
+          "name": "Vince White",
+          "type": "person"
+        },
+        {
+          "name": "Matt Drange",
+          "type": "person"
+        },
+        {
+          "name": "Ifeoma Ozoma",
+          "type": "person"
+        },
+        {
+          "name": "Miriam Shor",
+          "type": "person"
+        }
+      ]
+    },
+    {
+      "event_id": "PP1150714",
+      "name": "Round Table: Casting: Jenny Jue, Marisol Roncali, and Chelsea Ellis Bloch",
+      "date": "2026-03-13",
+      "start_time": "2026-03-13T16:00:00.000-05:00",
+      "end_time": "2026-03-13T17:00:00.000-05:00",
+      "event_type": "panel",
+      "format": "Round Table",
+      "category": "Round Table",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1150714",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2420",
+        "name": "Representative",
+        "lat": 30.2689471,
+        "lon": -97.7403971
+      },
+      "contributors": [
+        {
+          "name": "Jenny Jue",
+          "type": "person"
+        },
+        {
+          "name": "Marisol Roncali",
+          "type": "person"
+        },
+        {
+          "name": "Chelsea Ellis Bloch",
           "type": "person"
         }
       ]
@@ -35801,6 +36035,10 @@
       },
       "contributors": [
         {
+          "name": "Emma Sweet",
+          "type": "person"
+        },
+        {
           "name": "Libby Absten",
           "type": "person"
         },
@@ -36077,7 +36315,7 @@
     },
     {
       "event_id": "OE46579",
-      "name": "The Screen Between Us: Tech and Human Connection",
+      "name": "Shaping Digital Futures: Work, Life and Connection in a Tech-Driven World",
       "date": "2026-03-13",
       "start_time": "2026-03-13T17:30:00.000-05:00",
       "end_time": "2026-03-13T18:30:00.000-05:00",
@@ -36110,6 +36348,44 @@
         "name": "Speakeasy",
         "lat": 30.2668465,
         "lon": -97.7437285
+      },
+      "contributors": []
+    },
+    {
+      "event_id": "OE46696",
+      "name": "A New Performance Venture Launch",
+      "date": "2026-03-13",
+      "start_time": "2026-03-13T17:30:00.000-05:00",
+      "end_time": "2026-03-13T19:30:00.000-05:00",
+      "event_type": "activation",
+      "format": null,
+      "category": null,
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/OE46696",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0305",
+        "name": "Innovation Clubhouse",
+        "lat": 30.2660426,
+        "lon": -97.7417976
       },
       "contributors": []
     },
@@ -37413,6 +37689,41 @@
       ]
     },
     {
+      "event_id": "MS63379",
+      "name": "Kofi Stone",
+      "date": "2026-03-13",
+      "start_time": "2026-03-13T20:35:00.000-05:00",
+      "end_time": "2026-03-13T20:50:00.000-05:00",
+      "event_type": "showcase",
+      "format": "Hip-Hop / Rap",
+      "category": "Hip-Hop / Rap",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS63379",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0272",
+        "name": "British Music Embassy @ Palm Door on Sixth Patio",
+        "lat": 30.2669107,
+        "lon": -97.7377236
+      },
+      "contributors": [
+        {
+          "name": "Kofi Stone",
+          "type": "artist"
+        }
+      ]
+    },
+    {
       "event_id": "MS63408",
       "name": "Amie Blu",
       "date": "2026-03-13",
@@ -38046,41 +38357,6 @@
       "contributors": [
         {
           "name": "Hanorah",
-          "type": "artist"
-        }
-      ]
-    },
-    {
-      "event_id": "MS63379",
-      "name": "Kofi Stone",
-      "date": "2026-03-13",
-      "start_time": "2026-03-13T21:20:00.000-05:00",
-      "end_time": "2026-03-13T21:50:00.000-05:00",
-      "event_type": "showcase",
-      "format": "Hip-Hop / Rap",
-      "category": "Hip-Hop / Rap",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS63379",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0272",
-        "name": "British Music Embassy @ Palm Door on Sixth Patio",
-        "lat": 30.2669107,
-        "lon": -97.7377236
-      },
-      "contributors": [
-        {
-          "name": "Kofi Stone",
           "type": "artist"
         }
       ]
@@ -40572,7 +40848,7 @@
       "event_type": "panel",
       "format": "Featured Session",
       "category": "Featured Session",
-      "reservable": false,
+      "reservable": true,
       "official_url": "https://schedule.sxsw.com/2026/events/PP1148484",
       "credentials": [
         {
@@ -40594,10 +40870,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2417",
+        "name": "Hilton Grand Ballroom (Salon HJK)",
+        "lat": 30.2651364,
+        "lon": -97.7381904
       },
       "contributors": [
         {
@@ -40743,10 +41019,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2346",
+        "name": "Realtor.com Headquarters",
+        "lat": 30.2651723,
+        "lon": -97.7334166
       },
       "contributors": []
     },
@@ -41670,7 +41946,7 @@
       "event_type": "panel",
       "format": "Simulcast",
       "category": "Simulcast",
-      "reservable": true,
+      "reservable": false,
       "official_url": "https://schedule.sxsw.com/2026/events/PP1150648",
       "credentials": [
         {
@@ -41708,7 +41984,7 @@
       "event_type": "panel",
       "format": "Simulcast",
       "category": "Simulcast",
-      "reservable": true,
+      "reservable": false,
       "official_url": "https://schedule.sxsw.com/2026/events/PP1150649",
       "credentials": [
         {
@@ -42595,10 +42871,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -42633,10 +42909,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -42671,10 +42947,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -42709,10 +42985,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -42747,10 +43023,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -42785,10 +43061,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -43076,6 +43352,10 @@
       },
       "contributors": [
         {
+          "name": "Harjatin Baweja",
+          "type": "person"
+        },
+        {
           "name": "Peter Stone",
           "type": "person"
         },
@@ -43085,10 +43365,6 @@
         },
         {
           "name": "Jonathan Hurst",
-          "type": "person"
-        },
-        {
-          "name": "Andrea Thomaz",
           "type": "person"
         }
       ]
@@ -43761,41 +44037,6 @@
       ]
     },
     {
-      "event_id": "PP1149628",
-      "name": "Funding/Artist Support Mentor Session: DJ Jiang (Giant Leap Media Ventures)",
-      "date": "2026-03-14",
-      "start_time": "2026-03-14T11:30:00.000-05:00",
-      "end_time": "2026-03-14T12:45:00.000-05:00",
-      "event_type": "panel",
-      "format": "Mentor Session",
-      "category": "Mentor Session",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1149628",
-      "credentials": [
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        },
-        {
-          "type": "filmtv",
-          "name": "Film & TV Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2402",
-        "name": "Liberty",
-        "lat": 30.2689471,
-        "lon": -97.7403971
-      },
-      "contributors": [
-        {
-          "name": "DJ Jiang",
-          "type": "person"
-        }
-      ]
-    },
-    {
       "event_id": "PP1149638",
       "name": "Round Table: Producing: Ashleigh Snead, Kelly Williams, and Liz Cardenas",
       "date": "2026-03-14",
@@ -43869,6 +44110,76 @@
       "contributors": [
         {
           "name": "Einar Helde",
+          "type": "person"
+        }
+      ]
+    },
+    {
+      "event_id": "PP1149731",
+      "name": "Publicity and Marketing Mentor Session: Lee Meltzer (Lee Meltzer Consulting)",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T11:30:00.000-05:00",
+      "end_time": "2026-03-14T12:45:00.000-05:00",
+      "event_type": "panel",
+      "format": "Mentor Session",
+      "category": "Mentor Session",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1149731",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2401",
+        "name": "Executive Room",
+        "lat": 30.2689471,
+        "lon": -97.7403971
+      },
+      "contributors": [
+        {
+          "name": "Lee Meltzer",
+          "type": "person"
+        }
+      ]
+    },
+    {
+      "event_id": "PP1149757",
+      "name": "Sales, Acquisitions, and Distribution Mentor Session: (Limor  Gott Ronen)",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T11:30:00.000-05:00",
+      "end_time": "2026-03-14T12:45:00.000-05:00",
+      "event_type": "panel",
+      "format": "Mentor Session",
+      "category": "Mentor Session",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1149757",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2402",
+        "name": "Liberty",
+        "lat": 30.2689471,
+        "lon": -97.7403971
+      },
+      "contributors": [
+        {
+          "name": "Limor Gott Ronen",
           "type": "person"
         }
       ]
@@ -44317,41 +44628,6 @@
       "contributors": [
         {
           "name": "Sarah Nagourney",
-          "type": "person"
-        }
-      ]
-    },
-    {
-      "event_id": "PP1150630",
-      "name": "Funding/Artist Support Mentor Session: Emily Best (Seed&Spark)",
-      "date": "2026-03-14",
-      "start_time": "2026-03-14T11:30:00.000-05:00",
-      "end_time": "2026-03-14T12:45:00.000-05:00",
-      "event_type": "panel",
-      "format": "Mentor Session",
-      "category": "Mentor Session",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1150630",
-      "credentials": [
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        },
-        {
-          "type": "filmtv",
-          "name": "Film & TV Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2401",
-        "name": "Executive Room",
-        "lat": 30.2689471,
-        "lon": -97.7403971
-      },
-      "contributors": [
-        {
-          "name": "Emily Best",
           "type": "person"
         }
       ]
@@ -45229,7 +45505,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -45425,7 +45701,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -45459,6 +45735,44 @@
         "name": "Music Clubhouse",
         "lat": 30.2698058,
         "lon": -97.7343172
+      },
+      "contributors": []
+    },
+    {
+      "event_id": "OE46692",
+      "name": "The F-Stop",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T12:00:00.000-05:00",
+      "end_time": "2026-03-14T18:00:00.000-05:00",
+      "event_type": "special_event",
+      "format": null,
+      "category": null,
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/OE46692",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2457",
+        "name": "700 Congress Ave",
+        "lat": 30.269273,
+        "lon": -97.7428373
       },
       "contributors": []
     },
@@ -45531,6 +45845,44 @@
           "type": "person"
         }
       ]
+    },
+    {
+      "event_id": "OE46697",
+      "name": "Fuel Your Next Move: Midday Social",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T12:30:00.000-05:00",
+      "end_time": "2026-03-14T13:30:00.000-05:00",
+      "event_type": "networking",
+      "format": null,
+      "category": null,
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/OE46697",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2440",
+        "name": "Level 3 Foyer",
+        "lat": 30.2645713,
+        "lon": -97.743198
+      },
+      "contributors": []
     },
     {
       "event_id": "OE46541",
@@ -45851,41 +46203,6 @@
       "contributors": []
     },
     {
-      "event_id": "FS19490",
-      "name": "Ceremony",
-      "date": "2026-03-14",
-      "start_time": "2026-03-14T14:15:00.000-05:00",
-      "end_time": "2026-03-14T15:38:00.000-05:00",
-      "event_type": "screening",
-      "format": "Documentary Feature",
-      "category": "Documentary Feature",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/FS19490",
-      "credentials": [
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        },
-        {
-          "type": "filmtv",
-          "name": "Film & TV Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V0550",
-        "name": "Alamo Lamar 6",
-        "lat": 30.2561977,
-        "lon": -97.7635717
-      },
-      "contributors": [
-        {
-          "name": "Banchi Hanuse",
-          "type": "person"
-        }
-      ]
-    },
-    {
       "event_id": "FS19507",
       "name": "Drift",
       "date": "2026-03-14",
@@ -45916,6 +46233,45 @@
       "contributors": [
         {
           "name": "Deon Taylor",
+          "type": "person"
+        }
+      ]
+    },
+    {
+      "event_id": "FS19945",
+      "name": "Baby/Girls",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T14:15:00.000-05:00",
+      "end_time": "2026-03-14T15:49:00.000-05:00",
+      "event_type": "screening",
+      "format": "Documentary Feature",
+      "category": "Documentary Feature",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/FS19945",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0550",
+        "name": "Alamo Lamar 6",
+        "lat": 30.2561977,
+        "lon": -97.7635717
+      },
+      "contributors": [
+        {
+          "name": "Alyse Walsh",
+          "type": "person"
+        },
+        {
+          "name": "Jackie Jesko",
           "type": "person"
         }
       ]
@@ -46352,49 +46708,6 @@
         },
         {
           "name": "Hannah Jans",
-          "type": "person"
-        }
-      ]
-    },
-    {
-      "event_id": "PP1149150",
-      "name": "Featured Session: The Culture Layer of Financial Markets",
-      "date": "2026-03-14",
-      "start_time": "2026-03-14T14:30:00.000-05:00",
-      "end_time": "2026-03-14T15:30:00.000-05:00",
-      "event_type": "panel",
-      "format": "Featured Session",
-      "category": "Featured Session",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1149150",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        },
-        {
-          "type": "innovation",
-          "name": "Innovation Badge"
-        },
-        {
-          "type": "filmtv",
-          "name": "Film & TV Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2026",
-        "name": "Salon 6-8",
-        "lat": 30.2645713,
-        "lon": -97.743198
-      },
-      "contributors": [
-        {
-          "name": "Tarek Mansour",
           "type": "person"
         }
       ]
@@ -47531,8 +47844,8 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2027",
-        "name": "Salon 1-4",
+        "id": "V2026",
+        "name": "Salon 6-8",
         "lat": 30.2645713,
         "lon": -97.743198
       },
@@ -48485,6 +48798,57 @@
         },
         {
           "name": "Chloe Parsons",
+          "type": "person"
+        }
+      ]
+    },
+    {
+      "event_id": "PP1162965",
+      "name": "The Rising Power of the Female Homebuyer",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T14:30:00.000-05:00",
+      "end_time": "2026-03-14T15:30:00.000-05:00",
+      "event_type": "panel",
+      "format": "Panel",
+      "category": "Panel",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1162965",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2346",
+        "name": "Realtor.com Headquarters",
+        "lat": 30.2651723,
+        "lon": -97.7334166
+      },
+      "contributors": [
+        {
+          "name": "Sheryl Palmer",
+          "type": "person"
+        },
+        {
+          "name": "Lindsey Stanberry",
+          "type": "person"
+        },
+        {
+          "name": "Anna Marie Castiglioni",
           "type": "person"
         }
       ]
@@ -49645,41 +50009,6 @@
       ]
     },
     {
-      "event_id": "PP1149595",
-      "name": "Documentary Filmmaker Mentor Session: Ron Mann (Films We Like)",
-      "date": "2026-03-14",
-      "start_time": "2026-03-14T16:00:00.000-05:00",
-      "end_time": "2026-03-14T17:15:00.000-05:00",
-      "event_type": "panel",
-      "format": "Mentor Session",
-      "category": "Mentor Session",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1149595",
-      "credentials": [
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        },
-        {
-          "type": "filmtv",
-          "name": "Film & TV Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2402",
-        "name": "Liberty",
-        "lat": 30.2689471,
-        "lon": -97.7403971
-      },
-      "contributors": [
-        {
-          "name": "Ron Mann",
-          "type": "person"
-        }
-      ]
-    },
-    {
       "event_id": "PP1149596",
       "name": "Documentary Filmmaker Mentor Session: Lina Lyte Plioplyte (Lyte Films)",
       "date": "2026-03-14",
@@ -50578,7 +50907,7 @@
           "type": "person"
         },
         {
-          "name": "Nonny De La Peña",
+          "name": "Nonny de la Peña",
           "type": "person"
         },
         {
@@ -51229,6 +51558,36 @@
       ]
     },
     {
+      "event_id": "OE46651",
+      "name": "Any1 Brand Showcase & Tasting at SXSW",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T16:30:00.000-05:00",
+      "end_time": "2026-03-14T17:30:00.000-05:00",
+      "event_type": "special_event",
+      "format": "Special Event",
+      "category": "Special Event",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/OE46651",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V1206",
+        "name": "Brazos Hall",
+        "lat": 30.2660426,
+        "lon": -97.7417976
+      },
+      "contributors": []
+    },
+    {
       "event_id": "OE46680",
       "name": "Tennessee House - Nashville at Night",
       "date": "2026-03-14",
@@ -51415,16 +51774,16 @@
       ]
     },
     {
-      "event_id": "FS19945",
-      "name": "Baby/Girls",
+      "event_id": "FS19490",
+      "name": "Ceremony",
       "date": "2026-03-14",
       "start_time": "2026-03-14T17:30:00.000-05:00",
-      "end_time": "2026-03-14T19:04:00.000-05:00",
+      "end_time": "2026-03-14T18:53:00.000-05:00",
       "event_type": "screening",
       "format": "Documentary Feature",
       "category": "Documentary Feature",
       "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/FS19945",
+      "official_url": "https://schedule.sxsw.com/2026/events/FS19490",
       "credentials": [
         {
           "type": "platinum",
@@ -51444,11 +51803,7 @@
       },
       "contributors": [
         {
-          "name": "Alyse Walsh",
-          "type": "person"
-        },
-        {
-          "name": "Jackie Jesko",
+          "name": "Banchi Hanuse",
           "type": "person"
         }
       ]
@@ -52615,6 +52970,41 @@
       ]
     },
     {
+      "event_id": "MS64483",
+      "name": "c_robo_",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T20:45:00.000-05:00",
+      "end_time": "2026-03-14T21:00:00.000-05:00",
+      "event_type": "showcase",
+      "format": "Electronic",
+      "category": "Electronic",
+      "reservable": false,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS64483",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0599",
+        "name": "Kingdom",
+        "lat": 30.2672791,
+        "lon": -97.7375539
+      },
+      "contributors": [
+        {
+          "name": "c_robo_",
+          "type": "artist"
+        }
+      ]
+    },
+    {
       "event_id": "FS19324",
       "name": "Mike & Nick & Nick & Alice",
       "date": "2026-03-14",
@@ -53004,6 +53394,41 @@
       ]
     },
     {
+      "event_id": "MS63209",
+      "name": "Lynn",
+      "date": "2026-03-14",
+      "start_time": "2026-03-14T21:20:00.000-05:00",
+      "end_time": "2026-03-14T21:35:00.000-05:00",
+      "event_type": "showcase",
+      "format": "Hip-Hop / Rap",
+      "category": "Hip-Hop / Rap",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/MS63209",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2389",
+        "name": "Brushy Street Commons",
+        "lat": 30.2647851,
+        "lon": -97.7340015
+      },
+      "contributors": [
+        {
+          "name": "Lynn",
+          "type": "artist"
+        }
+      ]
+    },
+    {
       "event_id": "MS63375",
       "name": "Mên An Tol",
       "date": "2026-03-14",
@@ -53034,41 +53459,6 @@
       "contributors": [
         {
           "name": "Mên An Tol",
-          "type": "artist"
-        }
-      ]
-    },
-    {
-      "event_id": "MS63433",
-      "name": "Grace Sorensen",
-      "date": "2026-03-14",
-      "start_time": "2026-03-14T21:20:00.000-05:00",
-      "end_time": "2026-03-14T21:35:00.000-05:00",
-      "event_type": "showcase",
-      "format": "R & B",
-      "category": "R & B",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS63433",
-      "credentials": [
-        {
-          "type": "music",
-          "name": "Music Badge"
-        },
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2389",
-        "name": "Brushy Street Commons",
-        "lat": 30.2647851,
-        "lon": -97.7340015
-      },
-      "contributors": [
-        {
-          "name": "Grace Sorensen",
           "type": "artist"
         }
       ]
@@ -53249,16 +53639,16 @@
       ]
     },
     {
-      "event_id": "MS63209",
-      "name": "Lynn",
+      "event_id": "MS63433",
+      "name": "Grace Sorensen",
       "date": "2026-03-14",
       "start_time": "2026-03-14T21:40:00.000-05:00",
       "end_time": "2026-03-14T21:55:00.000-05:00",
       "event_type": "showcase",
-      "format": "Hip-Hop / Rap",
-      "category": "Hip-Hop / Rap",
+      "format": "R & B",
+      "category": "R & B",
       "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/MS63209",
+      "official_url": "https://schedule.sxsw.com/2026/events/MS63433",
       "credentials": [
         {
           "type": "music",
@@ -53278,7 +53668,7 @@
       },
       "contributors": [
         {
-          "name": "Lynn",
+          "name": "Grace Sorensen",
           "type": "artist"
         }
       ]
@@ -56892,10 +57282,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -56968,10 +57358,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -57006,10 +57396,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -57044,10 +57434,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -57082,10 +57472,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -58343,6 +58733,45 @@
       ]
     },
     {
+      "event_id": "PP1150601",
+      "name": "Eyewitness to Power: Citizen Journalism, Viral Video & Accountability",
+      "date": "2026-03-15",
+      "start_time": "2026-03-15T11:30:00.000-05:00",
+      "end_time": "2026-03-15T12:30:00.000-05:00",
+      "event_type": "panel",
+      "format": "Panel",
+      "category": "Panel",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1150601",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2399",
+        "name": "Mansfield AB",
+        "lat": 30.2689471,
+        "lon": -97.7403971
+      },
+      "contributors": [
+        {
+          "name": "Jennifer Holness",
+          "type": "person"
+        },
+        {
+          "name": "Sidney Fussell",
+          "type": "person"
+        }
+      ]
+    },
+    {
       "event_id": "PP1150616",
       "name": "Producers Mentor Session: Tracie Laymon (Laymon's Terms)",
       "date": "2026-03-15",
@@ -59300,7 +59729,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -59458,7 +59887,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -60008,6 +60437,53 @@
       ]
     },
     {
+      "event_id": "PP1148560",
+      "name": "The City That Plays: Digital Twins Reimagining LA & Beyond",
+      "date": "2026-03-15",
+      "start_time": "2026-03-15T14:30:00.000-05:00",
+      "end_time": "2026-03-15T15:30:00.000-05:00",
+      "event_type": "panel",
+      "format": "Panel",
+      "category": "Panel",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1148560",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V0406",
+        "name": "Room 201-202",
+        "lat": 30.2645713,
+        "lon": -97.743198
+      },
+      "contributors": [
+        {
+          "name": "Jack Rendler",
+          "type": "person"
+        },
+        {
+          "name": "Marcela Oliva",
+          "type": "person"
+        },
+        {
+          "name": "Duane Waliser",
+          "type": "person"
+        },
+        {
+          "name": "Kathleen Cohen",
+          "type": "person"
+        }
+      ]
+    },
+    {
       "event_id": "PP1148565",
       "name": "Lose Your Mind to AI? A Neuroscientist and an AI CEO Debate",
       "date": "2026-03-15",
@@ -60410,7 +60886,7 @@
     },
     {
       "event_id": "PP1149667",
-      "name": "Round Table: Documentary Filmmaking: Rebecca Stern, and Royd Chung",
+      "name": "Round Table: Documentary Filmmaking: Nilu Amin, Rebecca Stern, and Royd Chung",
       "date": "2026-03-15",
       "start_time": "2026-03-15T14:30:00.000-05:00",
       "end_time": "2026-03-15T15:30:00.000-05:00",
@@ -60437,6 +60913,10 @@
         "lon": -97.7403971
       },
       "contributors": [
+        {
+          "name": "Nilu Amin",
+          "type": "person"
+        },
         {
           "name": "Rebecca Stern",
           "type": "person"
@@ -63017,41 +63497,6 @@
       ]
     },
     {
-      "event_id": "PP1149605",
-      "name": "Sales, Acquisitions, and Distribution Mentor Session: Joe Tufano (Submarine Entertainment)",
-      "date": "2026-03-15",
-      "start_time": "2026-03-15T16:00:00.000-05:00",
-      "end_time": "2026-03-15T17:15:00.000-05:00",
-      "event_type": "panel",
-      "format": "Mentor Session",
-      "category": "Mentor Session",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1149605",
-      "credentials": [
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        },
-        {
-          "type": "filmtv",
-          "name": "Film & TV Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2402",
-        "name": "Liberty",
-        "lat": 30.2689471,
-        "lon": -97.7403971
-      },
-      "contributors": [
-        {
-          "name": "Joe Tufano",
-          "type": "person"
-        }
-      ]
-    },
-    {
       "event_id": "PP1149737",
       "name": "Sales, Acquisitions, and Distribution Mentor Session: Kurt Ravenwood (SRH)",
       "date": "2026-03-15",
@@ -63152,41 +63597,6 @@
       "contributors": [
         {
           "name": "Eli Zavala",
-          "type": "person"
-        }
-      ]
-    },
-    {
-      "event_id": "PP1149757",
-      "name": "Sales, Acquisitions, and Distribution Mentor Session: (Limor  Gott Ronen)",
-      "date": "2026-03-15",
-      "start_time": "2026-03-15T16:00:00.000-05:00",
-      "end_time": "2026-03-15T17:15:00.000-05:00",
-      "event_type": "panel",
-      "format": "Mentor Session",
-      "category": "Mentor Session",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1149757",
-      "credentials": [
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        },
-        {
-          "type": "filmtv",
-          "name": "Film & TV Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2402",
-        "name": "Liberty",
-        "lat": 30.2689471,
-        "lon": -97.7403971
-      },
-      "contributors": [
-        {
-          "name": "Limor Gott Ronen",
           "type": "person"
         }
       ]
@@ -64425,8 +64835,8 @@
       ]
     },
     {
-      "event_id": "PP1162672",
-      "name": "Collab at 300km/h: When Sport Powers Stories & Tech",
+      "event_id": "PP1162646",
+      "name": "Launchpad: Ready, Set, Communicate",
       "date": "2026-03-15",
       "start_time": "2026-03-15T16:00:00.000-05:00",
       "end_time": "2026-03-15T17:00:00.000-05:00",
@@ -64434,7 +64844,7 @@
       "format": "Core Conversation",
       "category": "Core Conversation",
       "reservable": false,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1162672",
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1162646",
       "credentials": [
         {
           "type": "platinum",
@@ -64454,11 +64864,7 @@
       },
       "contributors": [
         {
-          "name": "Pierre-Antoine Capton",
-          "type": "person"
-        },
-        {
-          "name": "Nicolas Parpex",
+          "name": "Aisling Conlon",
           "type": "person"
         }
       ]
@@ -68125,7 +68531,7 @@
     },
     {
       "event_id": "PP1149214",
-      "name": "Intro to Vibe Coding: Build Without Code",
+      "name": "Agents at Work: Build AI That Ships with v0",
       "date": "2026-03-16",
       "start_time": "2026-03-16T10:00:00.000-05:00",
       "end_time": "2026-03-16T12:00:00.000-05:00",
@@ -68153,7 +68559,7 @@
       },
       "contributors": [
         {
-          "name": "Pranathi Peri",
+          "name": "Fernando Rojo",
           "type": "person"
         },
         {
@@ -69474,7 +69880,7 @@
       "event_type": "panel",
       "format": "Fireside Chat",
       "category": "Fireside Chat",
-      "reservable": true,
+      "reservable": false,
       "official_url": "https://schedule.sxsw.com/2026/events/PP1162935",
       "credentials": [
         {
@@ -69910,10 +70316,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -69986,10 +70392,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -70024,10 +70430,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -70062,10 +70468,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -70100,10 +70506,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -70138,16 +70544,16 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
     {
       "event_id": "OE46602",
-      "name": "New Mexio House",
+      "name": "New Mexico House",
       "date": "2026-03-16",
       "start_time": "2026-03-16T11:00:00.000-05:00",
       "end_time": "2026-03-17T00:00:00.000-05:00",
@@ -72425,6 +72831,53 @@
       ]
     },
     {
+      "event_id": "PP1162603",
+      "name": "How the Pop-Tarts Bowl Became the Biggest Name in CFB",
+      "date": "2026-03-16",
+      "start_time": "2026-03-16T11:30:00.000-05:00",
+      "end_time": "2026-03-16T12:30:00.000-05:00",
+      "event_type": "panel",
+      "format": "Panel",
+      "category": "Panel",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1162603",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2050",
+        "name": "Waller Ballroom D",
+        "lat": 30.2628298,
+        "lon": -97.74157
+      },
+      "contributors": [
+        {
+          "name": "Matt Repchak",
+          "type": "person"
+        },
+        {
+          "name": "Jeffrey Immel",
+          "type": "person"
+        },
+        {
+          "name": "Mike Golic Jr.",
+          "type": "person"
+        },
+        {
+          "name": "Leslie Serro",
+          "type": "person"
+        }
+      ]
+    },
+    {
       "event_id": "PP1162884",
       "name": "r/Health Answers Everywhere: Who to Trust in the Age of AI?",
       "date": "2026-03-16",
@@ -72488,7 +72941,7 @@
       "event_type": "panel",
       "format": "Panel",
       "category": "Panel",
-      "reservable": true,
+      "reservable": false,
       "official_url": "https://schedule.sxsw.com/2026/events/PP1162889",
       "credentials": [
         {
@@ -72731,7 +73184,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -72851,7 +73304,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -72911,7 +73364,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -75472,7 +75925,7 @@
           "type": "person"
         },
         {
-          "name": "Kimberly Harston-Hicks",
+          "name": "Kimberly Hairston-Hicks",
           "type": "person"
         }
       ]
@@ -81611,7 +82064,7 @@
     },
     {
       "event_id": "PP1149782",
-      "name": "Round Table: Agents & Managers: Addie Poris, Eric Borja, and Erik Telford",
+      "name": "Round Table: Agents & Managers: Eric Borja and Erik Telford",
       "date": "2026-03-17",
       "start_time": "2026-03-17T10:00:00.000-05:00",
       "end_time": "2026-03-17T11:00:00.000-05:00",
@@ -81640,10 +82093,6 @@
       "contributors": [
         {
           "name": "Eric Borja",
-          "type": "person"
-        },
-        {
-          "name": "Addie Poris",
           "type": "person"
         },
         {
@@ -83093,10 +83542,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -83169,10 +83618,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -83207,10 +83656,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -83245,10 +83694,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -83283,10 +83732,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -85545,7 +85994,7 @@
       "event_type": "panel",
       "format": "Fireside Chat",
       "category": "Fireside Chat",
-      "reservable": true,
+      "reservable": false,
       "official_url": "https://schedule.sxsw.com/2026/events/PP1162936",
       "credentials": [
         {
@@ -85626,6 +86075,49 @@
         },
         {
           "name": "Dr. Imamu “Mu” Tomlinson",
+          "type": "person"
+        }
+      ]
+    },
+    {
+      "event_id": "PP1162947",
+      "name": "What Happens When Software Can Transact Autonomously?",
+      "date": "2026-03-17",
+      "start_time": "2026-03-17T11:30:00.000-05:00",
+      "end_time": "2026-03-17T12:30:00.000-05:00",
+      "event_type": "panel",
+      "format": "Presentation",
+      "category": "Presentation",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1162947",
+      "credentials": [
+        {
+          "type": "music",
+          "name": "Music Badge"
+        },
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2208",
+        "name": "Red River Ballroom",
+        "lat": 30.2667947,
+        "lon": -97.7409874
+      },
+      "contributors": [
+        {
+          "name": "Marc Vanlerberghe",
           "type": "person"
         }
       ]
@@ -85830,7 +86322,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -85950,7 +86442,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -89213,6 +89705,41 @@
       "contributors": [
         {
           "name": "Sharma Hendel",
+          "type": "person"
+        }
+      ]
+    },
+    {
+      "event_id": "PP1149628",
+      "name": "Funding/Artist Support Mentor Session: DJ Jiang (Giant Leap Media Ventures)",
+      "date": "2026-03-17",
+      "start_time": "2026-03-17T16:00:00.000-05:00",
+      "end_time": "2026-03-17T17:15:00.000-05:00",
+      "event_type": "panel",
+      "format": "Mentor Session",
+      "category": "Mentor Session",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1149628",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "filmtv",
+          "name": "Film & TV Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2401",
+        "name": "Executive Room",
+        "lat": 30.2689471,
+        "lon": -97.7403971
+      },
+      "contributors": [
+        {
+          "name": "DJ Jiang",
           "type": "person"
         }
       ]
@@ -94852,6 +95379,41 @@
       ]
     },
     {
+      "event_id": "PP1162415",
+      "name": "The Shortcut to Better Video for Overloaded Teams",
+      "date": "2026-03-18",
+      "start_time": "2026-03-18T10:00:00.000-05:00",
+      "end_time": "2026-03-18T12:00:00.000-05:00",
+      "event_type": "panel",
+      "format": "Workshop",
+      "category": "Workshop",
+      "reservable": true,
+      "official_url": "https://schedule.sxsw.com/2026/events/PP1162415",
+      "credentials": [
+        {
+          "type": "platinum",
+          "name": "Platinum Badge"
+        },
+        {
+          "type": "innovation",
+          "name": "Innovation Badge"
+        }
+      ],
+      "status": "active",
+      "venue": {
+        "id": "V2313",
+        "name": "Brazos I-III",
+        "lat": 30.2655533,
+        "lon": -97.7402274
+      },
+      "contributors": [
+        {
+          "name": "Amanda Glaeser",
+          "type": "person"
+        }
+      ]
+    },
+    {
       "event_id": "PP1162461",
       "name": "The RAI of Every Day Things - from Principles to UX Practice",
       "date": "2026-03-18",
@@ -94976,45 +95538,6 @@
         },
         {
           "name": "Dr. Mark Horowitz, MD",
-          "type": "person"
-        }
-      ]
-    },
-    {
-      "event_id": "PP1162515",
-      "name": "Inclusive GenAI Red Teaming",
-      "date": "2026-03-18",
-      "start_time": "2026-03-18T10:00:00.000-05:00",
-      "end_time": "2026-03-18T12:00:00.000-05:00",
-      "event_type": "panel",
-      "format": "Workshop",
-      "category": "Workshop",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1162515",
-      "credentials": [
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        },
-        {
-          "type": "innovation",
-          "name": "Innovation Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2313",
-        "name": "Brazos I-III",
-        "lat": 30.2655533,
-        "lon": -97.7402274
-      },
-      "contributors": [
-        {
-          "name": "Zaki Barzinji",
-          "type": "person"
-        },
-        {
-          "name": "Cindy Joung",
           "type": "person"
         }
       ]
@@ -95407,10 +95930,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -95445,10 +95968,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -95483,10 +96006,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -95521,10 +96044,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -95559,10 +96082,10 @@
       ],
       "status": "active",
       "venue": {
-        "id": null,
-        "name": null,
-        "lat": null,
-        "lon": null
+        "id": "V2458",
+        "name": "900 Congress Street Closure",
+        "lat": 30.2712128,
+        "lon": -97.742222
       },
       "contributors": []
     },
@@ -97560,7 +98083,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -97680,7 +98203,7 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2456",
+        "id": "V2481",
         "name": "Film & TV Clubhouse",
         "lat": 30.2702466,
         "lon": -97.7423627
@@ -98448,8 +98971,8 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V2190",
-        "name": "Rio Grande Ballroom 2",
+        "id": "V2191",
+        "name": "Guadalupe",
         "lat": 30.2655533,
         "lon": -97.7402274
       },
@@ -98921,41 +99444,6 @@
       ]
     },
     {
-      "event_id": "PP1162415",
-      "name": "The Shortcut to Better Video for Overloaded Teams",
-      "date": "2026-03-18",
-      "start_time": "2026-03-18T13:00:00.000-05:00",
-      "end_time": "2026-03-18T15:00:00.000-05:00",
-      "event_type": "panel",
-      "format": "Workshop",
-      "category": "Workshop",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1162415",
-      "credentials": [
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        },
-        {
-          "type": "innovation",
-          "name": "Innovation Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2313",
-        "name": "Brazos I-III",
-        "lat": 30.2655533,
-        "lon": -97.7402274
-      },
-      "contributors": [
-        {
-          "name": "Amanda Glaeser",
-          "type": "person"
-        }
-      ]
-    },
-    {
       "event_id": "PP1162416",
       "name": "How Sleep Sounds & AI Detect Sickness Days Early",
       "date": "2026-03-18",
@@ -99208,8 +99696,8 @@
       ],
       "status": "active",
       "venue": {
-        "id": "V0354",
-        "name": "Rio Grande Ballroom 1",
+        "id": "V2313",
+        "name": "Brazos I-III",
         "lat": 30.2655533,
         "lon": -97.7402274
       },
@@ -99629,41 +100117,6 @@
       "contributors": [
         {
           "name": "Alberto Chapa",
-          "type": "person"
-        }
-      ]
-    },
-    {
-      "event_id": "PP1149731",
-      "name": "Publicity and Marketing Mentor Session: Lee Meltzer (Lee Meltzer Consulting)",
-      "date": "2026-03-18",
-      "start_time": "2026-03-18T14:30:00.000-05:00",
-      "end_time": "2026-03-18T15:45:00.000-05:00",
-      "event_type": "panel",
-      "format": "Mentor Session",
-      "category": "Mentor Session",
-      "reservable": true,
-      "official_url": "https://schedule.sxsw.com/2026/events/PP1149731",
-      "credentials": [
-        {
-          "type": "platinum",
-          "name": "Platinum Badge"
-        },
-        {
-          "type": "filmtv",
-          "name": "Film & TV Badge"
-        }
-      ],
-      "status": "active",
-      "venue": {
-        "id": "V2402",
-        "name": "Liberty",
-        "lat": 30.2689471,
-        "lon": -97.7403971
-      },
-      "contributors": [
-        {
-          "name": "Lee Meltzer",
           "type": "person"
         }
       ]

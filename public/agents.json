@@ -1,19 +1,19 @@
 {
   "agent_contract_version": "1.1.0",
-  "generated_at": "2026-02-18T09:46:50.175Z",
+  "generated_at": "2026-02-19T01:06:36.391Z",
   "festival_year": 2026,
   "purpose": "Agent-first SXSW schedule feed from official source",
   "freshness": {
     "refresh_mode": "manual",
     "refresh_cadence_target": "daily",
-    "last_successful_refresh_at": "2026-02-18T09:46:50.175Z",
-    "source_snapshot_at": "2026-02-18T00:17:00.000Z",
-    "expected_next_refresh_by": "2026-02-19T09:46:50.175Z",
-    "stale_after": "2026-02-22T09:46:50.175Z",
+    "last_successful_refresh_at": "2026-02-19T01:06:36.391Z",
+    "source_snapshot_at": "2026-02-19T00:59:00.000Z",
+    "expected_next_refresh_by": "2026-02-20T01:06:36.391Z",
+    "stale_after": "2026-02-23T01:06:36.391Z",
     "data_staleness": {
       "is_stale": false,
       "status": "fresh",
-      "source_snapshot_age_hours": 9.5
+      "source_snapshot_age_hours": 0.1
     }
   },
   "compatibility": {
@@ -72,6 +72,15 @@
     "Use /events/by-date/*.ndjson for date-scoped streaming refreshes",
     "Use /schedule.json.gz only when complete raw snapshot fidelity is required"
   ],
+  "expectations": {
+    "timezone_note": "Event timestamps include local offsets from source data.",
+    "id_field": "event_id",
+    "date_field": "date",
+    "shard_strategy": "one NDJSON file per event date plus unknown-date shard",
+    "max_file_size_bytes": 26214400,
+    "refresh_mode": "manual",
+    "refresh_cadence_target": "daily"
+  },
   "source": {
     "system": "Official SXSW schedule website",
     "base_url": "https://schedule.sxsw.com",
@@ -79,7 +88,7 @@
       "/2026/search",
       "/api/web/2026/events/{event_id}"
     ],
-    "source_snapshot_at": "2026-02-18T00:17:00.000Z",
+    "source_snapshot_at": "2026-02-19T00:59:00.000Z",
     "extraction_notes": "Event IDs are discovered from official search index; event records are hydrated from official detail endpoint."
   }
 }
