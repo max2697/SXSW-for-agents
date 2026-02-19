@@ -1420,74 +1420,61 @@ function renderLlmsTxt(manifest, dateSummaries) {
 
   return `# SXSW ${manifest.festival_year} Agent-First Schedule
 
-> A static, machine-readable export of the official SXSW ${manifest.festival_year} schedule.
-> ${manifest.stats.event_count} events across March 12–18, ${manifest.festival_year}. All data sourced from schedule.sxsw.com.
+> ${manifest.stats.event_count} events across March 12–18, ${manifest.festival_year}. Sourced daily from schedule.sxsw.com.
 
-## What This Site Is
+## Query API (Recommended — use this first)
 
-This site publishes the SXSW ${manifest.festival_year} festival schedule as structured, agent-friendly data.
-It is designed to be easy for LLMs and AI agents to ingest, filter, and reason over.
+A search API returns filtered results in <10 KB. No bulk download needed.
 
-## Recommended Ingestion (Start Here)
+- [OpenAPI spec](/api/openapi.json) — import into ChatGPT, Claude, LangChain, or any OpenAPI-aware agent
+- \`GET /api/events?date=2026-03-14&category=AI\` — filter events by any combination of fields
+- \`GET /api/events?venue=Hilton&type=panel\` — venue + type filter
+- \`GET /api/events?contributor=Carmen+Simon\` — find sessions by speaker/artist
+- \`GET /api/events?q=machine+learning\` — full-text search across name, category, venue
+- \`GET /api/events/{event_id}\` — single event by ID
+- \`GET /api/dates\` — festival dates with event counts
+- \`GET /api/venues?name=Hilton\` — venue lookup
+- \`GET /api/categories\` — all 54 categories with counts
+- \`GET /api/contributors?name=Simon\` — speaker/artist search
 
-- [Agent ingestion contract](/agents.json) — machine-readable guide: endpoints, field names, ingestion order
-- [**Slim JSON feed**](/agent-schedule.v1.slim.json) — all ${manifest.stats.event_count} events, 10 key fields only, **${fmtMb(ai.bytes_slim_json)}** — recommended for most agent tool calls
-- [Slim NDJSON feed](/agent-schedule.v1.slim.ndjson) — same slim data, one event per line, **${fmtMb(ai.bytes_slim_ndjson)}**
-- [Full normalized JSON feed](/agent-schedule.v1.json) — all ${manifest.stats.event_count} events, raw + derived + provenance blocks, ${fmtMb(ai.bytes_json)} (large — prefer slim feed or per-day shards)
-- [Full normalized NDJSON feed](/agent-schedule.v1.ndjson) — same full data, one event per line, ${fmtMb(ai.bytes_ndjson)}
-- [Manifest + hashes](/schedule.manifest.json) — metadata, SHA256 hashes, shard map, field inventory
-- [Field schema + sample record](/schema.json) — all ${manifest.stats.field_count} raw fields documented with a sample event
-- [Change feed + tombstones](/changes.ndjson) — added/modified/removed/cancelled records for incremental sync
-- [Entity indexes](/entities/venues.v1.ndjson), [/entities/contributors.v1.ndjson] — canonical cross-event joins
+All API responses are JSON, CORS-enabled, always <10 KB.
 
-## Date-Sharded Feeds (Recommended for Tool Calls)
+## Bulk Data Feeds (If You Need Everything)
 
-Fetch only the days you need. Each day has a **slim JSON** (~280-410 KB) and a full NDJSON shard:
+- [agents.json](/agents.json) — machine-readable contract: all endpoints, field names, ingestion order
+- [Per-day slim JSON shards](/events/by-date/2026-03-14.slim.json) — one per day, ~280-410 KB, 14 key fields
+- [Slim JSON feed](/agent-schedule.v1.slim.json) — all ${manifest.stats.event_count} events, ${fmtMb(ai.bytes_slim_json)}, 14 key fields
+- [Full normalized JSON feed](/agent-schedule.v1.json) — all ${manifest.stats.event_count} events, ${fmtMb(ai.bytes_json)}, all fields
+- [Manifest + hashes](/schedule.manifest.json) — freshness metadata, SHA256 hashes
+- [Schema + sample](/schema.json) — all ${manifest.stats.field_count} raw fields with a sample event
+- [Changes feed](/changes.ndjson) — tombstones and incremental updates
+
+## Date Shards
 
 ${shardLines}
-
-## Full Raw Snapshot
-
-- [Full compressed export](/schedule.json.gz) — all ${manifest.stats.field_count} raw fields, gzip compressed
-
-## Human-Browsable Pages
-
-- [Schedule index](/schedule/index.html) — browse by day
-- [Individual event pages](/schedule/event/{event_id}.html) — one HTML page per event with JSON payload
-
-## Key Fields (Normalized Feed)
-
-${normalizedFields}
 
 ## Data Freshness
 
 Last built: ${manifest.generated_at}
 Source snapshot: ${manifest.freshness?.source_snapshot_at || manifest.generated_at}
-Expected next refresh by: ${manifest.freshness?.expected_next_refresh_by || manifest.generated_at}
-Refresh mode: daily cadence.
+Expected next refresh: ${manifest.freshness?.expected_next_refresh_by || manifest.generated_at}
 
-## Notes for LLMs
+## Key Fields
 
-- Primary event identifier: \`event_id\`
-- All timestamps include timezone offsets (America/Chicago, UTC-5 during festival)
-- \`contributors\` array contains speakers, artists, and performers
-- \`credentials\` array indicates badge types required to attend
-- \`reservable: true\` means the event requires a reservation via the official SXSW app
-- Venue objects include \`lat\`/\`lon\` for geospatial filtering
-- **File size warning:** The full feeds (/agent-schedule.v1.json ${fmtMb(ai.bytes_json)}, /agent-schedule.v1.ndjson ${fmtMb(ai.bytes_ndjson)}) may exceed tool call response limits. Use per-day slim shards (~280-410 KB) or /agent-schedule.v1.slim.json (${fmtMb(ai.bytes_slim_json)}) for most queries.
+- \`event_id\` — primary identifier
+- \`event_type\` — panel, showcase, screening, networking, party, activation, exhibition, comedy_event, lounge, special_event, registration
+- \`contributors\` — speakers, artists, performers (name + type)
+- \`credentials\` — badge types required (platinum, music, film, interactive, etc.)
+- \`reservable\` — true if RSVP required via SXSW app
+- \`venue.lat\` / \`venue.lon\` — coordinates for geospatial filtering
+- Timestamps are America/Chicago (UTC-5 during festival)
 
-## Fetching Tips for AI Agents
+## Fetching Notes
 
-- **Fetch JSON directly** — do not route through reader proxies (e.g. r.jina.ai, reader.llmstxt.cloud). These wrap the response in markdown and break JSON parsing. Use your HTTP/fetch tool with the raw URL.
-- **Per-day slim shards are best** for tool calls: /events/by-date/2026-03-12.slim.json through 2026-03-18.slim.json. Each is ~280-410 KB and parses cleanly.
-- **Check /agents.json first** — it lists all endpoints, recommended ingestion order, and field names.
-- All endpoints return \`Content-Type: application/json\` or \`application/x-ndjson\` — never HTML.
-- If you receive HTML or a markdown wrapper, you are hitting a proxy or a 404 fallback. Retry the raw URL directly.
-
-## Optional: Full Raw Data
-
-The \`/schedule.json.gz\` file contains all ${manifest.stats.field_count} source fields including accessibility flags,
-streaming URLs, film data, and related event IDs. Decompress with standard gzip tools.
+- **Use the API** — /api/events with query params returns only what you need, always parses cleanly
+- Do not route requests through reader proxies (r.jina.ai etc.) — they wrap JSON in markdown and break parsing
+- All endpoints return \`Content-Type: application/json\` or \`application/x-ndjson\` — never HTML
+- If you receive HTML, you hit a proxy or a 404. Retry the raw URL directly.
 `;
 }
 
@@ -1888,7 +1875,7 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
     ])
     .sort();
 
-  // Rebuild agents.json with slim feed entrypoints so agents read the right feed
+  // Rebuild agents.json with API + slim feed entrypoints
   const siteAgentsDescriptor = {
     ...manifest.source_descriptor,
     agent_contract_version: manifest.schema_version || SCHEMA_VERSION,
@@ -1898,6 +1885,19 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
     freshness: manifest.freshness,
     compatibility: manifest.compatibility,
     identity: manifest.identity,
+    api: {
+      openapi: "/api/openapi.json",
+      base_url: "/api",
+      endpoints: {
+        search_events: "GET /api/events?date=&category=&venue=&type=&contributor=&q=&limit=&offset=",
+        get_event:     "GET /api/events/{event_id}",
+        list_dates:    "GET /api/dates",
+        list_venues:   "GET /api/venues?name=",
+        list_categories: "GET /api/categories",
+        search_contributors: "GET /api/contributors?name="
+      },
+      note: "Query API returns filtered results <10 KB. No bulk download needed for most queries."
+    },
     entrypoints: {
       llms_txt: "/llms.txt",
       website_home: "/index.html",
@@ -1918,18 +1918,15 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
       contributors: "/entities/contributors.v1.ndjson"
     },
     recommended_ingestion_order: [
-      "Read /schedule.manifest.json for schema version, freshness metadata, and hashes",
-      "Fetch per-day slim JSON at /events/by-date/{date}.slim.json (~280-410 KB each) — best for most tool calls",
-      "Read /agent-schedule.v1.slim.json for all events in one request (~2.5 MB) — if per-day is too granular",
-      "Read /agent-schedule.v1.json for the full normalized feed (14 MB — only when all fields are needed)",
-      "Read /changes.ndjson to apply tombstones and incremental updates",
-      "Read /entities/venues.v1.ndjson and /entities/contributors.v1.ndjson for cross-event identity joins",
-      "Use /events/by-date/*.ndjson for full-fidelity date-scoped streaming refreshes",
-      "Use /schedule.json.gz only when complete raw snapshot fidelity is required"
+      "Import /api/openapi.json if your framework supports OpenAPI tool discovery",
+      "Query /api/events with date/category/venue/type/contributor/q params — returns <10 KB",
+      "Fall back to per-day slim shards /events/by-date/{date}.slim.json if you need all events for a day",
+      "Use /agent-schedule.v1.slim.json only if you need all events across all days in one request",
+      "Use /agent-schedule.v1.json only when all 75 raw fields are required"
     ],
     fetching_tips: [
+      "The /api/* endpoints are the recommended access pattern — small responses, no bulk download",
       "Fetch JSON directly — do not route through reader proxies (e.g. r.jina.ai). They wrap responses in markdown and break JSON parsing.",
-      "Per-day slim shards are best for tool calls: /events/by-date/2026-03-12.slim.json through 2026-03-18.slim.json",
       "All endpoints return Content-Type: application/json or application/x-ndjson — never HTML",
       "If you receive HTML or a markdown wrapper, you are hitting a proxy or a 404. Retry the raw URL directly."
     ],
@@ -2251,6 +2248,19 @@ async function main() {
     freshness,
     compatibility,
     identity,
+    api: {
+      openapi: "/api/openapi.json",
+      base_url: "/api",
+      endpoints: {
+        search_events:       "GET /api/events?date=&category=&venue=&type=&contributor=&q=&limit=&offset=",
+        get_event:           "GET /api/events/{event_id}",
+        list_dates:          "GET /api/dates",
+        list_venues:         "GET /api/venues?name=",
+        list_categories:     "GET /api/categories",
+        search_contributors: "GET /api/contributors?name="
+      },
+      note: "Query API returns filtered results <10 KB. No bulk download needed for most queries."
+    },
     entrypoints: {
       llms_txt: "/llms.txt",
       website_home: "/index.html",
@@ -2271,18 +2281,15 @@ async function main() {
       contributors: "/entities/contributors.v1.ndjson"
     },
     recommended_ingestion_order: [
-      "Read /schedule.manifest.json for schema version, freshness metadata, and hashes",
-      "Fetch per-day slim JSON at /events/by-date/{date}.slim.json (~280-410 KB each) — best for most tool calls",
-      "Read /agent-schedule.v1.slim.json for all events in one request (~2.5 MB) — if per-day is too granular",
-      "Read /agent-schedule.v1.json for the full normalized feed (14 MB — only when all fields are needed)",
-      "Read /changes.ndjson to apply tombstones and incremental updates",
-      "Read /entities/venues.v1.ndjson and /entities/contributors.v1.ndjson for cross-event identity joins",
-      "Use /events/by-date/*.ndjson for full-fidelity date-scoped streaming refreshes",
-      "Use /schedule.json.gz only when complete raw snapshot fidelity is required"
+      "Import /api/openapi.json if your framework supports OpenAPI tool discovery",
+      "Query /api/events with date/category/venue/type/contributor/q params — returns <10 KB",
+      "Fall back to per-day slim shards /events/by-date/{date}.slim.json if you need all events for a day",
+      "Use /agent-schedule.v1.slim.json only if you need all events across all days in one request",
+      "Use /agent-schedule.v1.json only when all 75 raw fields are required"
     ],
     fetching_tips: [
+      "The /api/* endpoints are the recommended access pattern — small responses, no bulk download",
       "Fetch JSON directly — do not route through reader proxies (e.g. r.jina.ai). They wrap responses in markdown and break JSON parsing.",
-      "Per-day slim shards are best for tool calls: /events/by-date/2026-03-12.slim.json through 2026-03-18.slim.json",
       "All endpoints return Content-Type: application/json or application/x-ndjson — never HTML",
       "If you receive HTML or a markdown wrapper, you are hitting a proxy or a 404. Retry the raw URL directly."
     ],
