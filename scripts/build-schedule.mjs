@@ -1474,7 +1474,15 @@ Refresh mode: daily cadence.
 - \`credentials\` array indicates badge types required to attend
 - \`reservable: true\` means the event requires a reservation via the official SXSW app
 - Venue objects include \`lat\`/\`lon\` for geospatial filtering
-- **File size warning:** The full feeds (/agent-schedule.v1.json ${fmtMb(ai.bytes_json)}, /agent-schedule.v1.ndjson ${fmtMb(ai.bytes_ndjson)}) may exceed tool call response limits. Use /agent-schedule.v1.slim.json (${fmtMb(ai.bytes_slim_json)}) or per-day shards for most queries.
+- **File size warning:** The full feeds (/agent-schedule.v1.json ${fmtMb(ai.bytes_json)}, /agent-schedule.v1.ndjson ${fmtMb(ai.bytes_ndjson)}) may exceed tool call response limits. Use per-day slim shards (~280-410 KB) or /agent-schedule.v1.slim.json (${fmtMb(ai.bytes_slim_json)}) for most queries.
+
+## Fetching Tips for AI Agents
+
+- **Fetch JSON directly** — do not route through reader proxies (e.g. r.jina.ai, reader.llmstxt.cloud). These wrap the response in markdown and break JSON parsing. Use your HTTP/fetch tool with the raw URL.
+- **Per-day slim shards are best** for tool calls: /events/by-date/2026-03-12.slim.json through 2026-03-18.slim.json. Each is ~280-410 KB and parses cleanly.
+- **Check /agents.json first** — it lists all endpoints, recommended ingestion order, and field names.
+- All endpoints return \`Content-Type: application/json\` or \`application/x-ndjson\` — never HTML.
+- If you receive HTML or a markdown wrapper, you are hitting a proxy or a 404 fallback. Retry the raw URL directly.
 
 ## Optional: Full Raw Data
 
@@ -1919,6 +1927,12 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
       "Use /events/by-date/*.ndjson for full-fidelity date-scoped streaming refreshes",
       "Use /schedule.json.gz only when complete raw snapshot fidelity is required"
     ],
+    fetching_tips: [
+      "Fetch JSON directly — do not route through reader proxies (e.g. r.jina.ai). They wrap responses in markdown and break JSON parsing.",
+      "Per-day slim shards are best for tool calls: /events/by-date/2026-03-12.slim.json through 2026-03-18.slim.json",
+      "All endpoints return Content-Type: application/json or application/x-ndjson — never HTML",
+      "If you receive HTML or a markdown wrapper, you are hitting a proxy or a 404. Retry the raw URL directly."
+    ],
     expectations: manifest.expectations,
     source: manifest.source
   };
@@ -2245,6 +2259,7 @@ async function main() {
       sitemap: "/sitemap.xml",
       slim_json: "/agent-schedule.v1.slim.json",
       slim_ndjson: "/agent-schedule.v1.slim.ndjson",
+      slim_shards: "/events/by-date/*.slim.json",
       easy_json: "/agent-schedule.v1.json",
       easy_ndjson: "/agent-schedule.v1.ndjson",
       manifest: "/schedule.manifest.json",
@@ -2257,12 +2272,19 @@ async function main() {
     },
     recommended_ingestion_order: [
       "Read /schedule.manifest.json for schema version, freshness metadata, and hashes",
-      "Read /agent-schedule.v1.slim.json for a compact feed (~10 key fields, fits in most tool call limits)",
+      "Fetch per-day slim JSON at /events/by-date/{date}.slim.json (~280-410 KB each) — best for most tool calls",
+      "Read /agent-schedule.v1.slim.json for all events in one request (~2.5 MB) — if per-day is too granular",
       "Read /agent-schedule.v1.json for the full normalized feed (14 MB — only when all fields are needed)",
       "Read /changes.ndjson to apply tombstones and incremental updates",
       "Read /entities/venues.v1.ndjson and /entities/contributors.v1.ndjson for cross-event identity joins",
-      "Use /events/by-date/*.ndjson for date-scoped streaming refreshes",
+      "Use /events/by-date/*.ndjson for full-fidelity date-scoped streaming refreshes",
       "Use /schedule.json.gz only when complete raw snapshot fidelity is required"
+    ],
+    fetching_tips: [
+      "Fetch JSON directly — do not route through reader proxies (e.g. r.jina.ai). They wrap responses in markdown and break JSON parsing.",
+      "Per-day slim shards are best for tool calls: /events/by-date/2026-03-12.slim.json through 2026-03-18.slim.json",
+      "All endpoints return Content-Type: application/json or application/x-ndjson — never HTML",
+      "If you receive HTML or a markdown wrapper, you are hitting a proxy or a 404. Retry the raw URL directly."
     ],
     expectations: {
       timezone_note: "Event timestamps include local offsets from source data.",
