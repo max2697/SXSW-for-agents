@@ -2,3 +2,25 @@ node_modules/
 .cache/
 
 .DS_Store
+
+# Generated build output — CI refreshes these, don't track locally
+public/index.html
+public/schedule/
+public/events/
+public/schedule.manifest.json
+public/schema.json
+public/sitemap.xml
+public/schedule.json.gz
+public/agent-schedule.v1.ndjson
+
+# Deleted bulk files (kept here in case they reappear locally)
+public/agent-schedule.v1.json
+public/agent-schedule.v1.slim.json
+public/agent-schedule.v1.slim.ndjson
+public/changes.ndjson
+public/events/
+public/entities/
+public/prompts/
+public/faq/
+public/changelog/
+public/stability/
