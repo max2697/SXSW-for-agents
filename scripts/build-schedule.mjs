@@ -799,7 +799,7 @@ function renderLandingPage(manifest, dateSummaries) {
   <p class="small">Copy and paste into Claude, ChatGPT, Gemini, Perplexity, or coding agents.</p>
   <details>
     <summary>Find AI sessions on 2026-03-15</summary>
-    <pre>Fetch ${escapeHtml(absoluteUrl("/api/events"))}?date=2026-03-15&q=AI&q_mode=any&limit=200 and return a table of results with columns: time, session name, venue, event_id.</pre>
+    <pre>Fetch ${escapeHtml(absoluteUrl("/api/events"))}?date=2026-03-15&q=AI and return a table of results with columns: time, session name, venue, event_id.</pre>
   </details>
   <details>
     <summary>Find sessions at Hilton Austin Downtown</summary>
@@ -851,12 +851,13 @@ ${aiPromptsSection}
 <section class="panel">
   <h2>Machine Access</h2>
   <ul class="flat">
-    <li><a href="/agents.json"><code>/agents.json</code></a></li>
+    <li><a href="/api/openapi.json"><code>/api/openapi.json</code></a> — OpenAPI spec (import into ChatGPT, Claude, LangChain)</li>
+    <li><a href="/agents.json"><code>/agents.json</code></a> — ingestion contract</li>
+    <li><a href="/llms.txt"><code>/llms.txt</code></a> — LLM guide</li>
     <li><a href="/schedule.manifest.json"><code>/schedule.manifest.json</code></a></li>
     <li><a href="/changes.ndjson"><code>/changes.ndjson</code></a></li>
     <li><a href="/entities/venues.v1.ndjson"><code>/entities/venues.v1.ndjson</code></a></li>
     <li><a href="/entities/contributors.v1.ndjson"><code>/entities/contributors.v1.ndjson</code></a></li>
-    <li><a href="/schedule.json.gz"><code>/schedule.json.gz</code></a></li>
     <li><a href="/schema.json"><code>/schema.json</code></a></li>
   </ul>
 </section>`,
@@ -898,7 +899,7 @@ function renderPromptExamplesPage(manifest) {
 <section class="panel">
   <h2>1) Find Sessions by Topic and Date</h2>
   <p><button class="button copy-prompt" type="button" data-target="prompt-1">Copy</button></p>
-  <pre id="prompt-1">Fetch ${escapeHtml(base)}api/events?date=2026-03-15&q=AI&q_mode=any&limit=200
+  <pre id="prompt-1">Fetch ${escapeHtml(base)}api/events?date=2026-03-15&q=AI
 Return a table with columns: start_time, name, venue, event_id, official_url. Sort by start_time.</pre>
 </section>
 <section class="panel">
@@ -1010,7 +1011,7 @@ function renderFaqPage(manifest) {
 </section>
 <section class="panel">
   <h2>Where should agents start?</h2>
-  <p>Start with <a href="/schedule.manifest.json"><code>/schedule.manifest.json</code></a>, then use <a href="/agent-schedule.v1.json"><code>/agent-schedule.v1.json</code></a>.</p>
+  <p>Use the <a href="/api/openapi.json">query API</a> — fetch <code>/api/events?date=&amp;q=&amp;venue=&amp;contributor=</code> for filtered results under 10 KB. See <a href="/agents.json"><code>/agents.json</code></a> for the full endpoint list, or <a href="/prompts/index.html">prompt examples</a> for ready-to-use instructions.</p>
 </section>
 <section class="panel">
   <h2>How do I track updates?</h2>
