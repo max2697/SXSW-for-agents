@@ -7,11 +7,12 @@ node_modules/
 public/index.html
 public/schedule/
 public/events/
-public/schedule.manifest.json
 public/schema.json
 public/sitemap.xml
 public/agent-schedule.v1.ndjson
-# public/schedule.json.gz — intentionally tracked: Cloudflare build reads it via BUILD_MODE=site
+# Intentionally tracked — Cloudflare build (BUILD_MODE=site) reads both of these:
+# public/schedule.json.gz
+# public/schedule.manifest.json
 
 # Deleted bulk files (kept here in case they reappear locally)
 public/agent-schedule.v1.json
