@@ -660,28 +660,66 @@ p, li, td, th {
 code, pre {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  background: #07121a;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: #cde4f5;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  margin: 0;
+}
+.prompt-block {
+  position: relative;
+  margin-top: 10px;
+}
+.prompt-block pre {
+  padding-top: 42px;
+}
+.prompt-block .copy-prompt {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 0.8rem;
+  padding: 5px 12px;
+}
 .hero {
   border: 1px solid var(--line);
   background: #0c1822;
   border-radius: 14px;
-  padding: 18px;
+  padding: 22px 24px;
 }
 .panel {
   border: 1px solid var(--line);
   background: var(--panel);
   border-radius: 12px;
-  padding: 14px;
+  padding: 20px 24px;
   margin-top: 14px;
+}
+.panel h3 {
+  margin-top: 20px;
+  margin-bottom: 6px;
+  font-size: 1rem;
+  color: var(--text);
+}
+.panel h3:first-of-type {
+  margin-top: 12px;
 }
 .button {
   display: inline-block;
   border: 1px solid #2d516b;
   border-radius: 999px;
-  padding: 8px 14px;
+  padding: 8px 16px;
   text-decoration: none;
   color: var(--text);
   background: #12324b;
   font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
 }
 .button:hover {
   background: #174468;
@@ -736,13 +774,7 @@ th {
   font-size: 0.88rem;
 }
 details pre {
-  white-space: pre-wrap;
-  word-break: break-word;
-  background: #09131a;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 10px;
-  color: #e8eef5;
+  margin-top: 10px;
 }
 ul.flat {
   margin: 8px 0 0 16px;
@@ -829,26 +861,36 @@ function renderLandingPage(manifest, dateSummaries) {
   <p class="small">Paste into Claude, ChatGPT, Gemini, or any AI that can browse the web. No setup needed.</p>
 
   <h3>Build a personal schedule</h3>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-h1">Copy</button></p>
-  <pre id="prompt-h1">Use ${escapeHtml(base)} as the source for the SXSW ${year} schedule.
+  <div class="prompt-block">
+    <button class="button copy-prompt" type="button" data-target="prompt-h1">Copy</button>
+    <pre id="prompt-h1">Use ${escapeHtml(base)} as the source for the SXSW ${year} schedule.
 
 I'm interested in AI, startups, and music technology. Build me a personal schedule for the full festival — pick the best 2–3 sessions per day that match my interests, avoid time conflicts, and include the venue and official link for each one.</pre>
+  </div>
 
   <h3>Explore a topic</h3>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-h2">Copy</button></p>
-  <pre id="prompt-h2">Using the SXSW ${year} schedule at ${escapeHtml(base)}, find all sessions about climate tech and sustainability. List them with date, time, venue, and a link. Group by day.</pre>
+  <div class="prompt-block">
+    <button class="button copy-prompt" type="button" data-target="prompt-h2">Copy</button>
+    <pre id="prompt-h2">Using the SXSW ${year} schedule at ${escapeHtml(base)}, find all sessions about climate tech and sustainability. List them with date, time, venue, and a link. Group by day.</pre>
+  </div>
 
   <h3>Look up a speaker</h3>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-h3">Copy</button></p>
-  <pre id="prompt-h3">Using the SXSW ${year} schedule at ${escapeHtml(base)}, find all sessions featuring [speaker name]. Show the date, time, session name, venue, and official link for each.</pre>
+  <div class="prompt-block">
+    <button class="button copy-prompt" type="button" data-target="prompt-h3">Copy</button>
+    <pre id="prompt-h3">Using the SXSW ${year} schedule at ${escapeHtml(base)}, find all sessions featuring [speaker name]. Show the date, time, session name, venue, and official link for each.</pre>
+  </div>
 
   <h3>Plan a single day</h3>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-h4">Copy</button></p>
-  <pre id="prompt-h4">Using the SXSW ${year} schedule at ${escapeHtml(base)}, plan my Saturday March 14. I like panels and keynotes about AI, product design, or the music industry. Suggest a realistic schedule with no overlaps — include times, venues, and links.</pre>
+  <div class="prompt-block">
+    <button class="button copy-prompt" type="button" data-target="prompt-h4">Copy</button>
+    <pre id="prompt-h4">Using the SXSW ${year} schedule at ${escapeHtml(base)}, plan my Saturday March 14. I like panels and keynotes about AI, product design, or the music industry. Suggest a realistic schedule with no overlaps — include times, venues, and links.</pre>
+  </div>
 
   <h3>Find something to do tonight</h3>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-h5">Copy</button></p>
-  <pre id="prompt-h5">Using the SXSW ${year} schedule at ${escapeHtml(base)}, what are the best music showcases and parties happening on Friday March 13? I prefer indie rock and electronic. List options with venue, start time, and a link.</pre>
+  <div class="prompt-block">
+    <button class="button copy-prompt" type="button" data-target="prompt-h5">Copy</button>
+    <pre id="prompt-h5">Using the SXSW ${year} schedule at ${escapeHtml(base)}, what are the best music showcases and parties happening on Friday March 13? I prefer indie rock and electronic. List options with venue, start time, and a link.</pre>
+  </div>
 </section>
 
 <section class="panel">
@@ -856,34 +898,44 @@ I'm interested in AI, startups, and music technology. Build me a personal schedu
   <p class="small">Structured prompts that tell the AI exactly how to call the API. Useful for coding agents, n8n, Make, or any tool-use workflow.</p>
 
   <h3>Personal schedule from interests</h3>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-a1">Copy</button></p>
-  <pre id="prompt-a1">You are a SXSW ${year} schedule assistant. Use the API at ${escapeHtml(base)}api/.
+  <div class="prompt-block">
+    <button class="button copy-prompt" type="button" data-target="prompt-a1">Copy</button>
+    <pre id="prompt-a1">You are a SXSW ${year} schedule assistant. Use the API at ${escapeHtml(base)}api/.
 
 Step 1: Fetch ${escapeHtml(base)}api/dates to get all festival days.
 Step 2: For each day, fetch ${escapeHtml(base)}api/events?date={date}&q=AI+startups&q_mode=any&limit=50
 Step 3: Pick the top 3 sessions per day based on relevance to AI and startups. Avoid overlapping times.
 Step 4: Return a schedule grouped by day. For each session include: name, start_time, end_time, venue, official_url.</pre>
+  </div>
 
   <h3>Topic search across all days</h3>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-a2">Copy</button></p>
-  <pre id="prompt-a2">Fetch ${escapeHtml(base)}api/events?q=climate+tech&q_mode=any&limit=200
+  <div class="prompt-block">
+    <button class="button copy-prompt" type="button" data-target="prompt-a2">Copy</button>
+    <pre id="prompt-a2">Fetch ${escapeHtml(base)}api/events?q=climate+tech&q_mode=any&limit=200
 Return all results as a table: date, start_time, name, venue, official_url. Sort by date then start_time.</pre>
+  </div>
 
   <h3>Speaker session lookup</h3>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-a3">Copy</button></p>
-  <pre id="prompt-a3">Fetch ${escapeHtml(base)}api/contributors?name=Carmen+Simon
+  <div class="prompt-block">
+    <button class="button copy-prompt" type="button" data-target="prompt-a3">Copy</button>
+    <pre id="prompt-a3">Fetch ${escapeHtml(base)}api/contributors?name=Carmen+Simon
 For each matching contributor, note their sessions. Then fetch ${escapeHtml(base)}api/events?contributor=Carmen+Simon
 Return: date, start_time, session name, venue, official_url.</pre>
+  </div>
 
   <h3>Daily shortlist (single API call)</h3>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-a4">Copy</button></p>
-  <pre id="prompt-a4">Fetch ${escapeHtml(base)}api/shortlist?topic=ai-developer-tooling&per_day=5
+  <div class="prompt-block">
+    <button class="button copy-prompt" type="button" data-target="prompt-a4">Copy</button>
+    <pre id="prompt-a4">Fetch ${escapeHtml(base)}api/shortlist?topic=ai-developer-tooling&per_day=5
 Return the results as a schedule grouped by day. For each session include name, time, venue, and official_url.</pre>
+  </div>
 
   <h3>Venue schedule</h3>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-a5">Copy</button></p>
-  <pre id="prompt-a5">Fetch ${escapeHtml(base)}api/events?venue=Hilton&limit=200
+  <div class="prompt-block">
+    <button class="button copy-prompt" type="button" data-target="prompt-a5">Copy</button>
+    <pre id="prompt-a5">Fetch ${escapeHtml(base)}api/events?venue=Hilton&limit=200
 Return all sessions at venues matching "Hilton", grouped by date. Include start_time, session name, and official_url.</pre>
+  </div>
 </section>
 
 <section class="panel">
