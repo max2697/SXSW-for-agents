@@ -290,10 +290,9 @@ async function main() {
   const agentNdjsonPath = `${BASE_DIR}/agent-schedule.v1.ndjson`;
   const schemaPath = `${BASE_DIR}/schema.json`;
 
+  // Core files — always required (present after both site and refresh builds)
   if (!existsSync(manifestPath)) fail(`Missing ${manifestPath}`);
   if (!existsSync(fullPath)) fail(`Missing ${fullPath}`);
-  if (!existsSync(agentNdjsonPath)) fail(`Missing ${agentNdjsonPath}`);
-  if (!existsSync(schemaPath)) fail(`Missing ${schemaPath}`);
   if (!existsSync(`${BASE_DIR}/robots.txt`)) fail(`Missing ${BASE_DIR}/robots.txt`);
   if (!existsSync(`${BASE_DIR}/sitemap.xml`)) fail(`Missing ${BASE_DIR}/sitemap.xml`);
   if (!existsSync(`${BASE_DIR}/llms.txt`)) fail(`Missing ${BASE_DIR}/llms.txt`);
@@ -303,13 +302,16 @@ async function main() {
   if (!existsSync(`${BASE_DIR}/schedule/og-default.svg`)) fail(`Missing ${BASE_DIR}/schedule/og-default.svg`);
   if (!existsSync(`${BASE_DIR}/agents.json`)) fail(`Missing ${BASE_DIR}/agents.json`);
 
+  // Refresh-only files — only present after BUILD_MODE=refresh (not site build)
+  const hasAgentNdjson = existsSync(agentNdjsonPath);
+  const hasSchema = existsSync(schemaPath);
+
   const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
   const agents = JSON.parse(await readFile(`${BASE_DIR}/agents.json`, "utf8"));
-  const schema = JSON.parse(await readFile(schemaPath, "utf8"));
+  const schema = hasSchema ? JSON.parse(await readFile(schemaPath, "utf8")) : null;
   const fullRaw = await readFile(fullPath);
   const full = JSON.parse(gunzipSync(fullRaw).toString("utf8"));
-  const agentNdjsonRaw = await readFile(agentNdjsonPath, "utf8");
-  const agentNdjson = parseNdjson(agentNdjsonRaw);
+  const agentNdjson = hasAgentNdjson ? parseNdjson(await readFile(agentNdjsonPath, "utf8")) : null;
   const robotsTxt = await readFile(`${BASE_DIR}/robots.txt`, "utf8");
   const sitemapXml = await readFile(`${BASE_DIR}/sitemap.xml`, "utf8");
 
@@ -340,11 +342,13 @@ async function main() {
     fail(`Expected refresh_mode=manual, got ${manifest.freshness.refresh_mode}`);
   }
 
-  if (!schema.normalized_json_schema || !schema.raw_json_schema) {
-    fail("schema.json missing one or more JSON Schema sections");
-  }
-  if (!Array.isArray(schema.normalized_required_fields) || schema.normalized_required_fields.length === 0) {
-    fail("schema.json missing normalized_required_fields");
+  if (schema) {
+    if (!schema.normalized_json_schema || !schema.raw_json_schema) {
+      fail("schema.json missing one or more JSON Schema sections");
+    }
+    if (!Array.isArray(schema.normalized_required_fields) || schema.normalized_required_fields.length === 0) {
+      fail("schema.json missing normalized_required_fields");
+    }
   }
 
   if (full.events.length !== manifest.stats.event_count) {
@@ -353,7 +357,7 @@ async function main() {
   if (full.fields.length !== manifest.stats.field_count) {
     fail(`Field count mismatch: full=${full.fields.length}, manifest=${manifest.stats.field_count}`);
   }
-  if (agentNdjson.length !== manifest.stats.event_count) {
+  if (agentNdjson && agentNdjson.length !== manifest.stats.event_count) {
     fail(`Agent NDJSON count mismatch: ndjson=${agentNdjson.length}, manifest=${manifest.stats.event_count}`);
   }
 
@@ -382,11 +386,13 @@ async function main() {
     fullById.set(id, event);
   }
 
-  // Verify agent NDJSON IDs are consistent with full export
-  for (const event of agentNdjson) {
-    const id = requiredId(event);
-    if (!id) fail("Event without ID in agent NDJSON");
-    if (!fullIds.has(id)) fail(`Agent NDJSON ID not in full export: ${id}`);
+  // Verify agent NDJSON IDs are consistent with full export (refresh builds only)
+  if (agentNdjson) {
+    for (const event of agentNdjson) {
+      const id = requiredId(event);
+      if (!id) fail("Event without ID in agent NDJSON");
+      if (!fullIds.has(id)) fail(`Agent NDJSON ID not in full export: ${id}`);
+    }
   }
 
   if (!agents.api?.endpoints) {
@@ -417,7 +423,7 @@ async function main() {
 
   console.log("Verification passed");
   console.log(`Events: ${full.events.length}`);
-  console.log(`Agent NDJSON events: ${agentNdjson.length}`);
+  if (agentNdjson) console.log(`Agent NDJSON events: ${agentNdjson.length}`);
   console.log(`Fields: ${full.fields.length}`);
   if (parityResult) {
     console.log(`Source parity count: ${parityResult.sourceCount}`);

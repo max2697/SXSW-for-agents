@@ -12,6 +12,48 @@
     "source_snapshot_at": "2026-02-19T01:06:00.000Z",
     "extraction_notes": "Event IDs are discovered from official search index; event records are hydrated from official detail endpoint."
   },
+  "freshness": {
+    "refresh_mode": "manual",
+    "refresh_cadence_target": "daily",
+    "last_successful_refresh_at": "2026-02-19T09:45:02.602Z",
+    "source_snapshot_at": "2026-02-19T01:06:00.000Z",
+    "expected_next_refresh_by": "2026-02-20T09:45:02.602Z",
+    "stale_after": "2026-02-23T09:45:02.602Z",
+    "data_staleness": {
+      "is_stale": false,
+      "status": "fresh",
+      "source_snapshot_age_hours": 8.7
+    }
+  },
+  "compatibility": {
+    "schema_semver": "1.1.0",
+    "interface_semver": "v1.1",
+    "policy": {
+      "non_breaking_changes": [
+        "Adding nullable fields",
+        "Adding enum variants",
+        "Adding new feed files",
+        "Adding new manifest metadata keys"
+      ],
+      "breaking_changes": [
+        "Removing or renaming existing fields",
+        "Changing field types",
+        "Changing primary identifiers",
+        "Changing route templates"
+      ]
+    }
+  },
+  "identity": {
+    "primary_event_id_field": "event_id",
+    "canonical_templates": {
+      "event_page_path": "/schedule/event/{event_id}.html",
+      "date_page_path": "/schedule/date/{date}.html",
+      "official_event_url": "https://schedule.sxsw.com/2026/events/{event_id}",
+      "venue_entity_id": "venue:{venue.id}",
+      "contributor_entity_id": "contributor:{contributors[].entity_id|contributors[].id}"
+    },
+    "slug_policy": "Non-alphanumeric characters are replaced with underscores."
+  },
   "stats": {
     "event_count": 2795,
     "field_count": 75,
@@ -101,5 +143,17 @@
     "xr_project_type",
     "youtube_id"
   ],
-  "sha256": "dfa490aa5830d52b8e5c20c038a4d4a3c93edbae9f0b685a76dc2bc8490179ae"
+  "changes": {
+    "path": "/changes.ndjson",
+    "generated_at": "2026-02-19T09:45:02.602Z",
+    "baseline_generated_at": "2026-02-19T01:23:17.640Z",
+    "baseline_reset_reason": null,
+    "total": 2796,
+    "added": 6,
+    "modified": 2789,
+    "removed": 1,
+    "cancelled": 0,
+    "uncancelled": 0,
+    "tombstone_count": 1
+  }
 }
