@@ -2,9 +2,9 @@
 
 > 2795 events across March 12–18, 2026. Sourced daily from schedule.sxsw.com.
 
-## Query API (Recommended — use this first)
+## Query API (Use This)
 
-A search API returns filtered results in <10 KB. No bulk download needed.
+A search API returns filtered results in <10 KB. No bulk downloads.
 
 - [OpenAPI spec](https://sxsw.0fn.net/api/openapi.json) — import into ChatGPT, Claude, LangChain, or any OpenAPI-aware agent
 - `https://sxsw.0fn.net/api/shortlist?topic=ai-developer-tooling&per_day=5` — one-call daily shortlist for agentic search
@@ -23,25 +23,11 @@ Note: `category` is a format label (Panel, Rock, Mentor Session…), not a topic
 
 All API responses are JSON, CORS-enabled, always <10 KB.
 
-## Bulk Data Feeds (If You Need Everything)
+## Reference Files
 
-- [agents.json](/agents.json) — machine-readable contract: all endpoints, field names, ingestion order
-- [Per-day slim JSON shards](/events/by-date/2026-03-14.slim.json) — one per day, ~280-410 KB, 14 key fields
-- [Slim JSON feed](/agent-schedule.v1.slim.json) — all 2795 events, ~2.5 MB, 14 key fields
-- [Full normalized JSON feed](/agent-schedule.v1.json) — all 2795 events, ~14.1 MB, all fields
-- [Manifest + hashes](/schedule.manifest.json) — freshness metadata, SHA256 hashes
-- [Schema + sample](/schema.json) — all 75 raw fields with a sample event
-- [Changes feed](/changes.ndjson) — tombstones and incremental updates
-
-## Date Shards
-
-- [Thu, Mar 12, 2026 slim JSON](/events/by-date/2026-03-12.slim.json) — 323 events, key fields only | [full NDJSON](/events/by-date/2026-03-12.ndjson)
-- [Fri, Mar 13, 2026 slim JSON](/events/by-date/2026-03-13.slim.json) — 421 events, key fields only | [full NDJSON](/events/by-date/2026-03-13.ndjson)
-- [Sat, Mar 14, 2026 slim JSON](/events/by-date/2026-03-14.slim.json) — 425 events, key fields only | [full NDJSON](/events/by-date/2026-03-14.ndjson)
-- [Sun, Mar 15, 2026 slim JSON](/events/by-date/2026-03-15.slim.json) — 442 events, key fields only | [full NDJSON](/events/by-date/2026-03-15.ndjson)
-- [Mon, Mar 16, 2026 slim JSON](/events/by-date/2026-03-16.slim.json) — 415 events, key fields only | [full NDJSON](/events/by-date/2026-03-16.ndjson)
-- [Tue, Mar 17, 2026 slim JSON](/events/by-date/2026-03-17.slim.json) — 451 events, key fields only | [full NDJSON](/events/by-date/2026-03-17.ndjson)
-- [Wed, Mar 18, 2026 slim JSON](/events/by-date/2026-03-18.slim.json) — 312 events, key fields only | [full NDJSON](/events/by-date/2026-03-18.ndjson)
+- [agents.json](/agents.json) — machine-readable contract with all endpoints
+- [schedule.manifest.json](/schedule.manifest.json) — freshness metadata
+- [schema.json](/schema.json) — field inventory with sample event
 
 ## Data Freshness
 

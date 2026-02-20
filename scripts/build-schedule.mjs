@@ -794,148 +794,158 @@ function renderShell({ title, description, body, jsonLd = null, pagePath = "/" }
 }
 
 function renderLandingPage(manifest, dateSummaries) {
-  const aiPromptsSection = `<section class="panel">
-  <h2>AI Assistant Prompts</h2>
-  <p class="small">Copy and paste into Claude, ChatGPT, Gemini, Perplexity, or coding agents.</p>
-  <details>
-    <summary>Find AI sessions on 2026-03-15</summary>
-    <pre>Fetch ${escapeHtml(absoluteUrl("/api/events"))}?date=2026-03-15&q=AI and return a table of results with columns: time, session name, venue, event_id.</pre>
-  </details>
-  <details>
-    <summary>Find sessions at Hilton Austin Downtown</summary>
-    <pre>Fetch ${escapeHtml(absoluteUrl("/api/events"))}?venue=Hilton&date=2026-03-14 and return a compact table with time, session name, and event_id.</pre>
-  </details>
-  <details>
-    <summary>Summarize what changed since last refresh</summary>
-    <pre>Fetch ${escapeHtml(absoluteUrl("/changes.ndjson"))}.
-Summarize added/modified/removed/cancelled events since the previous snapshot.
-If there are removed/cancelled events, list tombstones first.</pre>
-  </details>
-  <p><a class="button" href="/prompts/index.html">Open Prompt Examples</a></p>
-</section>`;
+  const base = absoluteUrl("/");
+  const year = manifest.festival_year;
 
   const cards = dateSummaries
     .map(
       (day) => `<article class="card">
   <h3><a href="${day.page_path}">${escapeHtml(day.label)}</a></h3>
   <p class="meta"><strong>${day.event_count}</strong> events</p>
-  <p class="small"><a href="${day.ndjson_path}">NDJSON shard</a></p>
 </article>`
     )
     .join("");
 
+  const nonBreaking = (manifest.compatibility?.policy?.non_breaking_changes || [])
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join("");
+  const breaking = (manifest.compatibility?.policy?.breaking_changes || [])
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join("");
+
   return renderShell({
-    title: `SXSW ${manifest.festival_year} Schedule for Agents`,
-    description: `SXSW ${manifest.festival_year} schedule for agents: human-browsable pages and agent-ready feeds from official source data.`,
+    title: `SXSW ${year} Schedule for Agents`,
+    description: `SXSW ${year} schedule for agents: human-browsable pages and agent-ready API from official source data.`,
     body: `<section class="hero">
-  <h1>SXSW ${manifest.festival_year} Schedule for Agents</h1>
-  <p>This project makes the SXSW schedule easy for agents to parse and easy for humans to browse, using official SXSW source data.</p>
-  <p class="meta"><strong>Freshness:</strong> ${escapeHtml(manifest.freshness?.data_staleness?.status || "unknown")} | Source snapshot: ${escapeHtml(manifest.freshness?.source_snapshot_at || "n/a")} | Next expected refresh: ${escapeHtml(manifest.freshness?.expected_next_refresh_by || "n/a")}</p>
+  <h1>SXSW ${year} Schedule for Agents</h1>
+  <p>Human-browsable schedule with a query API for AI agents and chatbots. Built for people, LLMs, and automation workflows.</p>
+  <p class="meta"><strong>Freshness:</strong> ${escapeHtml(manifest.freshness?.data_staleness?.status || "unknown")} | Source snapshot: ${escapeHtml(manifest.freshness?.source_snapshot_at || "n/a")} | Next refresh: ${escapeHtml(manifest.freshness?.expected_next_refresh_by || "n/a")}</p>
+  <p class="meta">Events: <strong>${manifest.stats.event_count}</strong> | Generated: ${escapeHtml(manifest.generated_at)}</p>
   <p><a class="button" href="/schedule/index.html">Browse Full Schedule</a></p>
-  <p class="meta">Generated: ${escapeHtml(manifest.generated_at)} | Events: ${manifest.stats.event_count}</p>
 </section>
-${aiPromptsSection}
+
 <section class="panel">
-  <h2>What This Is</h2>
-  <p>A human-browsable SXSW ${manifest.festival_year} schedule plus agent-ready data feeds. Built for people, LLMs, chatbots, and automation workflows.</p>
-  <ul class="flat">
-    <li><a href="/faq/index.html">FAQ</a> for common usage questions</li>
-    <li><a href="/changelog/index.html">Changelog</a> for latest snapshot differences</li>
-    <li><a href="/stability/index.html">Schema stability policy</a> for compatibility guarantees</li>
-  </ul>
+  <h2>Try These Prompts — For Humans</h2>
+  <p class="small">Paste into Claude, ChatGPT, Gemini, or any AI that can browse the web. No setup needed.</p>
+
+  <h3>Build a personal schedule</h3>
+  <p><button class="button copy-prompt" type="button" data-target="prompt-h1">Copy</button></p>
+  <pre id="prompt-h1">Use ${escapeHtml(base)} as the source for the SXSW ${year} schedule.
+
+I'm interested in AI, startups, and music technology. Build me a personal schedule for the full festival — pick the best 2–3 sessions per day that match my interests, avoid time conflicts, and include the venue and official link for each one.</pre>
+
+  <h3>Explore a topic</h3>
+  <p><button class="button copy-prompt" type="button" data-target="prompt-h2">Copy</button></p>
+  <pre id="prompt-h2">Using the SXSW ${year} schedule at ${escapeHtml(base)}, find all sessions about climate tech and sustainability. List them with date, time, venue, and a link. Group by day.</pre>
+
+  <h3>Look up a speaker</h3>
+  <p><button class="button copy-prompt" type="button" data-target="prompt-h3">Copy</button></p>
+  <pre id="prompt-h3">Using the SXSW ${year} schedule at ${escapeHtml(base)}, find all sessions featuring [speaker name]. Show the date, time, session name, venue, and official link for each.</pre>
+
+  <h3>Plan a single day</h3>
+  <p><button class="button copy-prompt" type="button" data-target="prompt-h4">Copy</button></p>
+  <pre id="prompt-h4">Using the SXSW ${year} schedule at ${escapeHtml(base)}, plan my Saturday March 14. I like panels and keynotes about AI, product design, or the music industry. Suggest a realistic schedule with no overlaps — include times, venues, and links.</pre>
+
+  <h3>Find something to do tonight</h3>
+  <p><button class="button copy-prompt" type="button" data-target="prompt-h5">Copy</button></p>
+  <pre id="prompt-h5">Using the SXSW ${year} schedule at ${escapeHtml(base)}, what are the best music showcases and parties happening on Friday March 13? I prefer indie rock and electronic. List options with venue, start time, and a link.</pre>
 </section>
+
+<section class="panel">
+  <h2>Try These Prompts — For Agents &amp; Developers</h2>
+  <p class="small">Structured prompts that tell the AI exactly how to call the API. Useful for coding agents, n8n, Make, or any tool-use workflow.</p>
+
+  <h3>Personal schedule from interests</h3>
+  <p><button class="button copy-prompt" type="button" data-target="prompt-a1">Copy</button></p>
+  <pre id="prompt-a1">You are a SXSW ${year} schedule assistant. Use the API at ${escapeHtml(base)}api/.
+
+Step 1: Fetch ${escapeHtml(base)}api/dates to get all festival days.
+Step 2: For each day, fetch ${escapeHtml(base)}api/events?date={date}&q=AI+startups&q_mode=any&limit=50
+Step 3: Pick the top 3 sessions per day based on relevance to AI and startups. Avoid overlapping times.
+Step 4: Return a schedule grouped by day. For each session include: name, start_time, end_time, venue, official_url.</pre>
+
+  <h3>Topic search across all days</h3>
+  <p><button class="button copy-prompt" type="button" data-target="prompt-a2">Copy</button></p>
+  <pre id="prompt-a2">Fetch ${escapeHtml(base)}api/events?q=climate+tech&q_mode=any&limit=200
+Return all results as a table: date, start_time, name, venue, official_url. Sort by date then start_time.</pre>
+
+  <h3>Speaker session lookup</h3>
+  <p><button class="button copy-prompt" type="button" data-target="prompt-a3">Copy</button></p>
+  <pre id="prompt-a3">Fetch ${escapeHtml(base)}api/contributors?name=Carmen+Simon
+For each matching contributor, note their sessions. Then fetch ${escapeHtml(base)}api/events?contributor=Carmen+Simon
+Return: date, start_time, session name, venue, official_url.</pre>
+
+  <h3>Daily shortlist (single API call)</h3>
+  <p><button class="button copy-prompt" type="button" data-target="prompt-a4">Copy</button></p>
+  <pre id="prompt-a4">Fetch ${escapeHtml(base)}api/shortlist?topic=ai-developer-tooling&per_day=5
+Return the results as a schedule grouped by day. For each session include name, time, venue, and official_url.</pre>
+
+  <h3>Venue schedule</h3>
+  <p><button class="button copy-prompt" type="button" data-target="prompt-a5">Copy</button></p>
+  <pre id="prompt-a5">Fetch ${escapeHtml(base)}api/events?venue=Hilton&limit=200
+Return all sessions at venues matching "Hilton", grouped by date. Include start_time, session name, and official_url.</pre>
+</section>
+
 <section class="panel">
   <h2>By Day</h2>
   <div class="grid">${cards}</div>
 </section>
+
+<section class="panel">
+  <h2>API Reference</h2>
+  <p>All endpoints return JSON under 10 KB, CORS-enabled. No bulk downloads.</p>
+  <ul class="flat">
+    <li><a href="/api/openapi.json"><code>/api/openapi.json</code></a> — OpenAPI spec (import into ChatGPT, Claude, LangChain)</li>
+    <li><code>${escapeHtml(base)}api/shortlist?topic=ai-developer-tooling&amp;per_day=5</code> — ranked daily shortlist</li>
+    <li><code>${escapeHtml(base)}api/events?date=2026-03-14&amp;q=AI&amp;q_mode=any&amp;limit=200</code> — topic search on a day</li>
+    <li><code>${escapeHtml(base)}api/events?venue=Hilton&amp;type=panel</code> — venue + format filter</li>
+    <li><code>${escapeHtml(base)}api/events?contributor=Carmen+Simon</code> — sessions by speaker</li>
+    <li><code>${escapeHtml(base)}api/events/PP1162244</code> — single event by ID</li>
+    <li><a href="/api/dates"><code>/api/dates</code></a> — festival dates with event counts</li>
+    <li><a href="/api/venues"><code>/api/venues</code></a> — venue lookup</li>
+    <li><a href="/api/categories"><code>/api/categories</code></a> — format labels (Panel, Rock, Mentor Session…)</li>
+    <li><a href="/api/contributors"><code>/api/contributors</code></a> — speaker/artist search</li>
+    <li><a href="/api/health"><code>/api/health</code></a> — health + current index timestamp</li>
+  </ul>
+  <p class="small">Note: <code>category</code> is a format label, not a topic. Use <code>q=</code> with <code>q_mode=</code> for topic search. If a strict query returns zero results, retry with <code>q_mode=any</code>.</p>
+</section>
+
+<section class="panel">
+  <h2>FAQ</h2>
+
+  <h3>What is this website?</h3>
+  <p>A static SXSW ${year} schedule mirror designed for both humans and AI agents. Data is sourced daily from the official SXSW schedule.</p>
+
+  <h3>Where should agents start?</h3>
+  <p>Fetch <a href="/api/openapi.json"><code>/api/openapi.json</code></a> if your framework supports OpenAPI, or call <code>/api/shortlist?topic=…&amp;per_day=5</code> for a one-call ranked daily shortlist. See <a href="/agents.json"><code>/agents.json</code></a> for the full endpoint contract.</p>
+
+  <h3>How do I check freshness?</h3>
+  <p>Fetch <a href="/api/health"><code>/api/health</code></a> for the current index timestamp, or check <code>freshness</code> fields in <a href="/schedule.manifest.json"><code>/schedule.manifest.json</code></a>.</p>
+
+  <h3>Can I use this with Claude, ChatGPT, or Gemini?</h3>
+  <p>Yes — copy any prompt above and paste it into any AI chat. The AI will query the schedule API automatically.</p>
+
+  <h3>What badge types are in the data?</h3>
+  <p>The <code>credentials</code> field lists required badge types: platinum, music, film, interactive, etc. Filter by this field if you only want sessions accessible with a specific badge.</p>
+</section>
+
+<section class="panel">
+  <h2>Schema Stability</h2>
+  <p class="meta">Schema: ${escapeHtml(manifest.compatibility?.schema_semver || "n/a")} | Interface: ${escapeHtml(manifest.compatibility?.interface_semver || "n/a")}</p>
+  <h3>Non-Breaking Changes (deployed without notice)</h3>
+  <ul class="flat">${nonBreaking || "<li>See schedule.manifest.json for current policy.</li>"}</ul>
+  <h3>Breaking Changes (require version bump)</h3>
+  <ul class="flat">${breaking || "<li>See schedule.manifest.json for current policy.</li>"}</ul>
+  <p>Before relying on this API in production, read <a href="/schedule.manifest.json"><code>/schedule.manifest.json</code></a> and check <code>schema_version</code> and <code>agent_interface.version</code>.</p>
+</section>
+
 <section class="panel">
   <h2>Machine Access</h2>
   <ul class="flat">
-    <li><a href="/api/openapi.json"><code>/api/openapi.json</code></a> — OpenAPI spec (import into ChatGPT, Claude, LangChain)</li>
-    <li><a href="/agents.json"><code>/agents.json</code></a> — ingestion contract</li>
-    <li><a href="/llms.txt"><code>/llms.txt</code></a> — LLM guide</li>
-    <li><a href="/schedule.manifest.json"><code>/schedule.manifest.json</code></a></li>
-    <li><a href="/changes.ndjson"><code>/changes.ndjson</code></a></li>
-    <li><a href="/entities/venues.v1.ndjson"><code>/entities/venues.v1.ndjson</code></a></li>
-    <li><a href="/entities/contributors.v1.ndjson"><code>/entities/contributors.v1.ndjson</code></a></li>
-    <li><a href="/schema.json"><code>/schema.json</code></a></li>
-  </ul>
-</section>`,
-    jsonLd: {
-      "@context": "https://schema.org",
-      "@type": "Dataset",
-      name: `SXSW ${manifest.festival_year} Schedule`,
-      description: "Static, browsable schedule export sourced from official SXSW data.",
-      distribution: [
-        { "@type": "DataDownload", contentUrl: absoluteUrl("/schedule.manifest.json") },
-        { "@type": "DataDownload", contentUrl: absoluteUrl("/schedule.json.gz") }
-      ]
-    },
-    pagePath: "/"
-  });
-}
-
-function renderPromptExamplesPage(manifest) {
-  const base = absoluteUrl("/");
-  return renderShell({
-    title: `AI Prompt Examples | SXSW ${manifest.festival_year}`,
-    description: `Copy/paste prompt examples for querying SXSW ${manifest.festival_year} schedule with popular AI assistants.`,
-    body: `<p class="breadcrumbs"><a href="/index.html">Home</a></p>
-<section class="hero">
-  <h1>AI Assistant Prompt Examples</h1>
-  <p>Copy and paste these into Claude, ChatGPT, Gemini, Perplexity, or coding agents.</p>
-  <p class="meta">Base URL: <code>${escapeHtml(base)}</code></p>
-</section>
-<section class="panel">
-  <h2>Prompt Builder</h2>
-  <div style="display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-    <label>Topic <input id="pb-topic" type="text" value="AI" style="width:100%;margin-top:4px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);"></label>
-    <label>Date <input id="pb-date" type="date" value="2026-03-15" style="width:100%;margin-top:4px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);"></label>
-    <label>Speaker (optional) <input id="pb-speaker" type="text" placeholder="Dr. Carmen Simon" style="width:100%;margin-top:4px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);"></label>
-  </div>
-  <p style="margin-top:10px;"><button id="pb-copy" class="button" type="button">Copy Generated Prompt</button></p>
-  <pre id="pb-output"></pre>
-</section>
-<section class="panel">
-  <h2>1) Find Sessions by Topic and Date</h2>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-1">Copy</button></p>
-  <pre id="prompt-1">Fetch ${escapeHtml(base)}api/events?date=2026-03-15&q=AI
-Return a table with columns: start_time, name, venue, event_id, official_url. Sort by start_time.</pre>
-</section>
-<section class="panel">
-  <h2>2) Venue-Based Search</h2>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-2">Copy</button></p>
-  <pre id="prompt-2">Fetch ${escapeHtml(base)}api/events?venue=Hilton&date=2026-03-14
-Return a compact table with time, session name, and event_id.</pre>
-</section>
-<section class="panel">
-  <h2>3) Speaker Lookup</h2>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-3">Copy</button></p>
-  <pre id="prompt-3">Fetch ${escapeHtml(base)}api/contributors?name=Carmen+Simon
-Return each session with date, start_time, event name, venue, event_id, and official_url.</pre>
-</section>
-<section class="panel">
-  <h2>4) Incremental Update Check</h2>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-4">Copy</button></p>
-  <pre id="prompt-4">Fetch ${escapeHtml(base)}changes.ndjson
-Summarize added/modified/removed/cancelled events since the previous snapshot.
-List any tombstones (removed/cancelled) first.</pre>
-</section>
-<section class="panel">
-  <h2>5) Plan My SXSW Day</h2>
-  <p><button class="button copy-prompt" type="button" data-target="prompt-5">Copy</button></p>
-  <pre id="prompt-5">Use the SXSW ${manifest.festival_year} schedule API at ${escapeHtml(base)}api/
-First try: fetch ${escapeHtml(base)}api/shortlist?topic=ai-developer-tooling&per_day=5
-If unavailable, fetch ${escapeHtml(base)}api/dates and then fetch ${escapeHtml(base)}api/events?date={date}&q=AI+developer+tooling&q_mode=all&limit=200 for each day.
-If no results, retry with q=AI&q_mode=any.
-Build a shortlist of the top sessions per day. Include event_id and official_url for every item.</pre>
-</section>
-<section class="panel">
-  <h2>See Also</h2>
-  <ul class="flat">
-    <li><a href="/faq/index.html">FAQ</a></li>
-    <li><a href="/changelog/index.html">Changelog</a></li>
-    <li><a href="/stability/index.html">Schema stability policy</a></li>
+    <li><a href="/agents.json"><code>/agents.json</code></a> — machine-readable API contract</li>
+    <li><a href="/llms.txt"><code>/llms.txt</code></a> — LLM guide (llms.txt standard)</li>
+    <li><a href="/schedule.manifest.json"><code>/schedule.manifest.json</code></a> — freshness &amp; metadata</li>
+    <li><a href="/schema.json"><code>/schema.json</code></a> — field inventory with sample event</li>
   </ul>
 </section>
 <script>
@@ -952,36 +962,6 @@ Build a shortlist of the top sessions per day. Include event_id and official_url
     document.body.removeChild(ta);
     return Promise.resolve();
   }
-
-  function buildPrompt() {
-    var topic = (document.getElementById('pb-topic').value || 'AI').trim();
-    var date = (document.getElementById('pb-date').value || '2026-03-15').trim();
-    var speaker = (document.getElementById('pb-speaker').value || '').trim();
-    var topicEnc = encodeURIComponent(topic).replace(/%20/g, '+');
-    var lines = [];
-    if (speaker) {
-      var speakerEnc = encodeURIComponent(speaker).replace(/%20/g, '+');
-      lines.push('Fetch ${escapeHtml(base)}api/contributors?name=' + speakerEnc);
-      lines.push('Also fetch ${escapeHtml(base)}api/events?date=' + date + '&q=' + topicEnc + '&q_mode=any&limit=200');
-    } else {
-      lines.push('Fetch ${escapeHtml(base)}api/events?date=' + date + '&q=' + topicEnc + '&q_mode=any&limit=200');
-    }
-    lines.push('Return a table with columns: start_time, name, venue, event_id, official_url. Sort by start_time.');
-    var text = lines.join('\\n');
-    document.getElementById('pb-output').textContent = text;
-    return text;
-  }
-
-  ['pb-topic','pb-date','pb-speaker'].forEach(function(id) {
-    var el = document.getElementById(id);
-    el.addEventListener('input', buildPrompt);
-  });
-  buildPrompt();
-
-  document.getElementById('pb-copy').addEventListener('click', function() {
-    copyText(buildPrompt());
-  });
-
   document.querySelectorAll('.copy-prompt').forEach(function(btn) {
     btn.addEventListener('click', function() {
       var target = document.getElementById(btn.getAttribute('data-target'));
@@ -990,144 +970,26 @@ Build a shortlist of the top sessions per day. Include event_id and official_url
     });
   });
 })();
-</script>
-`,
-    pagePath: "/prompts/"
-  });
-}
-
-function renderFaqPage(manifest) {
-  return renderShell({
-    title: `FAQ | SXSW ${manifest.festival_year} Agent-First Schedule`,
-    description: `Frequently asked questions about using the SXSW ${manifest.festival_year} schedule website and data feeds.`,
-    body: `<p class="breadcrumbs"><a href="/index.html">Home</a></p>
-<section class="hero">
-  <h1>FAQ</h1>
-  <p>Practical answers for using the website and data feeds.</p>
-</section>
-<section class="panel">
-  <h2>What is this website?</h2>
-  <p>A static SXSW ${manifest.festival_year} schedule mirror designed for both humans and agents.</p>
-</section>
-<section class="panel">
-  <h2>Where should agents start?</h2>
-  <p>Use the <a href="/api/openapi.json">query API</a> — fetch <code>/api/events?date=&amp;q=&amp;venue=&amp;contributor=</code> for filtered results under 10 KB. See <a href="/agents.json"><code>/agents.json</code></a> for the full endpoint list, or <a href="/prompts/index.html">prompt examples</a> for ready-to-use instructions.</p>
-</section>
-<section class="panel">
-  <h2>How do I track updates?</h2>
-  <p>Read <a href="/changes.ndjson"><code>/changes.ndjson</code></a>. It includes added, modified, removed, and cancelled records plus tombstones.</p>
-</section>
-<section class="panel">
-  <h2>How fresh is the data?</h2>
-  <p>Check <code>freshness</code> fields in <a href="/schedule.manifest.json"><code>/schedule.manifest.json</code></a>: <code>source_snapshot_at</code>, <code>expected_next_refresh_by</code>, and <code>data_staleness</code>.</p>
-</section>
-<section class="panel">
-  <h2>Can I browse by day?</h2>
-  <p>Yes. Use <a href="/schedule/index.html"><code>/schedule/index.html</code></a> and each date page for filterable tables.</p>
-</section>
-<section class="panel">
-  <h2>Can I use this with Claude/ChatGPT/Gemini?</h2>
-  <p>Yes. Use <a href="/prompts/index.html"><code>/prompts/index.html</code></a> for copy/paste prompt examples and a prompt builder.</p>
-</section>`,
-    pagePath: "/faq/"
-  });
-}
-
-function renderChangelogPage(manifest, changeRecords) {
-  const rows = changeRecords
-    .slice(0, 200)
-    .map((record) => `<tr>
-  <td class="mono">${escapeHtml(record.change_type || "n/a")}</td>
-  <td class="mono">${escapeHtml(record.event_id || "n/a")}</td>
-  <td>${escapeHtml(record.name || "(untitled)")}</td>
-  <td class="mono">${escapeHtml(record.date || "n/a")}</td>
-  <td class="mono">${escapeHtml(record.status || "n/a")}</td>
-</tr>`)
-    .join("");
-
-  return renderShell({
-    title: `Changelog | SXSW ${manifest.festival_year} Agent-First Schedule`,
-    description: `Latest snapshot-level changes for SXSW ${manifest.festival_year} schedule data.`,
-    body: `<p class="breadcrumbs"><a href="/index.html">Home</a></p>
-<section class="hero">
-  <h1>Changelog</h1>
-  <p class="meta">Generated: ${escapeHtml(manifest.generated_at)}</p>
-  <p class="meta">Total changes: ${manifest.changes?.total ?? 0} | Added: ${manifest.changes?.added ?? 0} | Modified: ${manifest.changes?.modified ?? 0} | Removed: ${manifest.changes?.removed ?? 0} | Cancelled: ${manifest.changes?.cancelled ?? 0}</p>
-  <p><a class="button" href="/changes.ndjson">Download /changes.ndjson</a></p>
-</section>
-<section class="panel">
-  <h2>Recent Changes (first 200)</h2>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr><th>Type</th><th>Event ID</th><th>Name</th><th>Date</th><th>Status</th></tr>
-      </thead>
-      <tbody>${rows || `<tr><td colspan="5">No changes in this snapshot.</td></tr>`}</tbody>
-    </table>
-  </div>
-</section>`,
-    pagePath: "/changelog/"
-  });
-}
-
-function renderStabilityPage(manifest) {
-  const nonBreaking = (manifest.compatibility?.policy?.non_breaking_changes || [])
-    .map((item) => `<li>${escapeHtml(item)}</li>`)
-    .join("");
-  const breaking = (manifest.compatibility?.policy?.breaking_changes || [])
-    .map((item) => `<li>${escapeHtml(item)}</li>`)
-    .join("");
-
-  return renderShell({
-    title: `Schema Stability | SXSW ${manifest.festival_year} Agent-First Schedule`,
-    description: `Compatibility guarantees and deprecation policy for SXSW ${manifest.festival_year} schedule data contracts.`,
-    body: `<p class="breadcrumbs"><a href="/index.html">Home</a></p>
-<section class="hero">
-  <h1>Schema Stability Policy</h1>
-  <p class="meta">Schema: ${escapeHtml(manifest.compatibility?.schema_semver || "n/a")} | Interface: ${escapeHtml(manifest.compatibility?.interface_semver || "n/a")}</p>
-</section>
-<section class="panel">
-  <h2>Non-Breaking Changes</h2>
-  <ul class="flat">${nonBreaking}</ul>
-</section>
-<section class="panel">
-  <h2>Breaking Changes</h2>
-  <ul class="flat">${breaking}</ul>
-</section>
-<section class="panel">
-  <h2>Deprecation Policy</h2>
-  <p>Breaking changes require a schema/interface version bump. Existing paths remain stable within the same interface version.</p>
-  <p>Before relying on a feed in production, always read <a href="/schedule.manifest.json"><code>/schedule.manifest.json</code></a> and compare <code>schema_version</code> and <code>agent_interface.version</code>.</p>
-</section>`,
-    pagePath: "/stability/"
+</script>`,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      name: `SXSW ${year} Schedule`,
+      description: "Browsable SXSW schedule with a query API for AI agents and chatbots.",
+      distribution: [
+        { "@type": "DataDownload", contentUrl: absoluteUrl("/schedule.manifest.json") }
+      ]
+    },
+    pagePath: "/"
   });
 }
 
 function renderScheduleIndexPage(manifest, dateSummaries) {
-  const aiPromptsSection = `<section class="panel">
-  <h2>AI Assistant Prompts</h2>
-  <details>
-    <summary>Top AI + developer tooling sessions per day</summary>
-    <pre>Use the SXSW ${manifest.festival_year} API at ${escapeHtml(absoluteUrl("/api/"))}.
-First try ${escapeHtml(absoluteUrl("/api/shortlist"))}?topic=ai-developer-tooling&per_day=5.
-If unavailable, fetch ${escapeHtml(absoluteUrl("/api/dates"))} and then fetch ${escapeHtml(absoluteUrl("/api/events"))}?date={date}&q=AI+developer+tooling&q_mode=all&limit=200.
-If no results, retry with q=AI&q_mode=any.
-Build a shortlist of top sessions per day. Include event_id and official_url for every item.</pre>
-  </details>
-  <details>
-    <summary>Speaker lookup prompt</summary>
-    <pre>Fetch ${escapeHtml(absoluteUrl("/api/contributors"))}?name=Carmen+Simon
-Return each session with date, start_time, event name, venue, event_id, and official_url.</pre>
-  </details>
-  <p><a class="button" href="/prompts/index.html">Open Prompt Examples</a></p>
-</section>`;
-
   const cards = dateSummaries
     .map(
       (day) => `<article class="card">
   <h3><a href="${day.page_path}">${escapeHtml(day.label)}</a></h3>
   <p class="meta"><strong>${day.event_count}</strong> events</p>
-  <p class="small"><a href="${day.ndjson_path}">Raw shard</a></p>
 </article>`
     )
     .join("");
@@ -1139,16 +1001,6 @@ Return each session with date, start_time, event name, venue, event_id, and offi
 <section class="hero">
   <h1>SXSW ${manifest.festival_year} Schedule by Day</h1>
   <p>Choose a day to view all sessions with times, venue, and detail pages.</p>
-</section>
-${aiPromptsSection}
-<section class="panel">
-  <h2>Helpful Pages</h2>
-  <ul class="flat">
-    <li><a href="/prompts/index.html">Prompt examples</a></li>
-    <li><a href="/faq/index.html">FAQ</a></li>
-    <li><a href="/changelog/index.html">Changelog</a></li>
-    <li><a href="/stability/index.html">Schema stability</a></li>
-  </ul>
 </section>
 <section class="panel">
   <div class="grid">${cards}</div>
@@ -1253,7 +1105,7 @@ function renderDatePage(manifest, day, events) {
     body: `<p class="breadcrumbs"><a href="/index.html">Home</a> / <a href="/schedule/index.html">Schedule</a></p>
 <section class="hero">
   <h1>${escapeHtml(day.label)}</h1>
-  <p class="meta">Events: ${day.event_count} | Data shard: <a href="${day.ndjson_path}">${day.ndjson_path}</a></p>
+  <p class="meta">Events: ${day.event_count}</p>
 </section>
 <section class="panel">
   ${filterBar}
@@ -1393,31 +1245,14 @@ Sitemap: ${absoluteUrl("/sitemap.xml")}
 `;
 }
 
-function renderLlmsTxt(manifest, dateSummaries) {
-  const shardLines = dateSummaries
-    .filter((d) => d.date !== "unknown")
-    .map((d) => {
-      const slimPath = d.ndjson_path.replace(/\.ndjson$/, ".slim.json");
-      return `- [${d.label} slim JSON](${slimPath}) — ${d.event_count} events, key fields only | [full NDJSON](${d.ndjson_path})`;
-    })
-    .join("\n");
-
-  const ai = manifest.agent_interface || {};
-  const fmtMb = (bytes) => (typeof bytes === "number" ? `~${Math.round(bytes / 1024 / 1024 * 10) / 10} MB` : "see manifest");
-
-  const normalizedFields = [
-    "event_id", "name", "date", "start_time", "end_time", "event_type", "format", "category",
-    "genre", "subgenre", "track", "focus_area", "presented_by", "reservable", "official_url",
-    "venue (id, name, address, lat, lon)", "contributors (name, type)", "tags", "hash_tags"
-  ].join(", ");
-
+function renderLlmsTxt(manifest) {
   return `# SXSW ${manifest.festival_year} Agent-First Schedule
 
 > ${manifest.stats.event_count} events across March 12–18, ${manifest.festival_year}. Sourced daily from schedule.sxsw.com.
 
-## Query API (Recommended — use this first)
+## Query API (Use This)
 
-A search API returns filtered results in <10 KB. No bulk download needed.
+A search API returns filtered results in <10 KB. No bulk downloads.
 
 - [OpenAPI spec](${absoluteUrl("/api/openapi.json")}) — import into ChatGPT, Claude, LangChain, or any OpenAPI-aware agent
 - \`${absoluteUrl("/api/shortlist?topic=ai-developer-tooling&per_day=5")}\` — one-call daily shortlist for agentic search
@@ -1436,19 +1271,11 @@ Note: \`category\` is a format label (Panel, Rock, Mentor Session…), not a top
 
 All API responses are JSON, CORS-enabled, always <10 KB.
 
-## Bulk Data Feeds (If You Need Everything)
+## Reference Files
 
-- [agents.json](/agents.json) — machine-readable contract: all endpoints, field names, ingestion order
-- [Per-day slim JSON shards](/events/by-date/2026-03-14.slim.json) — one per day, ~280-410 KB, 14 key fields
-- [Slim JSON feed](/agent-schedule.v1.slim.json) — all ${manifest.stats.event_count} events, ${fmtMb(ai.bytes_slim_json)}, 14 key fields
-- [Full normalized JSON feed](/agent-schedule.v1.json) — all ${manifest.stats.event_count} events, ${fmtMb(ai.bytes_json)}, all fields
-- [Manifest + hashes](/schedule.manifest.json) — freshness metadata, SHA256 hashes
-- [Schema + sample](/schema.json) — all ${manifest.stats.field_count} raw fields with a sample event
-- [Changes feed](/changes.ndjson) — tombstones and incremental updates
-
-## Date Shards
-
-${shardLines}
+- [agents.json](/agents.json) — machine-readable contract with all endpoints
+- [schedule.manifest.json](/schedule.manifest.json) — freshness metadata
+- [schema.json](/schema.json) — field inventory with sample event
 
 ## Data Freshness
 
@@ -1688,7 +1515,6 @@ function buildDateSummaries(groupedByDate) {
       slug: pathDate,
       label: formatDateLabel(date),
       event_count: events.length,
-      ndjson_path: `/events/by-date/${pathDate}.ndjson`,
       page_path: datePagePath(date)
     });
   }
@@ -1698,14 +1524,10 @@ function buildDateSummaries(groupedByDate) {
 async function loadPublishedSnapshotForSiteBuild() {
   const manifestPath = `${OUTPUT_DIR}/schedule.manifest.json`;
   const fullPath = `${OUTPUT_DIR}/schedule.json.gz`;
-  const changesPath = `${OUTPUT_DIR}/changes.ndjson`;
-  const agentNdjsonPath = `${OUTPUT_DIR}/agent-schedule.v1.ndjson`;
 
-  const [manifestRaw, fullRaw, changesRaw, agentNdjsonRaw] = await Promise.all([
+  const [manifestRaw, fullRaw] = await Promise.all([
     readFile(manifestPath, "utf8"),
-    readFile(fullPath),
-    readFile(changesPath, "utf8").catch(() => ""),
-    readFile(agentNdjsonPath, "utf8").catch(() => "")
+    readFile(fullPath)
   ]);
 
   const manifest = JSON.parse(manifestRaw);
@@ -1713,59 +1535,16 @@ async function loadPublishedSnapshotForSiteBuild() {
   const detailedEvents = Array.isArray(full.events) ? full.events.slice().sort(byStartTime) : [];
   const groupedByDate = groupByDate(detailedEvents);
   const dateSummaries = buildDateSummaries(groupedByDate);
-  const changeLines = parseNdjson(changesRaw);
-  const changeRecords = changeLines.filter((line) => line?.record_type === "change");
-  const agentEvents = agentNdjsonRaw ? parseNdjson(agentNdjsonRaw) : [];
 
   return {
     manifest,
     groupedByDate,
     dateSummaries,
-    changeRecords,
-    agentEvents
+    changeRecords: []
   };
 }
 
-async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, changeRecords, agentEvents, generatedAt }) {
-  // Generate slim feeds from normalized agent events
-  const slimEvents = (agentEvents || []).map(slimEvent);
-  const slimSchedule = {
-    schema_version: manifest.schema_version || SCHEMA_VERSION,
-    interface_version: manifest.agent_interface?.version || INTERFACE_VERSION,
-    generated_at: generatedAt,
-    festival_year: YEAR,
-    event_count: slimEvents.length,
-    note: "Slim feed: key fields only. Full data at /agent-schedule.v1.json.",
-    fields: Object.keys(slimEvents[0] || {}),
-    events: slimEvents
-  };
-  const slimNdjson = toNdjson(slimEvents);
-  const slimJsonText = JSON.stringify(slimSchedule, null, 2) + "\n";
-
-  // Patch slim byte sizes into manifest.agent_interface for renderLlmsTxt
-  manifest.agent_interface.bytes_slim_json = Buffer.byteLength(slimJsonText);
-  manifest.agent_interface.bytes_slim_ndjson = Buffer.byteLength(slimNdjson);
-
-  // Per-day slim JSON shards (~280-410 KB each, suitable for web tool fetches)
-  const slimByDate = groupByDate(slimEvents);
-  const slimShardWrites = [];
-  for (const [date, events] of slimByDate.entries()) {
-    const pathDate = dateSlug(date);
-    const shard = {
-      schema_version: manifest.schema_version || SCHEMA_VERSION,
-      generated_at: generatedAt,
-      festival_year: YEAR,
-      date: date || null,
-      event_count: events.length,
-      note: `Slim shard for ${date}. Full day data at /events/by-date/${pathDate}.ndjson.`,
-      fields: Object.keys(events[0] || {}),
-      events
-    };
-    slimShardWrites.push(
-      writeFile(`${OUTPUT_DIR}/events/by-date/${pathDate}.slim.json`, JSON.stringify(shard, null, 2) + "\n")
-    );
-  }
-  await Promise.all(slimShardWrites);
+async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, changeRecords, generatedAt }) {
 
   await rm(`${OUTPUT_DIR}/schedule`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/prompts`, { recursive: true, force: true });
@@ -1774,10 +1553,6 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
   await rm(`${OUTPUT_DIR}/stability`, { recursive: true, force: true });
   await mkdir(`${OUTPUT_DIR}/schedule/date`, { recursive: true });
   await mkdir(`${OUTPUT_DIR}/schedule/event`, { recursive: true });
-  await mkdir(`${OUTPUT_DIR}/prompts`, { recursive: true });
-  await mkdir(`${OUTPUT_DIR}/faq`, { recursive: true });
-  await mkdir(`${OUTPUT_DIR}/changelog`, { recursive: true });
-  await mkdir(`${OUTPUT_DIR}/stability`, { recursive: true });
 
   const pageWrites = [];
 
@@ -1797,30 +1572,6 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
     path: `${OUTPUT_DIR}/schedule/styles.css`,
     route: null,
     content: renderSiteCss()
-  });
-
-  pageWrites.push({
-    path: `${OUTPUT_DIR}/prompts/index.html`,
-    route: "/prompts/",
-    content: renderPromptExamplesPage(manifest)
-  });
-
-  pageWrites.push({
-    path: `${OUTPUT_DIR}/faq/index.html`,
-    route: "/faq/",
-    content: renderFaqPage(manifest)
-  });
-
-  pageWrites.push({
-    path: `${OUTPUT_DIR}/changelog/index.html`,
-    route: "/changelog/",
-    content: renderChangelogPage(manifest, changeRecords)
-  });
-
-  pageWrites.push({
-    path: `${OUTPUT_DIR}/stability/index.html`,
-    route: "/stability/",
-    content: renderStabilityPage(manifest)
   });
 
   pageWrites.push({
@@ -1860,19 +1611,12 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
     .concat([
       "/agents.json",
       "/schedule.manifest.json",
-      "/agent-schedule.v1.slim.json",
-      "/agent-schedule.v1.slim.ndjson",
-      "/agent-schedule.v1.json",
-      "/agent-schedule.v1.ndjson",
-      "/changes.ndjson",
       "/schema.json",
-      "/entities/venues.v1.ndjson",
-      "/entities/contributors.v1.ndjson",
       "/llms.txt"
     ])
     .sort();
 
-  // Rebuild agents.json with API + slim feed entrypoints
+  // Rebuild agents.json with API entrypoints only
   const siteAgentsDescriptor = {
     ...manifest.source_descriptor,
     agent_contract_version: manifest.schema_version || SCHEMA_VERSION,
@@ -1917,31 +1661,19 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
       schedule_index: "/schedule/index.html",
       robots: "/robots.txt",
       sitemap: "/sitemap.xml",
-      slim_json: "/agent-schedule.v1.slim.json",
-      slim_ndjson: "/agent-schedule.v1.slim.ndjson",
-      easy_json: "/agent-schedule.v1.json",
-      easy_ndjson: "/agent-schedule.v1.ndjson",
       manifest: "/schedule.manifest.json",
-      full_export_gzip: "/schedule.json.gz",
-      schema: "/schema.json",
-      slim_shards: "/events/by-date/*.slim.json",
-      shards: "/events/by-date/*.ndjson",
-      changes: "/changes.ndjson",
-      venues: "/entities/venues.v1.ndjson",
-      contributors: "/entities/contributors.v1.ndjson"
+      schema: "/schema.json"
     },
     recommended_ingestion_order: [
       "Import /api/openapi.json if your framework supports OpenAPI tool discovery",
       "Use /api/shortlist?topic=ai-developer-tooling&per_day=5 for one-call ranked daily shortlists",
       "Query /api/events with date/venue/type/contributor/q params — returns <10 KB",
-      "Fall back to per-day slim shards /events/by-date/{date}.slim.json if you need all events for a day",
-      "Use /agent-schedule.v1.slim.json only if you need all events across all days in one request",
-      "Use /agent-schedule.v1.json only when all 75 raw fields are required"
+      "Use /api/dates, /api/venues, /api/categories, /api/contributors for reference data"
     ],
     fetching_tips: [
-      "The /api/* endpoints are the recommended access pattern — small responses, no bulk download",
+      "The /api/* endpoints are the only access pattern — small responses, no bulk downloads",
       "Fetch JSON directly — do not route through reader proxies (e.g. r.jina.ai). They wrap responses in markdown and break JSON parsing.",
-      "All endpoints return Content-Type: application/json or application/x-ndjson — never HTML",
+      "All endpoints return Content-Type: application/json — never HTML",
       "If you receive HTML or a markdown wrapper, you are hitting a proxy or a 404. Retry the raw URL directly."
     ],
     expectations: manifest.expectations,
@@ -1951,10 +1683,8 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
   await Promise.all([
     writeFile(`${OUTPUT_DIR}/robots.txt`, renderRobotsTxt()),
     writeFile(`${OUTPUT_DIR}/sitemap.xml`, renderSitemapXml(sitemapPaths, generatedAt)),
-    writeFile(`${OUTPUT_DIR}/llms.txt`, renderLlmsTxt(manifest, dateSummaries)),
-    writeFile(`${OUTPUT_DIR}/agents.json`, JSON.stringify(siteAgentsDescriptor, null, 2) + "\n"),
-    writeFile(`${OUTPUT_DIR}/agent-schedule.v1.slim.json`, slimJsonText),
-    writeFile(`${OUTPUT_DIR}/agent-schedule.v1.slim.ndjson`, slimNdjson)
+    writeFile(`${OUTPUT_DIR}/llms.txt`, renderLlmsTxt(manifest)),
+    writeFile(`${OUTPUT_DIR}/agents.json`, JSON.stringify(siteAgentsDescriptor, null, 2) + "\n")
   ]);
 
   await mapWithConcurrency(pageWrites, 32, async (page) => {
@@ -1967,14 +1697,13 @@ async function writeSiteArtifacts({ manifest, groupedByDate, dateSummaries, chan
 async function main() {
   if (BUILD_MODE === "site") {
     console.log(`Building website from committed data snapshot (SXSW ${YEAR})...`);
-    const { manifest, groupedByDate, dateSummaries, changeRecords, agentEvents } =
+    const { manifest, groupedByDate, dateSummaries, changeRecords } =
       await loadPublishedSnapshotForSiteBuild();
     const pageCount = await writeSiteArtifacts({
       manifest,
       groupedByDate,
       dateSummaries,
       changeRecords,
-      agentEvents,
       generatedAt: manifest.generated_at || new Date().toISOString()
     });
     console.log(`Done. Rebuilt website pages (${pageCount} files) from committed snapshot.`);
@@ -2012,53 +1741,26 @@ async function main() {
   const generatedAt = new Date().toISOString();
   const groupedByDate = groupByDate(detailedEvents);
 
-  const shardSummaries = [];
   const dateSummaries = [];
-  const shardWrites = [];
 
-  await rm(`${OUTPUT_DIR}/events`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/schedule`, { recursive: true, force: true });
-  await rm(`${OUTPUT_DIR}/entities`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/prompts`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/faq`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/changelog`, { recursive: true, force: true });
   await rm(`${OUTPUT_DIR}/stability`, { recursive: true, force: true });
-  await mkdir(`${OUTPUT_DIR}/events/by-date`, { recursive: true });
   await mkdir(`${OUTPUT_DIR}/schedule/date`, { recursive: true });
   await mkdir(`${OUTPUT_DIR}/schedule/event`, { recursive: true });
-  await mkdir(`${OUTPUT_DIR}/entities`, { recursive: true });
-  await mkdir(`${OUTPUT_DIR}/prompts`, { recursive: true });
-  await mkdir(`${OUTPUT_DIR}/faq`, { recursive: true });
-  await mkdir(`${OUTPUT_DIR}/changelog`, { recursive: true });
-  await mkdir(`${OUTPUT_DIR}/stability`, { recursive: true });
 
   for (const [date, events] of groupedByDate.entries()) {
     const pathDate = dateSlug(date);
-    const relPath = `/events/by-date/${pathDate}.ndjson`;
-    const absPath = `${OUTPUT_DIR}${relPath}`;
-    const ndjson = toNdjson(events);
-
     dateSummaries.push({
       date,
       slug: pathDate,
       label: formatDateLabel(date),
       event_count: events.length,
-      ndjson_path: relPath,
       page_path: datePagePath(date)
     });
-
-    shardSummaries.push({
-      date,
-      path: relPath,
-      event_count: events.length,
-      sha256: createHash("sha256").update(ndjson).digest("hex"),
-      bytes: Buffer.byteLength(ndjson)
-    });
-
-    shardWrites.push(writeFile(absPath, ndjson));
   }
-
-  await Promise.all(shardWrites);
 
   const sourceSnapshotAt = maxIsoTimestamp(detailedEvents.map((event) => event.publish_at)) || generatedAt;
   const compatibility = buildCompatibilityPolicy();
@@ -2075,8 +1777,6 @@ async function main() {
   };
 
   const agentEvents = detailedEvents.map((event) => normalizeAgentEvent(event, sourceSnapshotAt));
-  const venueEntities = buildVenueEntityIndex(agentEvents);
-  const contributorEntities = buildContributorEntityIndex(agentEvents);
   const agentSchedule = {
     schema_version: SCHEMA_VERSION,
     interface_version: INTERFACE_VERSION,
@@ -2087,42 +1787,6 @@ async function main() {
     events: agentEvents
   };
   const agentNdjson = toNdjson(agentEvents);
-  const agentJsonText = JSON.stringify(agentSchedule, null, 2) + "\n";
-
-  const slimEvents = agentEvents.map(slimEvent);
-  const slimSchedule = {
-    schema_version: SCHEMA_VERSION,
-    interface_version: INTERFACE_VERSION,
-    generated_at: generatedAt,
-    festival_year: YEAR,
-    event_count: slimEvents.length,
-    note: "Slim feed: key fields only. Full data at /agent-schedule.v1.json.",
-    fields: Object.keys(slimEvents[0] || {}),
-    events: slimEvents
-  };
-  const slimNdjson = toNdjson(slimEvents);
-  const slimJsonText = JSON.stringify(slimSchedule, null, 2) + "\n";
-
-  // Per-day slim JSON shards (~280-410 KB each, suitable for web tool fetches)
-  const slimByDate = groupByDate(slimEvents);
-  const slimShardWrites = [];
-  for (const [date, events] of slimByDate.entries()) {
-    const pathDate = dateSlug(date);
-    const shard = {
-      schema_version: SCHEMA_VERSION,
-      generated_at: generatedAt,
-      festival_year: YEAR,
-      date: date || null,
-      event_count: events.length,
-      note: `Slim shard for ${date}. Full day data at /events/by-date/${pathDate}.ndjson.`,
-      fields: Object.keys(events[0] || {}),
-      events
-    };
-    slimShardWrites.push(
-      writeFile(`${OUTPUT_DIR}/events/by-date/${pathDate}.slim.json`, JSON.stringify(shard, null, 2) + "\n")
-    );
-  }
-  await Promise.all(slimShardWrites);
 
   const { previousGeneratedAt, previousEventsById, baselineResetReason } = await readPreviousBuildState();
   const baselineGeneratedAt = previousGeneratedAt || null;
@@ -2131,8 +1795,6 @@ async function main() {
   if (baselineResetReason) {
     changesMetadata.note = `${changesMetadata.note} ${baselineResetReason}`;
   }
-  const changesNdjson =
-    [JSON.stringify(changesMetadata), ...changeRecords.map((record) => JSON.stringify(record))].join("\n") + "\n";
 
   const expectedNextRefreshBy = addHours(generatedAt, REFRESH_INTERVAL_HOURS);
   const staleAfter = addHours(generatedAt, STALE_AFTER_HOURS);
@@ -2171,10 +1833,7 @@ async function main() {
       event_count: detailedEvents.length,
       field_count: fields.length,
       failed_event_ids: failedEventIds,
-      date_range: dateRange,
-      shard_count: shardSummaries.length,
-      venue_entity_count: venueEntities.length,
-      contributor_entity_count: contributorEntities.length
+      date_range: dateRange
     },
     fields,
     events: detailedEvents
@@ -2199,37 +1858,12 @@ async function main() {
     identity,
     stats: fullSchedule.stats,
     fields: fullSchedule.fields,
-    full_export_gzip: {
-      path: "/schedule.json.gz",
-      sha256: fullSchedule.sha256
-    },
-    agent_interface: {
-      version: INTERFACE_VERSION,
-      path_json: "/agent-schedule.v1.json",
-      path_ndjson: "/agent-schedule.v1.ndjson",
-      layering: {
-        raw_fields_block: "raw",
-        derived_fields_block: "derived",
-        provenance_block: "provenance",
-        canonical_block: "canonical"
-      }
-    },
     changes: {
-      path: "/changes.ndjson",
       generated_at: generatedAt,
       baseline_generated_at: baselineGeneratedAt,
-      baseline_reset_reason: baselineResetReason,
       total: changesMetadata.total_changes,
-      ...changeCounts,
-      tombstone_count: changesMetadata.tombstone_count
+      ...changeCounts
     },
-    entity_indexes: {
-      venues_ndjson: "/entities/venues.v1.ndjson",
-      contributors_ndjson: "/entities/contributors.v1.ndjson",
-      venue_count: venueEntities.length,
-      contributor_count: contributorEntities.length
-    },
-    shards: shardSummaries,
     website: {
       home: "/index.html",
       schedule_index: "/schedule/index.html",
@@ -2237,22 +1871,6 @@ async function main() {
       event_pages: "/schedule/event/{event_id}.html"
     }
   };
-
-  manifest.agent_interface.sha256_json = createHash("sha256")
-    .update(agentJsonText)
-    .digest("hex");
-  manifest.agent_interface.sha256_ndjson = createHash("sha256")
-    .update(agentNdjson)
-    .digest("hex");
-  manifest.agent_interface.bytes_json = Buffer.byteLength(agentJsonText);
-  manifest.agent_interface.bytes_ndjson = Buffer.byteLength(agentNdjson);
-  manifest.agent_interface.path_slim_json = "/agent-schedule.v1.slim.json";
-  manifest.agent_interface.path_slim_ndjson = "/agent-schedule.v1.slim.ndjson";
-  manifest.agent_interface.sha256_slim_json = createHash("sha256").update(slimJsonText).digest("hex");
-  manifest.agent_interface.sha256_slim_ndjson = createHash("sha256").update(slimNdjson).digest("hex");
-  manifest.agent_interface.bytes_slim_json = Buffer.byteLength(slimJsonText);
-  manifest.agent_interface.bytes_slim_ndjson = Buffer.byteLength(slimNdjson);
-  manifest.agent_interface.slim_fields = Object.keys(slimEvents[0] || {});
 
   const agentsDescriptor = {
     agent_contract_version: SCHEMA_VERSION,
@@ -2297,31 +1915,19 @@ async function main() {
       schedule_index: "/schedule/index.html",
       robots: "/robots.txt",
       sitemap: "/sitemap.xml",
-      slim_json: "/agent-schedule.v1.slim.json",
-      slim_ndjson: "/agent-schedule.v1.slim.ndjson",
-      slim_shards: "/events/by-date/*.slim.json",
-      easy_json: "/agent-schedule.v1.json",
-      easy_ndjson: "/agent-schedule.v1.ndjson",
       manifest: "/schedule.manifest.json",
-      full_export_gzip: "/schedule.json.gz",
-      schema: "/schema.json",
-      shards: "/events/by-date/*.ndjson",
-      changes: "/changes.ndjson",
-      venues: "/entities/venues.v1.ndjson",
-      contributors: "/entities/contributors.v1.ndjson"
+      schema: "/schema.json"
     },
     recommended_ingestion_order: [
       "Import /api/openapi.json if your framework supports OpenAPI tool discovery",
       "Use /api/shortlist?topic=ai-developer-tooling&per_day=5 for one-call ranked daily shortlists",
       "Query /api/events with date/category/venue/type/contributor/q params — returns <10 KB",
-      "Fall back to per-day slim shards /events/by-date/{date}.slim.json if you need all events for a day",
-      "Use /agent-schedule.v1.slim.json only if you need all events across all days in one request",
-      "Use /agent-schedule.v1.json only when all 75 raw fields are required"
+      "Use /api/dates, /api/venues, /api/categories, /api/contributors for reference data"
     ],
     fetching_tips: [
-      "The /api/* endpoints are the recommended access pattern — small responses, no bulk download",
+      "The /api/* endpoints are the only access pattern — small responses, no bulk downloads",
       "Fetch JSON directly — do not route through reader proxies (e.g. r.jina.ai). They wrap responses in markdown and break JSON parsing.",
-      "All endpoints return Content-Type: application/json or application/x-ndjson — never HTML",
+      "All endpoints return Content-Type: application/json — never HTML",
       "If you receive HTML or a markdown wrapper, you are hitting a proxy or a 404. Retry the raw URL directly."
     ],
     expectations: {
@@ -2615,7 +2221,7 @@ async function main() {
     normalized_field_tiers: normalizedFieldTiers,
     normalized_required_fields: normalizedRequiredFields,
     dropped_fields: droppedFields,
-    dropped_fields_note: "These raw fields are not in the normalized agent feed. Access them via /schedule.json.gz.",
+    dropped_fields_note: "These raw fields are not in the normalized agent feed.",
     raw_fields: fullSchedule.fields,
     normalized_json_schema: normalizedJsonSchema,
     raw_json_schema: rawJsonSchema,
@@ -2651,30 +2257,6 @@ async function main() {
     path: `${OUTPUT_DIR}/schedule/styles.css`,
     route: null,
     content: renderSiteCss()
-  });
-
-  pageWrites.push({
-    path: `${OUTPUT_DIR}/prompts/index.html`,
-    route: "/prompts/",
-    content: renderPromptExamplesPage(manifest)
-  });
-
-  pageWrites.push({
-    path: `${OUTPUT_DIR}/faq/index.html`,
-    route: "/faq/",
-    content: renderFaqPage(manifest)
-  });
-
-  pageWrites.push({
-    path: `${OUTPUT_DIR}/changelog/index.html`,
-    route: "/changelog/",
-    content: renderChangelogPage(manifest, changeRecords)
-  });
-
-  pageWrites.push({
-    path: `${OUTPUT_DIR}/stability/index.html`,
-    route: "/stability/",
-    content: renderStabilityPage(manifest)
   });
 
   pageWrites.push({
@@ -2714,36 +2296,20 @@ async function main() {
     .concat([
       "/agents.json",
       "/schedule.manifest.json",
-      "/agent-schedule.v1.slim.json",
-      "/agent-schedule.v1.slim.ndjson",
-      "/agent-schedule.v1.json",
-      "/agent-schedule.v1.ndjson",
-      "/changes.ndjson",
       "/schema.json",
-      "/entities/venues.v1.ndjson",
-      "/entities/contributors.v1.ndjson",
       "/llms.txt"
     ])
     .sort();
 
-  const venueNdjson = toNdjson(venueEntities);
-  const contributorNdjson = toNdjson(contributorEntities);
-
   await Promise.all([
     writeFile(`${OUTPUT_DIR}/schedule.manifest.json`, JSON.stringify(manifest, null, 2) + "\n"),
     writeFile(`${OUTPUT_DIR}/agents.json`, JSON.stringify(agentsDescriptor, null, 2) + "\n"),
-    writeFile(`${OUTPUT_DIR}/agent-schedule.v1.json`, agentJsonText),
     writeFile(`${OUTPUT_DIR}/agent-schedule.v1.ndjson`, agentNdjson),
-    writeFile(`${OUTPUT_DIR}/agent-schedule.v1.slim.json`, slimJsonText),
-    writeFile(`${OUTPUT_DIR}/agent-schedule.v1.slim.ndjson`, slimNdjson),
     writeFile(`${OUTPUT_DIR}/schema.json`, JSON.stringify(schema, null, 2) + "\n"),
     writeFile(`${OUTPUT_DIR}/schedule.json.gz`, gzippedFull),
-    writeFile(`${OUTPUT_DIR}/changes.ndjson`, changesNdjson),
-    writeFile(`${OUTPUT_DIR}/entities/venues.v1.ndjson`, venueNdjson),
-    writeFile(`${OUTPUT_DIR}/entities/contributors.v1.ndjson`, contributorNdjson),
     writeFile(`${OUTPUT_DIR}/robots.txt`, renderRobotsTxt()),
     writeFile(`${OUTPUT_DIR}/sitemap.xml`, renderSitemapXml(sitemapPaths, generatedAt)),
-    writeFile(`${OUTPUT_DIR}/llms.txt`, renderLlmsTxt(manifest, dateSummaries))
+    writeFile(`${OUTPUT_DIR}/llms.txt`, renderLlmsTxt(manifest))
   ]);
 
   await mapWithConcurrency(pageWrites, 32, async (page) => {
@@ -2751,7 +2317,7 @@ async function main() {
   });
 
   console.log(
-    `Done. Wrote ${OUTPUT_DIR}/schedule pages (${pageWrites.length} files), data manifest, and ${shardSummaries.length} shard files.`
+    `Done. Wrote ${OUTPUT_DIR}/schedule pages (${pageWrites.length} files) and data manifest.`
   );
 }
 

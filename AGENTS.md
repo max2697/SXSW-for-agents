@@ -1,12 +1,12 @@
 # AGENTS.md
 
 ## Purpose
-This repository publishes an agent-first SXSW 2026 schedule export on Cloudflare Pages at https://sxsw.0fn.net.
-It serves both a query API (for agents that make filtered requests) and bulk data feeds (for agents that ingest everything).
+This repository publishes an agent-first SXSW 2026 schedule on Cloudflare Pages at https://sxsw.0fn.net.
+All data access is through a query API — no bulk downloads.
 
 ---
 
-## Query API (Recommended for agents)
+## Query API
 
 A Cloudflare Pages Function at `/api/*` returns filtered results in <10 KB.
 Import the OpenAPI spec into any framework that supports tool discovery.
@@ -22,6 +22,8 @@ GET https://sxsw.0fn.net/api/openapi.json
 |---|---|
 | `GET /api/events` | Search/filter events. All params optional and combinable. |
 | `GET /api/events/{event_id}` | Single event by ID. |
+| `GET /api/shortlist?topic=&per_day=` | Ranked daily shortlist by topic. |
+| `GET /api/health` | Health check and current index timestamp. |
 | `GET /api/dates` | Festival dates with event counts. |
 | `GET /api/venues?name=` | Venue list, optionally filtered. |
 | `GET /api/categories` | All categories with counts. |
@@ -37,6 +39,7 @@ GET https://sxsw.0fn.net/api/openapi.json
 | `type` | string | `panel` | Exact match on `event_type`. |
 | `contributor` | string | `Carmen Simon` | Partial match on speaker/artist name. |
 | `q` | string | `artificial intelligence` | Full-text across name, category, venue, contributors. **Use this for topic search.** |
+| `q_mode` | string | `any` | Search mode: `any` (default), `all`, `phrase`. |
 | `limit` | int | `50` | Max results (default 50, max 200). |
 | `offset` | int | `0` | Pagination offset. |
 
@@ -57,6 +60,9 @@ GET /api/events?q=climate+tech&date=2026-03-15
 
 # Single event
 GET /api/events/PP1162244
+
+# Ranked daily shortlist
+GET /api/shortlist?topic=ai-developer-tooling&per_day=5
 ```
 
 ### Response format (`/api/events`)
@@ -89,31 +95,15 @@ GET /api/events/PP1162244
 
 ---
 
-## Bulk Data Feeds (fallback / full ingestion)
+## Reference Files (small, <50 KB)
 
-| Path | Description | Size |
-|---|---|---|
-| `/agents.json` | Machine-readable contract: API, entrypoints, ingestion order | <5 KB |
-| `/llms.txt` | Human+LLM readable site guide | <5 KB |
-| `/api/openapi.json` | OpenAPI 3.1 spec for the query API | <10 KB |
-| `/events/by-date/{date}.slim.json` | Per-day, 14 key fields | ~280-410 KB |
-| `/agent-schedule.v1.slim.json` | All days, 14 key fields | ~2.5 MB |
-| `/agent-schedule.v1.json` | All days, all 75 fields | ~14 MB |
-| `/agent-schedule.v1.ndjson` | NDJSON variant of full feed | ~14 MB |
-| `/schedule.manifest.json` | Freshness, hashes, shard map | <50 KB |
-| `/schema.json` | All 75 fields with sample event | <50 KB |
-| `/changes.ndjson` | Tombstones + incremental updates | varies |
-| `/entities/venues.v1.ndjson` | Canonical venue list | <500 KB |
-| `/entities/contributors.v1.ndjson` | Canonical contributor list | <500 KB |
-| `/schedule.json.gz` | Complete raw snapshot (gzip) | <5 MB |
-
-### Recommended ingestion order
-
-1. Import `/api/openapi.json` if your framework supports OpenAPI tool discovery
-2. Query `/api/events` with params — returns <10 KB, no bulk download needed
-3. Fall back to `/events/by-date/{date}.slim.json` if you need all events for a specific day
-4. Use `/agent-schedule.v1.slim.json` only if you need all events across all days in one request
-5. Use `/agent-schedule.v1.json` only when all 75 raw fields are required
+| Path | Description |
+|---|---|
+| `/agents.json` | Machine-readable contract: API endpoints, ingestion order |
+| `/llms.txt` | LLM-friendly guide |
+| `/api/openapi.json` | OpenAPI 3.1 spec |
+| `/schedule.manifest.json` | Freshness metadata |
+| `/schema.json` | Field inventory with sample event |
 
 ---
 
@@ -127,14 +117,14 @@ GET /api/events/PP1162244
 - `contributors` contains speakers, artists, and performers (`name` + `type`)
 - `credentials` lists required badge types
 - `reservable: true` means RSVP required via SXSW app
-- Change semantics: `added`, `modified`, `removed`, `cancelled`, `uncancelled` in `/changes.ndjson`
 
 ---
 
 ## Fetching Notes
 
-- **Do not use reader proxies** (r.jina.ai, reader.llmstxt.cloud, etc.) — they wrap JSON in markdown and break parsing
-- All API and feed endpoints return `Content-Type: application/json` or `application/x-ndjson` — never HTML
+- **Use the API only** — /api/events with query params returns only what you need, always parses cleanly
+- Do not use reader proxies (r.jina.ai, reader.llmstxt.cloud, etc.) — they wrap JSON in markdown and break parsing
+- All API endpoints return `Content-Type: application/json` — never HTML
 - If you receive HTML, you hit a proxy or 404 — retry the raw URL directly
 - All endpoints have `Access-Control-Allow-Origin: *`
 

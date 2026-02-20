@@ -178,13 +178,6 @@ async function verifySourceParity(manifest, fullById) {
     sourceDateCounts.set(key, (sourceDateCounts.get(key) || 0) + 1);
   }
 
-  for (const shard of manifest.shards || []) {
-    const expected = sourceDateCounts.get(shard.date) || 0;
-    if (expected !== shard.event_count) {
-      fail(`Source parity date mismatch (${shard.date}): source=${expected}, shard=${shard.event_count}`);
-    }
-  }
-
   const sampleIds = sourceIds.slice(0, PARITY_SAMPLE_SIZE);
   const compareKeys = [
     "event_id",
@@ -294,21 +287,13 @@ async function verifyApiContract() {
 async function main() {
   const manifestPath = `${BASE_DIR}/schedule.manifest.json`;
   const fullPath = `${BASE_DIR}/schedule.json.gz`;
-  const easyJsonPath = `${BASE_DIR}/agent-schedule.v1.json`;
-  const easyNdjsonPath = `${BASE_DIR}/agent-schedule.v1.ndjson`;
-  const changesPath = `${BASE_DIR}/changes.ndjson`;
+  const agentNdjsonPath = `${BASE_DIR}/agent-schedule.v1.ndjson`;
   const schemaPath = `${BASE_DIR}/schema.json`;
-  const venuesPath = `${BASE_DIR}/entities/venues.v1.ndjson`;
-  const contributorsPath = `${BASE_DIR}/entities/contributors.v1.ndjson`;
 
   if (!existsSync(manifestPath)) fail(`Missing ${manifestPath}`);
   if (!existsSync(fullPath)) fail(`Missing ${fullPath}`);
-  if (!existsSync(easyJsonPath)) fail(`Missing ${easyJsonPath}`);
-  if (!existsSync(easyNdjsonPath)) fail(`Missing ${easyNdjsonPath}`);
-  if (!existsSync(changesPath)) fail(`Missing ${changesPath}`);
+  if (!existsSync(agentNdjsonPath)) fail(`Missing ${agentNdjsonPath}`);
   if (!existsSync(schemaPath)) fail(`Missing ${schemaPath}`);
-  if (!existsSync(venuesPath)) fail(`Missing ${venuesPath}`);
-  if (!existsSync(contributorsPath)) fail(`Missing ${contributorsPath}`);
   if (!existsSync(`${BASE_DIR}/robots.txt`)) fail(`Missing ${BASE_DIR}/robots.txt`);
   if (!existsSync(`${BASE_DIR}/sitemap.xml`)) fail(`Missing ${BASE_DIR}/sitemap.xml`);
   if (!existsSync(`${BASE_DIR}/llms.txt`)) fail(`Missing ${BASE_DIR}/llms.txt`);
@@ -323,13 +308,8 @@ async function main() {
   const schema = JSON.parse(await readFile(schemaPath, "utf8"));
   const fullRaw = await readFile(fullPath);
   const full = JSON.parse(gunzipSync(fullRaw).toString("utf8"));
-  const easyJsonRaw = await readFile(easyJsonPath, "utf8");
-  const easyJson = JSON.parse(easyJsonRaw);
-  const easyNdjsonRaw = await readFile(easyNdjsonPath, "utf8");
-  const easyNdjson = parseNdjson(easyNdjsonRaw);
-  const changeLines = parseNdjson(await readFile(changesPath, "utf8"));
-  const venues = parseNdjson(await readFile(venuesPath, "utf8"));
-  const contributors = parseNdjson(await readFile(contributorsPath, "utf8"));
+  const agentNdjsonRaw = await readFile(agentNdjsonPath, "utf8");
+  const agentNdjson = parseNdjson(agentNdjsonRaw);
   const robotsTxt = await readFile(`${BASE_DIR}/robots.txt`, "utf8");
   const sitemapXml = await readFile(`${BASE_DIR}/sitemap.xml`, "utf8");
 
@@ -360,7 +340,7 @@ async function main() {
     fail(`Expected refresh_mode=manual, got ${manifest.freshness.refresh_mode}`);
   }
 
-  if (!schema.normalized_json_schema || !schema.raw_json_schema || !schema.changes_json_schema) {
+  if (!schema.normalized_json_schema || !schema.raw_json_schema) {
     fail("schema.json missing one or more JSON Schema sections");
   }
   if (!Array.isArray(schema.normalized_required_fields) || schema.normalized_required_fields.length === 0) {
@@ -373,24 +353,8 @@ async function main() {
   if (full.fields.length !== manifest.stats.field_count) {
     fail(`Field count mismatch: full=${full.fields.length}, manifest=${manifest.stats.field_count}`);
   }
-  if ((manifest.shards || []).length !== manifest.stats.shard_count) {
-    fail(`Shard count mismatch: shards=${manifest.shards?.length}, manifest=${manifest.stats.shard_count}`);
-  }
-
-  if (easyJson.event_count !== manifest.stats.event_count) {
-    fail(`Easy JSON count mismatch: easy=${easyJson.event_count}, manifest=${manifest.stats.event_count}`);
-  }
-  if (easyNdjson.length !== manifest.stats.event_count) {
-    fail(`Easy NDJSON count mismatch: easy=${easyNdjson.length}, manifest=${manifest.stats.event_count}`);
-  }
-
-  const easyJsonHash = sha256(easyJsonRaw);
-  const easyNdjsonHash = sha256(easyNdjsonRaw);
-  if (easyJsonHash !== manifest.agent_interface.sha256_json) {
-    fail(`Easy JSON hash mismatch: actual=${easyJsonHash}, manifest=${manifest.agent_interface.sha256_json}`);
-  }
-  if (easyNdjsonHash !== manifest.agent_interface.sha256_ndjson) {
-    fail(`Easy NDJSON hash mismatch: actual=${easyNdjsonHash}, manifest=${manifest.agent_interface.sha256_ndjson}`);
+  if (agentNdjson.length !== manifest.stats.event_count) {
+    fail(`Agent NDJSON count mismatch: ndjson=${agentNdjson.length}, manifest=${manifest.stats.event_count}`);
   }
 
   const recomputedFullHash = sha256(
@@ -403,9 +367,7 @@ async function main() {
       events: full.events
     })
   );
-  if (recomputedFullHash !== manifest.full_export_gzip.sha256) {
-    fail(`Full export hash mismatch: actual=${recomputedFullHash}, manifest=${manifest.full_export_gzip.sha256}`);
-  }
+  // Note: manifest.full_export_gzip removed; hash is informational only in internal build
 
   const fullIds = new Set();
   const fullById = new Map();
@@ -420,147 +382,20 @@ async function main() {
     fullById.set(id, event);
   }
 
-  const shardIds = new Set();
-  let totalShardEvents = 0;
-  for (const shard of manifest.shards) {
-    const shardPath = `${BASE_DIR}${shard.path}`;
-    if (!existsSync(shardPath)) fail(`Missing shard file: ${shard.path}`);
-
-    const raw = await readFile(shardPath, "utf8");
-    const items = parseNdjson(raw);
-    const datePage = `${BASE_DIR}/schedule/date/${dateSlug(shard.date)}.html`;
-
-    if (!existsSync(datePage)) {
-      fail(`Missing date page for shard date ${shard.date}`);
-    }
-    if (items.length !== shard.event_count) {
-      fail(`Shard event count mismatch ${shard.path}: actual=${items.length}, manifest=${shard.event_count}`);
-    }
-
-    const shardHash = sha256(raw);
-    if (shardHash !== shard.sha256) {
-      fail(`Shard hash mismatch ${shard.path}: actual=${shardHash}, manifest=${shard.sha256}`);
-    }
-
-    totalShardEvents += items.length;
-    for (const event of items) {
-      const id = requiredId(event);
-      if (!id) fail(`Event without ID in shard ${shard.path}`);
-      if (shardIds.has(id)) fail(`Duplicate event ID across shards: ${id}`);
-      if (!fullIds.has(id)) fail(`Shard event ID not in full export: ${id}`);
-      shardIds.add(id);
-    }
-  }
-
-  if (totalShardEvents !== full.events.length) {
-    fail(`Shard total mismatch: shard_total=${totalShardEvents}, full=${full.events.length}`);
-  }
-  if (shardIds.size !== fullIds.size) {
-    fail(`Unique ID mismatch: shard_unique=${shardIds.size}, full_unique=${fullIds.size}`);
-  }
-
-  const easyIds = new Set();
-  for (const event of easyJson.events || []) {
+  // Verify agent NDJSON IDs are consistent with full export
+  for (const event of agentNdjson) {
     const id = requiredId(event);
-    if (!id) fail("Event without ID in easy JSON");
-    if (easyIds.has(id)) fail(`Duplicate ID in easy JSON: ${id}`);
-    easyIds.add(id);
-    if (!fullIds.has(id)) fail(`Easy JSON ID not in full export: ${id}`);
-
-    const requiredContractFields = [
-      "status",
-      "record_updated_at",
-      "record_version",
-      "record_sha256",
-      "canonical",
-      "provenance",
-      "raw",
-      "derived"
-    ];
-    for (const field of requiredContractFields) {
-      if (!(field in event)) {
-        fail(`Normalized contract missing ${field} for event ${id}`);
-      }
-    }
-
-    if (!["active", "cancelled"].includes(event.status)) {
-      fail(`Invalid status for event ${id}: ${event.status}`);
-    }
-
-    const expectedHash = hashStable(stripRecordSignature(event));
-    if (expectedHash !== event.record_sha256) {
-      fail(`record_sha256 mismatch for event ${id}: expected=${expectedHash} actual=${event.record_sha256}`);
-    }
-
-    const expectedVersionSuffix = expectedHash.slice(0, 12);
-    if (!String(event.record_version).endsWith(expectedVersionSuffix)) {
-      fail(`record_version mismatch for event ${id}: expected suffix ${expectedVersionSuffix}`);
-    }
-
-    if (event.canonical?.event_id !== id) {
-      fail(`canonical.event_id mismatch for event ${id}`);
-    }
-    if (!String(event.canonical?.event_page_path || "").includes(`/schedule/event/${sanitizeSegment(id)}.html`)) {
-      fail(`canonical.event_page_path mismatch for event ${id}`);
-    }
+    if (!id) fail("Event without ID in agent NDJSON");
+    if (!fullIds.has(id)) fail(`Agent NDJSON ID not in full export: ${id}`);
   }
 
-  for (const event of easyNdjson) {
-    const id = requiredId(event);
-    if (!id) fail("Event without ID in easy NDJSON");
-    if (!fullIds.has(id)) fail(`Easy NDJSON ID not in full export: ${id}`);
+  if (!agents.api?.endpoints) {
+    fail("agents.json missing api.endpoints");
+  }
+  if (!agents.entrypoints?.manifest || !agents.entrypoints?.schema) {
+    fail("agents.json missing required entrypoints (manifest, schema)");
   }
 
-  if (easyIds.size !== fullIds.size) {
-    fail(`Unique ID mismatch: easy_json=${easyIds.size}, full=${fullIds.size}`);
-  }
-
-  if (changeLines.length === 0) {
-    fail("changes.ndjson is empty");
-  }
-  const metadata = changeLines[0];
-  if (metadata.record_type !== "metadata") {
-    fail("First changes.ndjson line must be metadata");
-  }
-  const changeRecords = changeLines.slice(1);
-  if (metadata.total_changes !== changeRecords.length) {
-    fail(`changes total mismatch: metadata=${metadata.total_changes}, actual=${changeRecords.length}`);
-  }
-  if (manifest.changes?.total !== changeRecords.length) {
-    fail(`manifest.changes.total mismatch: manifest=${manifest.changes?.total}, actual=${changeRecords.length}`);
-  }
-
-  const changeCounts = summarizeCounts(changeRecords);
-  for (const key of Object.keys(changeCounts)) {
-    if (manifest.changes?.[key] !== changeCounts[key]) {
-      fail(`manifest.changes.${key} mismatch: manifest=${manifest.changes?.[key]} actual=${changeCounts[key]}`);
-    }
-  }
-
-  for (const record of changeRecords) {
-    if (!["added", "modified", "removed", "cancelled", "uncancelled"].includes(record.change_type)) {
-      fail(`Invalid change_type: ${record.change_type}`);
-    }
-    if (!record.event_id) {
-      fail("Change record missing event_id");
-    }
-    if (record.change_type === "removed" || record.change_type === "cancelled") {
-      if (record.tombstone !== true) {
-        fail(`Expected tombstone=true for ${record.change_type} ${record.event_id}`);
-      }
-    }
-  }
-
-  if (manifest.entity_indexes?.venue_count !== venues.length) {
-    fail(`Venue entity count mismatch: manifest=${manifest.entity_indexes?.venue_count}, actual=${venues.length}`);
-  }
-  if (manifest.entity_indexes?.contributor_count !== contributors.length) {
-    fail(`Contributor entity count mismatch: manifest=${manifest.entity_indexes?.contributor_count}, actual=${contributors.length}`);
-  }
-
-  if (!agents.entrypoints?.changes || !agents.entrypoints?.venues || !agents.entrypoints?.contributors) {
-    fail("agents.json missing changes or entity endpoints");
-  }
 
   const files = await listFiles(BASE_DIR);
   for (const file of files) {
@@ -582,12 +417,8 @@ async function main() {
 
   console.log("Verification passed");
   console.log(`Events: ${full.events.length}`);
-  console.log(`Easy JSON events: ${easyJson.events.length}`);
+  console.log(`Agent NDJSON events: ${agentNdjson.length}`);
   console.log(`Fields: ${full.fields.length}`);
-  console.log(`Shards: ${manifest.shards.length}`);
-  console.log(`Changes: ${changeRecords.length}`);
-  console.log(`Venues: ${venues.length}`);
-  console.log(`Contributors: ${contributors.length}`);
   if (parityResult) {
     console.log(`Source parity count: ${parityResult.sourceCount}`);
     console.log(`Source sample checked: ${parityResult.sampleChecked}`);
