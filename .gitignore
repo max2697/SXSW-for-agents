@@ -10,8 +10,8 @@ public/events/
 public/schedule.manifest.json
 public/schema.json
 public/sitemap.xml
-public/schedule.json.gz
 public/agent-schedule.v1.ndjson
+# public/schedule.json.gz — intentionally tracked: Cloudflare build reads it via BUILD_MODE=site
 
 # Deleted bulk files (kept here in case they reappear locally)
 public/agent-schedule.v1.json
