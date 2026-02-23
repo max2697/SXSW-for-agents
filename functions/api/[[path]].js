@@ -1,8 +1,8 @@
 /**
  * SXSW 2026 Schedule API — Cloudflare Worker
  *
- * Serves filtered query results from the static slim JSON feed hosted on
- * the same Cloudflare Pages origin. Agents never need to download bulk data.
+ * Serves filtered query results from the full schedule snapshot (schedule.json.gz)
+ * hosted on the same Cloudflare Pages origin. Agents use this API directly.
  *
  * Endpoints:
  *   GET /api/events?date=&category=&venue=&type=&contributor=&q=&q_mode=&limit=&offset=
@@ -17,7 +17,7 @@
  */
 
 const ORIGIN = "https://sxsw.0fn.net";
-const SLIM_JSON_URL = `${ORIGIN}/agent-schedule.v1.slim.json`;
+const FULL_GZ_URL = `${ORIGIN}/schedule.json.gz`;
 const CACHE_TTL = 300; // seconds — matches Pages Cache-Control
 const QUERY_MODES = new Set(["any", "all", "phrase"]);
 
@@ -65,11 +65,34 @@ const TOPIC_PRESETS = {
 };
 
 // ---------------------------------------------------------------------------
-// Cache: load slim JSON once per Worker isolate lifetime (~minutes)
+// Cache: load schedule once per Worker isolate lifetime (~minutes)
 // ---------------------------------------------------------------------------
 let _cache = null;
 let _cacheMeta = null;
 let _cacheExpiry = 0;
+
+const SLIM_FIELDS = [
+  "event_id", "name", "date", "start_time", "end_time",
+  "event_type", "format", "category", "reservable", "official_url",
+  "credentials", "status",
+];
+
+function slimEvent(event) {
+  const slim = {};
+  for (const field of SLIM_FIELDS) {
+    slim[field] = event[field] ?? null;
+  }
+  // official_url is not stored in the full export; derive it from event_id
+  const id = event.event_id || event.id || null;
+  slim.official_url = id ? `https://schedule.sxsw.com/2026/events/${encodeURIComponent(id)}` : null;
+  slim.venue = event.venue
+    ? { id: event.venue.id ?? null, name: event.venue.name ?? null, lat: event.venue.lat ?? null, lon: event.venue.lon ?? null }
+    : null;
+  slim.contributors = Array.isArray(event.contributors)
+    ? event.contributors.map((c) => ({ name: c.name ?? null, type: c.type ?? null }))
+    : [];
+  return slim;
+}
 
 async function getSnapshot(env) {
   const now = Date.now();
@@ -77,16 +100,17 @@ async function getSnapshot(env) {
     return { events: _cache, ..._cacheMeta };
   }
 
-  const res = await fetch(SLIM_JSON_URL, {
-    headers: { "Accept": "application/json" },
+  const res = await fetch(FULL_GZ_URL, {
     cf: { cacheEverything: true, cacheTtl: CACHE_TTL }
   });
-  if (!res.ok) throw new Error(`Failed to fetch slim feed: ${res.status}`);
-  const data = await res.json();
-  _cache = data.events || [];
+  if (!res.ok) throw new Error(`Failed to fetch schedule: ${res.status}`);
+  const ds = new DecompressionStream("gzip");
+  const text = await new Response(res.body.pipeThrough(ds)).text();
+  const data = JSON.parse(text);
+  _cache = (data.events || []).map(slimEvent);
   _cacheMeta = {
     festival_year: data.festival_year || 2026,
-    event_count: data.event_count || _cache.length,
+    event_count: data.stats?.event_count || _cache.length,
     index_timestamp: data.generated_at || null,
   };
   _cacheExpiry = now + CACHE_TTL * 1000;
@@ -442,7 +466,7 @@ async function handleHealth(env) {
     event_count: snapshot.events.length,
     index_timestamp: snapshot.index_timestamp,
     cache_ttl_seconds: CACHE_TTL,
-    source_feed: SLIM_JSON_URL,
+    source_feed: FULL_GZ_URL,
     now: new Date().toISOString(),
   });
 }
@@ -466,12 +490,7 @@ async function handleDates(env) {
   const dates = Object.entries(counts)
     .filter(([d]) => d !== "unknown")
     .sort(([a], [b]) => a.localeCompare(b))
-    .map(([date, event_count]) => ({
-      date,
-      event_count,
-      slim_shard: `/events/by-date/${date}.slim.json`,
-      full_shard: `/events/by-date/${date}.ndjson`,
-    }));
+    .map(([date, event_count]) => ({ date, event_count }));
   return json({ festival_year: 2026, dates });
 }
 
@@ -634,7 +653,7 @@ function handleOpenApi(url) {
         get: {
           operationId: "getHealth",
           summary: "Health and index freshness info",
-          description: "Returns service health, current event count, and index timestamp from the latest loaded slim feed.",
+          description: "Returns service health, current event count, and index timestamp from the loaded schedule snapshot.",
           "x-agent-example-url": `${base}/api/health`,
           responses: {
             "200": { description: "Health status", content: { "application/json": { schema: { "$ref": "#/components/schemas/HealthResponse" } } } },
