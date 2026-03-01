@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-02-28T09:25:40.183Z",
+  "generated_at": "2026-03-01T09:29:39.558Z",
   "festival_year": 2026,
   "source": {
     "system": "Official SXSW schedule website",
@@ -9,20 +9,20 @@
       "/2026/search",
       "/api/web/2026/events/{event_id}"
     ],
-    "source_snapshot_at": "2026-02-28T07:02:00.000Z",
+    "source_snapshot_at": "2026-03-01T01:52:00.000Z",
     "extraction_notes": "Event IDs are discovered from official search index; event records are hydrated from official detail endpoint."
   },
   "freshness": {
     "refresh_mode": "manual",
     "refresh_cadence_target": "daily",
-    "last_successful_refresh_at": "2026-02-28T09:25:40.183Z",
-    "source_snapshot_at": "2026-02-28T07:02:00.000Z",
-    "expected_next_refresh_by": "2026-03-01T09:25:40.183Z",
-    "stale_after": "2026-03-04T09:25:40.183Z",
+    "last_successful_refresh_at": "2026-03-01T09:29:39.558Z",
+    "source_snapshot_at": "2026-03-01T01:52:00.000Z",
+    "expected_next_refresh_by": "2026-03-02T09:29:39.558Z",
+    "stale_after": "2026-03-05T09:29:39.558Z",
     "data_staleness": {
       "is_stale": false,
       "status": "fresh",
-      "source_snapshot_age_hours": 2.4
+      "source_snapshot_age_hours": 7.6
     }
   },
   "compatibility": {
@@ -55,11 +55,9 @@
     "slug_policy": "Non-alphanumeric characters are replaced with underscores."
   },
   "stats": {
-    "event_count": 3381,
+    "event_count": 3395,
     "field_count": 75,
-    "failed_event_ids": [
-      "MS63615"
-    ],
+    "failed_event_ids": [],
     "date_range": {
       "start": "2026-03-12T07:00:00.000-05:00",
       "end": "2026-03-19T02:00:00.000-05:00"
@@ -143,10 +141,10 @@
     "youtube_id"
   ],
   "changes": {
-    "generated_at": "2026-02-28T09:25:40.183Z",
-    "baseline_generated_at": "2026-02-27T09:40:27.345Z",
-    "total": 3381,
-    "added": 3381,
+    "generated_at": "2026-03-01T09:29:39.558Z",
+    "baseline_generated_at": "2026-02-28T09:25:40.183Z",
+    "total": 3395,
+    "added": 3395,
     "modified": 0,
     "removed": 0,
     "cancelled": 0,
