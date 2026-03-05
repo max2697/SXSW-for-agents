@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-03-04T09:40:15.423Z",
+  "generated_at": "2026-03-05T09:42:35.058Z",
   "festival_year": 2026,
   "source": {
     "system": "Official SXSW schedule website",
@@ -9,20 +9,20 @@
       "/2026/search",
       "/api/web/2026/events/{event_id}"
     ],
-    "source_snapshot_at": "2026-03-04T06:25:00.000Z",
+    "source_snapshot_at": "2026-03-05T05:20:00.000Z",
     "extraction_notes": "Event IDs are discovered from official search index; event records are hydrated from official detail endpoint."
   },
   "freshness": {
     "refresh_mode": "manual",
     "refresh_cadence_target": "daily",
-    "last_successful_refresh_at": "2026-03-04T09:40:15.423Z",
-    "source_snapshot_at": "2026-03-04T06:25:00.000Z",
-    "expected_next_refresh_by": "2026-03-05T09:40:15.423Z",
-    "stale_after": "2026-03-08T09:40:15.423Z",
+    "last_successful_refresh_at": "2026-03-05T09:42:35.058Z",
+    "source_snapshot_at": "2026-03-05T05:20:00.000Z",
+    "expected_next_refresh_by": "2026-03-06T09:42:35.058Z",
+    "stale_after": "2026-03-09T09:42:35.058Z",
     "data_staleness": {
       "is_stale": false,
       "status": "fresh",
-      "source_snapshot_age_hours": 3.3
+      "source_snapshot_age_hours": 4.4
     }
   },
   "compatibility": {
@@ -55,8 +55,8 @@
     "slug_policy": "Non-alphanumeric characters are replaced with underscores."
   },
   "stats": {
-    "event_count": 3553,
-    "field_count": 75,
+    "event_count": 3727,
+    "field_count": 77,
     "failed_event_ids": [],
     "date_range": {
       "start": "2026-03-12T07:00:00.000-05:00",
@@ -69,6 +69,7 @@
     "add_bcl_url",
     "add_slido",
     "age_policy",
+    "ai_generated",
     "american_sign_language",
     "apple_url",
     "audio_description",
@@ -107,6 +108,7 @@
     "publish_at",
     "rebroadcast",
     "recommended_ids",
+    "related_events",
     "related_sales_client",
     "reservable",
     "reservable_id",
@@ -141,10 +143,10 @@
     "youtube_id"
   ],
   "changes": {
-    "generated_at": "2026-03-04T09:40:15.423Z",
-    "baseline_generated_at": "2026-03-03T09:41:01.364Z",
-    "total": 3553,
-    "added": 3553,
+    "generated_at": "2026-03-05T09:42:35.058Z",
+    "baseline_generated_at": "2026-03-04T09:40:15.423Z",
+    "total": 3727,
+    "added": 3727,
     "modified": 0,
     "removed": 0,
     "cancelled": 0,
