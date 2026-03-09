@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-03-08T09:30:06.193Z",
+  "generated_at": "2026-03-09T09:52:17.736Z",
   "festival_year": 2026,
   "source": {
     "system": "Official SXSW schedule website",
@@ -9,20 +9,20 @@
       "/2026/search",
       "/api/web/2026/events/{event_id}"
     ],
-    "source_snapshot_at": "2026-03-08T03:09:00.000Z",
+    "source_snapshot_at": "2026-03-09T03:54:00.000Z",
     "extraction_notes": "Event IDs are discovered from official search index; event records are hydrated from official detail endpoint."
   },
   "freshness": {
     "refresh_mode": "manual",
     "refresh_cadence_target": "daily",
-    "last_successful_refresh_at": "2026-03-08T09:30:06.193Z",
-    "source_snapshot_at": "2026-03-08T03:09:00.000Z",
-    "expected_next_refresh_by": "2026-03-09T09:30:06.193Z",
-    "stale_after": "2026-03-12T09:30:06.193Z",
+    "last_successful_refresh_at": "2026-03-09T09:52:17.736Z",
+    "source_snapshot_at": "2026-03-09T03:54:00.000Z",
+    "expected_next_refresh_by": "2026-03-10T09:52:17.736Z",
+    "stale_after": "2026-03-13T09:52:17.736Z",
     "data_staleness": {
       "is_stale": false,
       "status": "fresh",
-      "source_snapshot_age_hours": 6.4
+      "source_snapshot_age_hours": 6
     }
   },
   "compatibility": {
@@ -55,7 +55,7 @@
     "slug_policy": "Non-alphanumeric characters are replaced with underscores."
   },
   "stats": {
-    "event_count": 3853,
+    "event_count": 3889,
     "field_count": 79,
     "failed_event_ids": [
       "MS63120",
@@ -67,8 +67,6 @@
       "MS63472",
       "MS63498",
       "MS63506",
-      "MS63522",
-      "MS63525",
       "MS63556",
       "MS63557",
       "MS63559",
@@ -121,32 +119,27 @@
       "MS64340",
       "MS64341",
       "MS64347",
-      "MS64371",
       "MS64375",
       "MS64376",
       "MS64418",
       "MS64441",
       "MS64459",
-      "MS64461",
       "MS64464",
       "MS64473",
       "MS64507",
+      "MS64514",
       "MS64523",
       "MS64539",
-      "MS64544",
       "MS64545",
       "MS64554",
       "MS64558",
       "MS64580",
       "MS64650",
-      "MS64678",
       "MS64682",
       "MS64693",
       "MS64721",
       "MS64722",
-      "MS64747",
       "MS64763",
-      "MS64797",
       "MS64799",
       "MS64800",
       "MS64810",
@@ -157,18 +150,15 @@
       "MS64869",
       "MS64872",
       "MS64894",
-      "MS64895",
       "MS64908",
       "MS64928",
       "MS64980",
       "MS64999",
-      "MS65002",
       "MS65009",
       "MS65010",
       "MS65022",
       "MS65038",
       "MS65040",
-      "MS65043",
       "MS65050",
       "MS65054",
       "MS65068",
@@ -177,10 +167,11 @@
       "MS65152",
       "MS65154",
       "MS65184",
-      "MS65189"
+      "MS65208",
+      "MS65218"
     ],
     "date_range": {
-      "start": "2026-03-08T15:00:00.000-05:00",
+      "start": "2026-03-12T07:00:00.000-05:00",
       "end": "2026-03-19T02:00:00.000-05:00"
     }
   },
@@ -266,10 +257,10 @@
     "youtube_id"
   ],
   "changes": {
-    "generated_at": "2026-03-08T09:30:06.193Z",
-    "baseline_generated_at": "2026-03-07T09:29:09.511Z",
-    "total": 3853,
-    "added": 3853,
+    "generated_at": "2026-03-09T09:52:17.736Z",
+    "baseline_generated_at": "2026-03-08T09:30:06.193Z",
+    "total": 3889,
+    "added": 3889,
     "modified": 0,
     "removed": 0,
     "cancelled": 0,
