@@ -1,6 +1,6 @@
 # SXSW 2026 Agent-First Schedule
 
-> 4173 events across March 12–18, 2026. Sourced daily from schedule.sxsw.com.
+> 4250 events across March 12–18, 2026. Sourced daily from schedule.sxsw.com.
 
 ## Query API (Use This)
 
@@ -31,9 +31,9 @@ All API responses are JSON, CORS-enabled, always <10 KB.
 
 ## Data Freshness
 
-Last built: 2026-03-11T09:42:08.497Z
-Source snapshot: 2026-03-11T04:22:00.000Z
-Expected next refresh: 2026-03-12T09:42:08.497Z
+Last built: 2026-03-12T09:42:33.326Z
+Source snapshot: 2026-03-12T02:31:00.000Z
+Expected next refresh: 2026-03-13T09:42:33.326Z
 
 ## Key Fields
 
