@@ -1,19 +1,19 @@
 {
   "agent_contract_version": "1.1.0",
-  "generated_at": "2026-03-15T09:34:56.372Z",
+  "generated_at": "2026-03-16T10:06:46.965Z",
   "festival_year": 2026,
   "purpose": "Agent-first SXSW schedule feed from official source",
   "freshness": {
     "refresh_mode": "manual",
     "refresh_cadence_target": "daily",
-    "last_successful_refresh_at": "2026-03-15T09:34:56.372Z",
-    "source_snapshot_at": "2026-03-14T23:53:00.000Z",
-    "expected_next_refresh_by": "2026-03-16T09:34:56.372Z",
-    "stale_after": "2026-03-19T09:34:56.372Z",
+    "last_successful_refresh_at": "2026-03-16T10:06:46.965Z",
+    "source_snapshot_at": "2026-03-16T00:51:00.000Z",
+    "expected_next_refresh_by": "2026-03-17T10:06:46.965Z",
+    "stale_after": "2026-03-20T10:06:46.965Z",
     "data_staleness": {
       "is_stale": false,
       "status": "fresh",
-      "source_snapshot_age_hours": 9.7
+      "source_snapshot_age_hours": 9.3
     }
   },
   "compatibility": {
@@ -111,7 +111,7 @@
       "/2026/search",
       "/api/web/2026/events/{event_id}"
     ],
-    "source_snapshot_at": "2026-03-14T23:53:00.000Z",
+    "source_snapshot_at": "2026-03-16T00:51:00.000Z",
     "extraction_notes": "Event IDs are discovered from official search index; event records are hydrated from official detail endpoint."
   }
 }
