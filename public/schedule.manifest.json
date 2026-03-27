@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-03-26T10:01:25.482Z",
+  "generated_at": "2026-03-27T09:56:00.564Z",
   "festival_year": 2026,
   "source": {
     "system": "Official SXSW schedule website",
@@ -9,20 +9,20 @@
       "/2026/search",
       "/api/web/2026/events/{event_id}"
     ],
-    "source_snapshot_at": "2026-03-18T18:27:00.000Z",
+    "source_snapshot_at": "2026-03-26T20:21:00.000Z",
     "extraction_notes": "Event IDs are discovered from official search index; event records are hydrated from official detail endpoint."
   },
   "freshness": {
     "refresh_mode": "manual",
     "refresh_cadence_target": "daily",
-    "last_successful_refresh_at": "2026-03-26T10:01:25.482Z",
-    "source_snapshot_at": "2026-03-18T18:27:00.000Z",
-    "expected_next_refresh_by": "2026-03-27T10:01:25.482Z",
-    "stale_after": "2026-03-30T10:01:25.482Z",
+    "last_successful_refresh_at": "2026-03-27T09:56:00.564Z",
+    "source_snapshot_at": "2026-03-26T20:21:00.000Z",
+    "expected_next_refresh_by": "2026-03-28T09:56:00.564Z",
+    "stale_after": "2026-03-31T09:56:00.564Z",
     "data_staleness": {
       "is_stale": false,
       "status": "fresh",
-      "source_snapshot_age_hours": 183.6
+      "source_snapshot_age_hours": 13.6
     }
   },
   "compatibility": {
@@ -55,7 +55,7 @@
     "slug_policy": "Non-alphanumeric characters are replaced with underscores."
   },
   "stats": {
-    "event_count": 4321,
+    "event_count": 4322,
     "field_count": 79,
     "failed_event_ids": [],
     "date_range": {
@@ -145,10 +145,10 @@
     "youtube_id"
   ],
   "changes": {
-    "generated_at": "2026-03-26T10:01:25.482Z",
-    "baseline_generated_at": "2026-03-25T09:54:53.074Z",
-    "total": 4321,
-    "added": 4321,
+    "generated_at": "2026-03-27T09:56:00.564Z",
+    "baseline_generated_at": "2026-03-26T10:01:25.482Z",
+    "total": 4322,
+    "added": 4322,
     "modified": 0,
     "removed": 0,
     "cancelled": 0,
