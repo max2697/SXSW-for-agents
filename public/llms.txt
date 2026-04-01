@@ -31,9 +31,9 @@ All API responses are JSON, CORS-enabled, always <10 KB.
 
 ## Data Freshness
 
-Last built: 2026-03-31T10:06:40.133Z
+Last built: 2026-04-01T10:06:52.415Z
 Source snapshot: 2026-03-26T20:21:00.000Z
-Expected next refresh: 2026-04-01T10:06:40.133Z
+Expected next refresh: 2026-04-02T10:06:52.415Z
 
 ## Key Fields
 
