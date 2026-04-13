@@ -1,19 +1,19 @@
 {
   "agent_contract_version": "1.1.0",
-  "generated_at": "2026-04-12T09:45:22.035Z",
+  "generated_at": "2026-04-13T10:45:50.488Z",
   "festival_year": 2026,
   "purpose": "Agent-first SXSW schedule feed from official source",
   "freshness": {
     "refresh_mode": "manual",
     "refresh_cadence_target": "daily",
-    "last_successful_refresh_at": "2026-04-12T09:45:22.035Z",
+    "last_successful_refresh_at": "2026-04-13T10:45:50.488Z",
     "source_snapshot_at": "2026-03-26T20:21:00.000Z",
-    "expected_next_refresh_by": "2026-04-13T09:45:22.035Z",
-    "stale_after": "2026-04-16T09:45:22.035Z",
+    "expected_next_refresh_by": "2026-04-14T10:45:50.488Z",
+    "stale_after": "2026-04-17T10:45:50.488Z",
     "data_staleness": {
       "is_stale": false,
       "status": "fresh",
-      "source_snapshot_age_hours": 397.4
+      "source_snapshot_age_hours": 422.4
     }
   },
   "compatibility": {
