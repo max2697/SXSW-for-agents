@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-06-21T11:47:13.298Z",
+  "generated_at": "2026-06-22T14:38:26.487Z",
   "festival_year": 2026,
   "source": {
     "system": "Official SXSW schedule website",
@@ -15,14 +15,14 @@
   "freshness": {
     "refresh_mode": "manual",
     "refresh_cadence_target": "daily",
-    "last_successful_refresh_at": "2026-06-21T11:47:13.298Z",
+    "last_successful_refresh_at": "2026-06-22T14:38:26.487Z",
     "source_snapshot_at": "2026-03-26T20:21:00.000Z",
-    "expected_next_refresh_by": "2026-06-22T11:47:13.298Z",
-    "stale_after": "2026-06-25T11:47:13.298Z",
+    "expected_next_refresh_by": "2026-06-23T14:38:26.487Z",
+    "stale_after": "2026-06-26T14:38:26.487Z",
     "data_staleness": {
       "is_stale": false,
       "status": "fresh",
-      "source_snapshot_age_hours": 2079.4
+      "source_snapshot_age_hours": 2106.3
     }
   },
   "compatibility": {
@@ -146,8 +146,8 @@
     "youtube_id"
   ],
   "changes": {
-    "generated_at": "2026-06-21T11:47:13.298Z",
-    "baseline_generated_at": "2026-06-20T11:18:26.642Z",
+    "generated_at": "2026-06-22T14:38:26.487Z",
+    "baseline_generated_at": "2026-06-21T11:47:13.298Z",
     "total": 4321,
     "added": 4321,
     "modified": 0,
