@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-10-20T14:08:57.842Z",
+  "generated_at": "2026-10-21T14:23:48.732Z",
   "festival_year": 2026,
   "source": {
     "system": "Official SXSW schedule website",
@@ -15,14 +15,14 @@
   "freshness": {
     "refresh_mode": "manual",
     "refresh_cadence_target": "daily",
-    "last_successful_refresh_at": "2026-10-20T14:08:57.842Z",
+    "last_successful_refresh_at": "2026-10-21T14:23:48.732Z",
     "source_snapshot_at": "2026-03-26T20:21:00.000Z",
-    "expected_next_refresh_by": "2026-10-21T14:08:57.842Z",
-    "stale_after": "2026-10-24T14:08:57.842Z",
+    "expected_next_refresh_by": "2026-10-22T14:23:48.732Z",
+    "stale_after": "2026-10-25T14:23:48.732Z",
     "data_staleness": {
       "is_stale": false,
       "status": "fresh",
-      "source_snapshot_age_hours": 4985.8
+      "source_snapshot_age_hours": 5010
     }
   },
   "compatibility": {
@@ -56,11 +56,11 @@
   },
   "stats": {
     "event_count": 4321,
-    "field_count": 80,
+    "field_count": 78,
     "failed_event_ids": [],
     "date_range": {
-      "start": "2026-03-12T07:00:00.000-05:00",
-      "end": "2026-03-19T02:00:00.000-05:00"
+      "start": null,
+      "end": null
     }
   },
   "fields": [
@@ -81,9 +81,7 @@
     "contributors",
     "cpe_credit",
     "credentials",
-    "date",
     "description",
-    "end_time",
     "event_id",
     "event_status",
     "event_type",
@@ -107,6 +105,7 @@
     "name",
     "open_captioned",
     "playlist_tag",
+    "presentation_url",
     "presented_by",
     "publish_at",
     "rebroadcast",
@@ -122,7 +121,6 @@
     "sort",
     "source",
     "squad_up_url",
-    "start_time",
     "stream_embed",
     "stream_id",
     "stream_url",
@@ -146,8 +144,8 @@
     "youtube_id"
   ],
   "changes": {
-    "generated_at": "2026-10-20T14:08:57.842Z",
-    "baseline_generated_at": "2026-10-19T16:14:09.826Z",
+    "generated_at": "2026-10-21T14:23:48.732Z",
+    "baseline_generated_at": "2026-10-20T14:08:57.842Z",
     "total": 4321,
     "added": 4321,
     "modified": 0,
